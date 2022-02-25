@@ -27,7 +27,7 @@ def usage():
     """
     print("Usage: %s [OPTION...]" % sys.argv[0])
     print("")
-    print("  -d, --debug                emit debugging messages")
+    print("-d, --debug                emit debugging messages")
     print("  -h, --help                 print this message")
     print("  -e, --daemonize            go to background after init")
     print("  -i, --pidfile              file to write daemonized process pid")

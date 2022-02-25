@@ -4,7 +4,7 @@
 
 We recently went through some breaking changes to the repository code base as
 outlined in the linked email. These have been coming for a long time as most of
-our development was focused on the 'next' branch (now renamed to master).
+our development was focused on the 'next' branch (now renamed to master)...
 
 A lot of the 'next' functionality is ready to be used for testing purposes but
 we've yet to mark individual library APIs as 'stable' so no guarantees for

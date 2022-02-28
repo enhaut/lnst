@@ -1,4 +1,4 @@
-# Current state
+# Current state      
 
 [IMPORTANT UPDATE ABOUT RECENT REPOSITORY CHANGES](https://lists.fedorahosted.org/archives/list/lnst-developers@lists.fedorahosted.org/thread/WK2PWZSUVDDJBQCJSZDR6WCJKZ44ZKVU/)
 

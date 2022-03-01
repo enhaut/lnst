@@ -24,14 +24,6 @@ jobs:
           path: lnst
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: XXX2
-        run: |
-          ls
-          echo "==================="
-          ls ..
-          echo "==================="
-          ls ../../
-
       - name: Test
         run: |
           cd "$GITHUB_WORKSPACE"/lnst
@@ -39,8 +31,5 @@ jobs:
           git fetch --unshallow upstream
           git config --local user.email "lnst-developers@lists.fedorahosted.org"
           git config --local user.name "LNST developers"
-          git branch
-          git remote show
-          git log -n 2
           git rebase upstream/master
           git log -n 2

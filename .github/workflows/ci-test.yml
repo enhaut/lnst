@@ -25,7 +25,7 @@ jobs:
 
       - name: Test
         run: |
-          git remote add upstream "$GITHUB_WORKSPACE/upstream"
+          git remote add upstream "../$GITHUB_WORKSPACE/upstream"
           git fetch upstream master
           git branch
           git remote show

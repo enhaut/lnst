@@ -14,7 +14,7 @@ jobs:
       - name: Source checkout
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.ref }}
+          ref: ${GITHUB_REF##*/}
 
       - name: Test
         run: |

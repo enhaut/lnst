@@ -25,6 +25,7 @@ jobs:
 
       - name: Test
         run: |
+          ls ..
           git remote add upstream "../upstream/"
           git fetch upstream master
           git branch

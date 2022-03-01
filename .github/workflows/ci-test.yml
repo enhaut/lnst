@@ -18,14 +18,6 @@ jobs:
           repository: LNST-project/lnst
           ref: master
 
-      - name: XXX
-        run: |
-          ls
-          echo "==================="
-          ls ..
-          echo "==================="
-          ls ../../
-
       - name: Source checkout
         uses: actions/checkout@v2
         with:
@@ -42,8 +34,8 @@ jobs:
 
       - name: Test
         run: |
-          ls ../..
-          git remote add upstream "../upstream/"
+          cd "$GITHUB_WORKSPACE"/lnst
+          git remote add upstream "$GITHUB_WORKSPACE/upstream"
           git fetch upstream master
           git branch
           git remote show

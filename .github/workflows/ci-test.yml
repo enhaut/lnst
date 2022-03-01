@@ -36,7 +36,7 @@ jobs:
         run: |
           cd "$GITHUB_WORKSPACE"/lnst
           git remote add upstream "$GITHUB_WORKSPACE/upstream"
-          git fetch upstream master
+          git fetch upstream
           git branch
           git remote show
           git log -n 2

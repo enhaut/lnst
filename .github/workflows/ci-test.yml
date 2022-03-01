@@ -7,32 +7,6 @@ on:
     branches: [ master ]
 
 jobs:
-  MergeTest:
-    runs-on: ubuntu-20.04
-
-    steps:
-      - name: LNST upstream checkout
-        uses: actions/checkout@v2
-        with:
-          path: lnst-upstream
-          repository: LNST-project/lnst
-          ref: master
-
-      - name: Source branch checkout
-        uses: actions/checkout@v2
-        with:
-          path: lnst
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      - name: Rebase
-        run: |
-          cd "$GITHUB_WORKSPACE"/lnst
-          git remote add upstream "$GITHUB_WORKSPACE/lnst-upstream"
-          git fetch --unshallow upstream
-          git config --local user.email "lnst-developers@lists.fedorahosted.org"
-          git config --local user.name "LNST developers"
-          git rebase upstream/master
-
   FunctionalTest:
     runs-on: ubuntu-20.04
 
@@ -42,7 +16,12 @@ jobs:
       with:
         python-version: "3.6"
 
-    - uses: actions/checkout@v2
+    - name: Source branch checkout
+      uses: actions/checkout@v2
+      with:
+        path: lnst
+        ref: ${{ github.event.pull_request.head.sha }}
+
     - name: Set up system requirements
       run: |
         sudo apt-get install podman -y

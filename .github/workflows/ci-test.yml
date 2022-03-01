@@ -26,6 +26,7 @@ jobs:
 
       - name: Test
         run: |
+          ls
           git log
           git branch
           git remote show

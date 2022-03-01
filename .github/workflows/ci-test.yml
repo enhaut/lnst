@@ -14,10 +14,11 @@ jobs:
       - name: Source checkout
         uses: actions/checkout@v2
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
       - name: Test
         run: |
+          git log -n 5
           git checkout HEAD^
           git log -n 5
           git branch

@@ -11,32 +11,24 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - name: Source checkout
-        uses: actions/checkout@v2
-        with:
-          path: source
-          ref: ${{ github.event.pull_request.head.sha }}
-
       - name: LNST upstream checkout
         uses: actions/checkout@v2
         with:
           repository: LNST-project/lnst
-          path: lnst
+          path: upstream
           ref: master
+
+      - name: Source checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Test
         run: |
-          ls
-          git log
+          git remote add upstream "$GITHUB_WORKSPACE/upstream"
+          git fetch upstream master
           git branch
           git remote show
-
-      - name: Upstream checkout
-        run: |
-          git checkout -b source
-          git remote add upstream "https://github.com/LNST-project/lnst.git"
-          git fetch upstream
-          git checkout -b upstream_master upstream/master
-          git config --local user.email "lnst-developers@lists.fedorahosted.org"
-          git config --local user.name "LNST developers"
-          git merge --no-commit --allow-unrelated-histories source
+          git log -n 2
+          git rebase upstream/master
+          git log -n 2

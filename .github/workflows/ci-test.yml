@@ -33,3 +33,4 @@ jobs:
           git config --local user.name "LNST developers"
           git rebase upstream/master
           git log -n 3
+          cat test

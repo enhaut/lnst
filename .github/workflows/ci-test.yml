@@ -14,9 +14,17 @@ jobs:
       - name: LNST upstream checkout
         uses: actions/checkout@v2
         with:
-          repository: LNST-project/lnst
           path: upstream
+          repository: LNST-project/lnst
           ref: master
+
+      - name: XXX
+        run: |
+          ls
+          echo "==================="
+          ls ..
+          echo "==================="
+          ls ../../
 
       - name: Source checkout
         uses: actions/checkout@v2

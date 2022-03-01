@@ -57,13 +57,11 @@ jobs:
 
     - name: Build LNST workers image
       run: |
-        ls
-        ls ..
-        sudo podman build . -t lnst -f container_files/Dockerfile
+        sudo podman build . -t lnst -f lnst/container_files/Dockerfile
 
     - name: SimpleNetworkRecipe ping test
       run: |
         export PATH=$PATH:$HOME/.poetry/bin
         venv_path=$(poetry env info -p)
-        sudo "$venv_path"/bin/python .github/runner.py
+        sudo "$venv_path"/bin/python lnst/.github/runner.py
 

@@ -18,6 +18,7 @@ class HelloWorldRecipe(BaseRecipe):
 
         self.matched.machine1.run("ping 192.168.1.2 -c 5")
         self.matched.machine2.run("ping 192.168.1.1 -c 5")
+        self.matched.machine2.run("ping 1.1.1.1 -c 5")
 
 
 podman_uri = "unix:///run/podman/podman.sock"

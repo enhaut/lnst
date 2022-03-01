@@ -14,12 +14,21 @@ jobs:
       - name: Source checkout
         uses: actions/checkout@v2
         with:
+          path: source
           ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: LNST upstream checkout
+        uses: actions/checkout@v2
+        with:
+          repository: LNST-project/lnst
+          path: lnst
+          ref: master
 
       - name: Test
         run: |
           git log
           git branch
+          git remote show
 
       - name: Upstream checkout
         run: |

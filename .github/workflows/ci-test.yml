@@ -57,6 +57,8 @@ jobs:
 
     - name: Build LNST workers image
       run: |
+        ls
+        ls ..
         sudo podman build . -t lnst -f container_files/Dockerfile
 
     - name: SimpleNetworkRecipe ping test

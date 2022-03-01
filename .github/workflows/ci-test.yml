@@ -11,18 +11,27 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - name: Source checkout
+      - name: LNST upstream checkout
         uses: actions/checkout@v2
+        with:
+          path: lnst-upstream
+          repository: LNST-project/lnst
+          ref: master
 
-      - name: Upstream checkout
+      - name: Source branch checkout
+        uses: actions/checkout@v2
+        with:
+          path: lnst
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Rebase
         run: |
-          git checkout -b source
-          git remote add upstream "https://github.com/LNST-project/lnst.git"
-          git fetch upstream
-          git checkout -b upstream_master upstream/master
+          cd "$GITHUB_WORKSPACE"/lnst
+          git remote add upstream "$GITHUB_WORKSPACE/lnst-upstream"
+          git fetch --unshallow upstream
           git config --local user.email "lnst-developers@lists.fedorahosted.org"
           git config --local user.name "LNST developers"
-          git merge --no-commit --allow-unrelated-histories source
+          git rebase upstream/master
 
   FunctionalTest:
     runs-on: ubuntu-20.04
@@ -64,6 +73,7 @@ jobs:
         libnl-route-3-dev \
         git \
         libnl-3-dev
+        cd lnst
         $HOME/.poetry/bin/poetry install
 
     - name: Build LNST workers image

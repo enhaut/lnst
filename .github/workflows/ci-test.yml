@@ -37,6 +37,8 @@ jobs:
           cd "$GITHUB_WORKSPACE"/lnst
           git remote add upstream "$GITHUB_WORKSPACE/lnst-upstream"
           git fetch --unshallow upstream
+          git config --local user.email "lnst-developers@lists.fedorahosted.org"
+          git config --local user.name "LNST developers"
           git branch
           git remote show
           git log -n 2

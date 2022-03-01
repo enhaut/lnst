@@ -31,7 +31,8 @@ jobs:
           git fetch --unshallow upstream
           git config --local user.email "lnst-developers@lists.fedorahosted.org"
           git config --local user.name "LNST developers"
-          git rebase upstream/master
+          git fetch origin
+          git rebase origin/master
 
   FunctionalTest:
     runs-on: ubuntu-20.04

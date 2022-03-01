@@ -27,6 +27,7 @@ jobs:
       - name: Rebase
         run: |
           cd "$GITHUB_WORKSPACE"/lnst
+          git branch "$GITHUB_REF_NAME"
           git remote add upstream "$GITHUB_WORKSPACE/lnst-upstream"
           git fetch --unshallow upstream
           git config --local user.email "lnst-developers@lists.fedorahosted.org"

@@ -19,7 +19,6 @@ jobs:
     - name: Source branch checkout
       uses: actions/checkout@v2
       with:
-        path: lnst
         ref: ${{ github.event.pull_request.head.sha }}
 
     - name: Set up system requirements
@@ -52,16 +51,15 @@ jobs:
         libnl-route-3-dev \
         git \
         libnl-3-dev
-        cd lnst
         $HOME/.poetry/bin/poetry install
 
     - name: Build LNST workers image
       run: |
-        sudo podman build . -t lnst -f lnst/container_files/Dockerfile
+        sudo podman build . -t lnst -f container_files/Dockerfile
 
     - name: SimpleNetworkRecipe ping test
       run: |
         export PATH=$PATH:$HOME/.poetry/bin
         venv_path=$(poetry env info -p)
-        sudo "$venv_path"/bin/python lnst/.github/runner.py
+        sudo "$venv_path"/bin/python .github/runner.py
 

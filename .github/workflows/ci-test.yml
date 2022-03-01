@@ -29,6 +29,7 @@ jobs:
       - name: Source checkout
         uses: actions/checkout@v2
         with:
+          path: lnst
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: XXX2

@@ -10,10 +10,9 @@ RUN dnf install -y initscripts \
     python-devel \
     libxml2-devel \
     libxslt-devel \
-    libvirt \
-    libvirt-devel \
     libnl3 \
     git \
+    which \
     libnl3-devel &&  \
     curl -sSL https://install.python-poetry.org |  \
     python3 - --version 1.1.13

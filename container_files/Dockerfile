@@ -13,6 +13,7 @@ RUN dnf install -y initscripts \
     libnl3 \
     git \
     which \
+    iproute \
     libnl3-devel &&  \
     curl -sSL https://install.python-poetry.org |  \
     python3 - --version 1.1.13

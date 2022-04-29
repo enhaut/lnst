@@ -19,11 +19,8 @@ include = ["schema-am.rng", "install/*", "lnst-ctl.conf"]
 [tool.poetry.dependencies]
 python = "^3.9"
 
-pyroute2 = "*"
-pyyaml = "*"
-lxml = "*"
 ethtool = "*"
-podman = "*"
+pyroute2 = "*"
 
 [tool.poetry.scripts]
 lnst-agent = 'lnst.Agent.__main__:main'

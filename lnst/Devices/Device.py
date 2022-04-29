@@ -12,13 +12,10 @@ olichtne@redhat.com (Ondrej Lichtner)
 """
 
 import re
-import ethtool
-import pyroute2
 import logging
 import pprint
 import time
 from abc import ABCMeta
-from pyroute2.netlink.rtnl import ifinfmsg
 from lnst.Common.Logs import log_exc_traceback
 from lnst.Common.ExecCmd import exec_cmd, ExecCmdFail
 from lnst.Common.DeviceError import DeviceError, DeviceDeleted, DeviceDisabled
@@ -26,10 +23,8 @@ from lnst.Common.DeviceError import DeviceConfigError, DeviceConfigValueError
 from lnst.Common.DeviceError import DeviceFeatureNotSupported
 from lnst.Common.IpAddress import ipaddress, AF_INET
 from lnst.Common.HWAddress import hwaddress
+from lnst.Controller.Requirements import RequirementError
 
-from pyroute2.netlink.rtnl import RTM_NEWLINK
-from pyroute2.netlink.rtnl import RTM_NEWADDR
-from pyroute2.netlink.rtnl import RTM_DELADDR
 
 class DeviceMeta(ABCMeta):
     def __instancecheck__(self, other):
@@ -52,6 +47,7 @@ class Device(object, metaclass=DeviceMeta):
     """
 
     def __init__(self, if_manager):
+        self._import_optional()
         self.ifindex = None
         self._nl_msg = None
         self._devlink = None
@@ -65,6 +61,18 @@ class Device(object, metaclass=DeviceMeta):
         self._bulk_enabled = False
 
         self._cleanup_data = None
+
+    def _import_optional(self):
+        try:
+            import ethtool
+            import pyroute2
+            from pyroute2.netlink.rtnl import ifinfmsg
+            from pyroute2.netlink.rtnl import RTM_NEWLINK
+            from pyroute2.netlink.rtnl import RTM_NEWADDR
+            from pyroute2.netlink.rtnl import RTM_DELADDR
+        except ModuleNotFoundError as e:
+            logging.error(f"Module {e} not found, install XXX")
+            raise RequirementError()
 
     def _set_nl_attr(self, msg, value, name):
         msg[name] = value

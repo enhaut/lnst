@@ -8,7 +8,6 @@ from lnst.Common.Parameters import (
     IntParam,
     StrParam,
     BoolParam,
-    ListParam,
     FloatParam,
 )
 from lnst.Common.IpAddress import AF_INET, AF_INET6
@@ -33,7 +32,6 @@ class EnrtConfiguration(object):
     store any values relevant to configuration being applied during the lifetime
     of the Recipe.
     """
-    pass
 
 
 class BaseEnrtRecipe(

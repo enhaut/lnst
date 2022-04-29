@@ -10,21 +10,17 @@ __author__ = """
 olichtne@redhat.com (Ondrej Lichtner)
 """
 
-import time
 import copy
 import signal
 from lnst.Common.Parameters import Parameters, Param
 from lnst.Common.LnstError import LnstError
 
-from lnst.Common.Logs import log_exc_traceback
 
 class TestModuleError(LnstError):
     """Exception used by BaseTestModule and derived classes"""
-    pass
 
 class InterruptException(TestModuleError):
     """Exception used to handle SIGINT waiting"""
-    pass
 
 class BaseTestModule(object):
     """Base class for test modules

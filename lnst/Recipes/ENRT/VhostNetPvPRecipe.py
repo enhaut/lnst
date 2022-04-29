@@ -206,7 +206,6 @@ class VhostNetPvPRecipe(BasePvPRecipe):
         """
         VM - specific forwarding deconfiguration
         """
-        pass
 
     def host_forwarding_configuration(self, host_conf):
         if (self.params.host_fwd == 'bridge'):

@@ -277,7 +277,6 @@ class BasePvPRecipe(PingTestAndEvaluate, PerfRecipe):
         Returns:
             An instance of Perf.Recipe.RecipeConf
         """
-        pass
 
     def test_wide_deconfiguration(self, config):
         pass

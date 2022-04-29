@@ -15,7 +15,6 @@ olichtne@redhat.com (Ondrej Lichtner)
 """
 
 import logging
-from abc import ABCMeta
 from lnst.Controller.Job import DEFAULT_TIMEOUT
 from lnst.Devices.Device import Device
 from lnst.Devices.LoopbackDevice import LoopbackDevice

@@ -20,7 +20,6 @@ from lnst.Controller.RecipeResults import BaseResult, Result
 
 class RecipeError(ControllerError):
     """Exception thrown by the BaseRecipe class"""
-    pass
 
 
 class BaseRecipe(object):

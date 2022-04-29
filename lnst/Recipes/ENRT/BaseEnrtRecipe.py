@@ -32,7 +32,6 @@ class EnrtConfiguration(object):
     store any values relevant to configuration being applied during the lifetime
     of the Recipe.
     """
-    pass
 
 
 class BaseEnrtRecipe(

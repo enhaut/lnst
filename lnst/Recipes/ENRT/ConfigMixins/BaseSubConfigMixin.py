@@ -27,7 +27,6 @@ class BaseSubConfigMixin(object):
         The child class must include a :py:func:`super` call of this method so
         that all other mixin classes do their part of cooperative inheritance.
         """
-        pass
 
     def generate_sub_configuration_description(self, config):
         """

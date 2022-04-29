@@ -15,4 +15,3 @@ class LnstError(Exception):
 
     All LNST related Exceptions should inherit from this class.
     """
-    pass

@@ -18,11 +18,9 @@ from lnst.Common.LnstError import LnstError
 
 class TestModuleError(LnstError):
     """Exception used by BaseTestModule and derived classes"""
-    pass
 
 class InterruptException(TestModuleError):
     """Exception used to handle SIGINT waiting"""
-    pass
 
 class BaseTestModule(object):
     """Base class for test modules

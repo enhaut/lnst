@@ -65,7 +65,6 @@ sys.modules["lnst.RecipeCommon"] = RecipeCommon
 
 class SystemCallException(Exception):
     """Exception used to handle SIGINT waiting for system calls"""
-    pass
 
 
 class RemoteMethods:

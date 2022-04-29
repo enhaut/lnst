@@ -21,6 +21,7 @@ python = "^3.9"
 
 ethtool = "*"
 pyroute2 = "*"
+lxml = "*"
 
 [tool.poetry.scripts]
 lnst-agent = 'lnst.Agent.__main__:main'

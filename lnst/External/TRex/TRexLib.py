@@ -35,11 +35,21 @@ class TRexCli:
     trex_stl_path = 'trex_client/interactive'
 
     def __init__(self, params):
+        self._import_optionals()
         self.params = params
         self.results = {}
         for key in TREX_CLI_DEFAULT_PARAMS:
             if key not in params.__dict__:
                 setattr(self.params, key, TREX_CLI_DEFAULT_PARAMS[key])
+
+    @staticmethod
+    def _import_optionals():
+        try:
+            from trex.stl import api as trex_api
+        except ModuleNotFoundError:
+            msg = "TRex module not found, please install it"
+            logging.error(msg)
+            raise TRexError(msg)
 
     def get_results(self):
         return self.results
@@ -47,8 +57,6 @@ class TRexCli:
     def run(self):
         sys.path.insert(0, os.path.join(self.params.trex_dir,
                                         self.trex_stl_path))
-
-        from trex.stl import api as trex_api
 
         try:
             return self._run(trex_api)

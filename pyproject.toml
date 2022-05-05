@@ -24,6 +24,7 @@ pyyaml = "*"
 lxml = "*"
 ethtool = "*"
 podman = "*"
+cryptography = "*"
 
 [tool.poetry.scripts]
 lnst-agent = 'lnst.Agent.__main__:main'

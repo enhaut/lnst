@@ -3,12 +3,18 @@ import logging
 import socket
 from time import sleep
 from json import loads
-from podman.domain.containers import Container
-from podman.domain.networks import Network
-from podman.errors import APIError
-from podman import PodmanClient
 from lnst.Controller.AgentPoolManager import PoolManagerError
 from lnst.Controller.Machine import Machine
+
+try:
+    from podman.domain.containers import Container
+    from podman.domain.networks import Network
+    from podman.errors import APIError
+    from podman import PodmanClient
+except ModuleNotFoundError as e:
+    msg = f"Module {e} not found, see documentation for details"
+    logging.error(msg)
+    raise PoolManagerError(msg)
 
 
 class ContainerPoolManager(object):

@@ -13,7 +13,7 @@ rpazdera@redhat.com (Radek Pazdera)
 import re
 import socket
 import subprocess
-from pyroute2 import IPRoute
+from lnst.Common.LnstError import LnstError
 
 
 def normalize_hwaddr(hwaddr):
@@ -25,6 +25,10 @@ def normalize_hwaddr(hwaddr):
 
 def scan_netdevs():
     scan = []
+    try:
+        from pyroute2 import IPRoute
+    except ModuleNotFoundError:
+        raise LnstError("Could not import pyroute2, please install it.")
 
     with IPRoute() as ipr:
         for part in ipr.get_links():

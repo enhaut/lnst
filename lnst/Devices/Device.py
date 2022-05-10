@@ -13,12 +13,10 @@ olichtne@redhat.com (Ondrej Lichtner)
 
 import re
 import ethtool
-import pyroute2
 import logging
 import pprint
 import time
 from abc import ABCMeta
-from pyroute2.netlink.rtnl import ifinfmsg
 from lnst.Common.Logs import log_exc_traceback
 from lnst.Common.ExecCmd import exec_cmd, ExecCmdFail
 from lnst.Common.DeviceError import DeviceError, DeviceDeleted, DeviceDisabled
@@ -27,9 +25,6 @@ from lnst.Common.DeviceError import DeviceFeatureNotSupported
 from lnst.Common.IpAddress import ipaddress, AF_INET
 from lnst.Common.HWAddress import hwaddress
 
-from pyroute2.netlink.rtnl import RTM_NEWLINK
-from pyroute2.netlink.rtnl import RTM_NEWADDR
-from pyroute2.netlink.rtnl import RTM_DELADDR
 
 class DeviceMeta(ABCMeta):
     def __instancecheck__(self, other):
@@ -65,6 +60,19 @@ class Device(object, metaclass=DeviceMeta):
         self._bulk_enabled = False
 
         self._cleanup_data = None
+
+    @staticmethod
+    def _import_optionals():
+        try:
+            from pyroute2.netlink.rtnl import RTM_NEWLINK
+            from pyroute2.netlink.rtnl import RTM_NEWADDR
+            from pyroute2.netlink.rtnl import RTM_DELADDR
+            from pyroute2.netlink.rtnl import ifinfmsg
+            import pyroute2
+        except ModuleNotFoundError as e:
+            msg = f"Module {e} could not be imported, please install pyroute2."
+            logging.error(msg)
+            raise DeviceError(msg)
 
     def _set_nl_attr(self, msg, value, name):
         msg[name] = value
@@ -119,7 +127,15 @@ class Device(object, metaclass=DeviceMeta):
         logging.debug("{}".format(pretty_attrs))
 
         ret_val = None
-        with pyroute2.IPRoute() as ipr:
+
+        try:
+            from pyroute2 import IPRoute
+        except ModuleNotFoundError:
+            msg = "Could not import pyroute2.IPRoute, please install pyroute2"
+            logging.error(msg)
+            raise DeviceConfigError(msg)
+
+        with IPRoute() as ipr:
             try:
                 obj = getattr(ipr, obj_name)
                 if op_name is not None:
@@ -196,14 +212,21 @@ class Device(object, metaclass=DeviceMeta):
         if getattr(self, "_deleted"):
             raise DeviceDeleted("Device was deleted.")
 
+        try:
+            from pyroute2.netlink import rtnl
+        except:
+            msg = "Could not import pyroute2.netlink.rtnl, please install pyroute2"
+            logging.error(msg)
+            raise DeviceConfigError(msg)
+
         if self.ifindex != nl_msg['index']:
             msg = "ifindex of netlink message (%s) doesn't match "\
                   "the device's (%s)." % (nl_msg['index'], self.ifindex)
             raise DeviceError(msg)
 
-        if nl_msg['header']['type'] == RTM_NEWLINK:
+        if nl_msg['header']['type'] == rtnl.RTM_NEWLINK:
             self._nl_msg = nl_msg
-        elif nl_msg['header']['type'] == RTM_NEWADDR:
+        elif nl_msg['header']['type'] == rtnl.RTM_NEWADDR:
             if nl_msg['family'] == AF_INET:
                 """
                 from if_addr.h:
@@ -232,7 +255,7 @@ class Device(object, metaclass=DeviceMeta):
                     self._ip_addrs.pop(old_idx)
                     self._ip_addrs.append(addr)
 
-        elif nl_msg['header']['type'] == RTM_DELADDR:
+        elif nl_msg['header']['type'] == rtnl.RTM_DELADDR:
             addr = ipaddress(nl_msg.get_attr('IFA_ADDRESS'))
             addr.prefixlen = nl_msg["prefixlen"]
 
@@ -472,6 +495,13 @@ class Device(object, metaclass=DeviceMeta):
         as reported by the kernel.
         """
         flags = self._nl_msg["flags"]
+        try:
+            from pyroute2.netlink.rtnl import ifinfmsg
+        except ModuleNotFoundError:
+            msg = "Could not import ifinfmsg, please install pyroute2"
+            logging.error(msg)
+            raise DeviceError(msg)
+
         return [ifinfmsg.IFF_VALUES[i][4:].lower() for i in ifinfmsg.IFF_VALUES if flags & i]
         #TODO add passive wait until lower up, with timeout
 

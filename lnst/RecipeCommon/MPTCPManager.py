@@ -1,9 +1,10 @@
+import logging
 from enum import IntFlag
 from typing import Dict, List
 
-from pyroute2 import MPTCP
 from socket import AF_INET, AF_INET6
 from lnst.Common.IpAddress import ipaddress, BaseIpAddress
+from lnst.Common.LnstError import LnstError
 
 class MPTCPFlags(IntFlag):
     # via https://github.com/torvalds/linux/blob/9d31d2338950293ec19d9b095fbaa9030899dcb4/include/uapi/linux/mptcp.h#L73
@@ -78,8 +79,18 @@ class MPTCPEndpoint:
 
 class MPTCPManager:
     def __init__(self):
+        self._import_optionals()
         self._mptcp = MPTCP()
         self._endpoints = {}
+
+    @staticmethod
+    def _import_optionals():
+        try:
+            from pyroute2 import MPTCP
+        except ModuleNotFoundError:
+            msg = "Module MPTCP not found, please install pyroute2"
+            logging.error(msg)
+            raise LnstError(msg)
 
     @property
     def endpoints(self):

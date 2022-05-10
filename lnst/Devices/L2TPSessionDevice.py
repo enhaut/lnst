@@ -10,8 +10,8 @@ __author__ = """
 jtluka@redhat.com (Jan Tluka)
 """
 
-from pyroute2.netlink import NetlinkError
-from pyroute2.netlink.generic.l2tp import L2tp
+import logging
+
 from lnst.Common.DeviceError import DeviceError, DeviceConfigError
 from lnst.Devices.Device import Device
 
@@ -70,6 +70,16 @@ class L2TPSessionDevice(Device):
         self._ifmanager = ifmanager
 
         super(L2TPSessionDevice, self).__init__(ifmanager)
+
+    @staticmethod
+    def _import_optionals():
+        try:
+            from pyroute2.netlink import NetlinkError
+            from pyroute2.netlink.generic.l2tp import L2tp
+        except ModuleNotFoundError as e:
+            msg = f"Could not import {e}, please import pyroute2"
+            logging.error(msg)
+            raise DeviceError(msg)
 
     def _create(self):
         try:

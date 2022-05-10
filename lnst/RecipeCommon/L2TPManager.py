@@ -13,8 +13,6 @@ jtluka@redhat.com (Jan Tluka)
 """
 
 import logging
-from pyroute2.netlink import NetlinkError
-from pyroute2.netlink.generic.l2tp import L2tp
 from lnst.Common.LnstError import LnstError
 
 
@@ -84,6 +82,7 @@ class L2TPManager:
                 )
     """
     def __init__(self):
+        self._import_optionals()
         self._tunnels = []
 
         try:
@@ -92,6 +91,16 @@ class L2TPManager:
             raise L2tpConfigurationError(
                 "Could not initialize pyroute's L2TP API. Please check if l2tp_eth module is loaded."
             )
+
+    @staticmethod
+    def _import_optionals():
+        try:
+            from pyroute2.netlink import NetlinkError
+            from pyroute2.netlink.generic.l2tp import L2tp
+        except ModuleNotFoundError as e:
+            msg = f"Could not import {e}, please install pyroute2."
+            logging.error(msg)
+            raise L2tpConfigurationError(msg)
 
     @property
     def l2tp_api(self):

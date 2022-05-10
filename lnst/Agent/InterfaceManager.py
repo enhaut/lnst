@@ -15,33 +15,33 @@ olichtne@redhat.com (Ondrej Lichtner)
 import re
 import select
 import socket
+import logging
+import importlib
 from collections import deque
 from lnst.Common.ExecCmd import exec_cmd
 from lnst.Common.DeviceError import (DeviceNotFound, DeviceConfigError,
         DeviceError)
 from lnst.Common.InterfaceManagerError import InterfaceManagerError
-from pyroute2 import IPRSocket
-from pyroute2.netlink import NLM_F_REQUEST, NLM_F_DUMP
-from pyroute2.netlink.rtnl import RTMGRP_IPV4_IFADDR
-from pyroute2.netlink.rtnl import RTMGRP_IPV6_IFADDR
-from pyroute2.netlink.rtnl import RTMGRP_LINK
-from pyroute2.netlink.rtnl import RTM_NEWLINK
-from pyroute2.netlink.rtnl import RTM_GETLINK
-from pyroute2.netlink.rtnl import RTM_DELLINK
-from pyroute2.netlink.rtnl import RTM_NEWADDR
-from pyroute2.netlink.rtnl import RTM_GETADDR
-from pyroute2.netlink.rtnl import RTM_DELADDR
 
 NL_GROUPS = 0
 PF_BRIDGE = 7
 
 class InterfaceManager(object):
     def __init__(self, server_handler):
-        NL_GROUPS = RTMGRP_IPV4_IFADDR | RTMGRP_IPV6_IFADDR | RTMGRP_LINK
+        self._rtnl = None
+        self._netlink = None
+        self._get_rtnl()
+
+        NL_GROUPS = self._rtnl.RTMGRP_IPV4_IFADDR | self._rtnl.RTMGRP_IPV6_IFADDR | self._rtnl.RTMGRP_LINK
 
         self._device_classes = {}
 
         self._devices = {} #ifindex to device
+
+        try:
+            from pyroute2 import IPRSocket
+        except:
+            logging.error("ERR IPRSocket")  # TODO
 
         self._nl_socket = IPRSocket()
         self._nl_socket.bind(groups=NL_GROUPS)
@@ -52,6 +52,18 @@ class InterfaceManager(object):
         #self._dl_manager = DevlinkManager()
 
         self._server_handler = server_handler
+
+    def _get_rtnl(self):
+        if not self._rtnl:
+            self._rtnl = self._get_netlink().rtnl
+
+        return self._rtnl
+
+    def _get_netlink(self):
+        if not self._netlink:
+            self._netlink = importlib.import_module("pyroute2.netlink")
+
+        return self._netlink
 
     def clear_dev_classes(self):
         self._device_classes = {}
@@ -67,7 +79,14 @@ class InterfaceManager(object):
         if self._nl_socket != None:
             self._nl_socket.close()
             self._nl_socket = None
+
+        try:
+            from pyroute2 import IPRSocket
+        except:
+            logging.error("ERR IPRSocket")  # TODO
+
         self._nl_socket = IPRSocket()
+
         self._nl_socket.bind(groups=NL_GROUPS)
 
         self.rescan_devices()
@@ -91,11 +110,13 @@ class InterfaceManager(object):
         self.handle_netlink_msgs()
 
     def request_netlink_dump(self):
+        netlink = self._get_netlink()
+        rtnl = self._get_rtnl()
         self._nl_socket.put(
-            None, RTM_GETLINK, msg_flags=NLM_F_REQUEST | NLM_F_DUMP
+            None, rtnl.RTM_GETLINK, msg_flags=netlink.NLM_F_REQUEST | netlink.NLM_F_DUMP
         )
         self._nl_socket.put(
-            None, RTM_GETADDR, msg_flags=NLM_F_REQUEST | NLM_F_DUMP
+            None, rtnl.RTM_GETADDR, msg_flags=netlink.NLM_F_REQUEST | netlink.NLM_F_DUMP
         )
 
     def handle_netlink_msgs(self):
@@ -111,10 +132,12 @@ class InterfaceManager(object):
             # device._set_devlink(dl_port)
 
     def _handle_netlink_msg(self, msg):
-        if msg['header']['type'] in [RTM_NEWLINK, RTM_NEWADDR, RTM_DELADDR]:
+        rtnl = self._get_rtnl()
+
+        if msg['header']['type'] in [rtnl.RTM_NEWLINK, rtnl.RTM_NEWADDR, rtnl.RTM_DELADDR]:
             if msg['index'] in self._devices:
                 self._devices[msg['index']]._update_netlink(msg)
-            elif msg['header']['type'] == RTM_NEWLINK:
+            elif msg['header']['type'] == rtnl.RTM_NEWLINK:
                 if msg['ifi_type'] == 772:
                     dev = self._device_classes["LoopbackDevice"](self)
                 else:
@@ -129,7 +152,7 @@ class InterfaceManager(object):
                 if msg['ifi_type'] != 772:
                     dev._disable()
 
-        elif msg['header']['type'] == RTM_DELLINK:
+        elif msg['header']['type'] == rtnl.RTM_DELLINK:
             if msg['family'] == PF_BRIDGE:
                 return
 

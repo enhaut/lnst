@@ -11,6 +11,8 @@ __author__ = """
 jiri@mellanox.com (Jiri Pirko)
 """
 
+import logging
+
 try:
     from pyroute2 import DL
     from pyroute2.netlink.exceptions import NetlinkError
@@ -21,7 +23,8 @@ try:
         except NetlinkError:
             return None
 
-except ImportError:
+except ImportError as e:
+    logging.error(f"Could not import {e}, please install pyroute2. Using workaround instead")
     class DL(object):
         def port_list(self):
             return []

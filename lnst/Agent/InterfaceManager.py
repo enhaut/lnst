@@ -32,11 +32,13 @@ from pyroute2.netlink.rtnl import RTM_NEWADDR
 from pyroute2.netlink.rtnl import RTM_GETADDR
 from pyroute2.netlink.rtnl import RTM_DELADDR
 
-NL_GROUPS = RTMGRP_IPV4_IFADDR | RTMGRP_IPV6_IFADDR | RTMGRP_LINK
+NL_GROUPS = 0
 PF_BRIDGE = 7
 
 class InterfaceManager(object):
     def __init__(self, server_handler):
+        NL_GROUPS = RTMGRP_IPV4_IFADDR | RTMGRP_IPV6_IFADDR | RTMGRP_LINK
+
         self._device_classes = {}
 
         self._devices = {} #ifindex to device

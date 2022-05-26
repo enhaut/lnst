@@ -74,10 +74,7 @@ class ContainerPoolManager(object):
 
     def _import_optionals(self):
         try:
-            from podman.domain.containers import Container
-            from podman.domain.networks import Network
             from podman.errors import APIError
-            from podman import PodmanClient
         except ModuleNotFoundError as e:
             msg = f"Module {e} not found, see documentation for details"
             logging.error(msg)
@@ -109,8 +106,13 @@ class ContainerPoolManager(object):
     def _podman_connect(self, podman_uri: str):
         logging.debug("Connecting to Podman API")
         try:
+            from podman import PodmanClient
             client = PodmanClient(base_url=podman_uri, timeout=60)
             client.info()  # info() will try to connect to the API
+        except ModuleNotFoundError:
+            msg = f"Module podman not found, see documentation for details"
+            logging.error(msg)
+            raise PoolManagerError(msg)
         except APIError as e:
             raise PoolManagerError(f"Could not connect to Podman API: {e}")
 

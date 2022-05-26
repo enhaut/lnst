@@ -74,7 +74,10 @@ class ContainerPoolManager(object):
 
     def _import_optionals(self):
         try:
-            from podman.errors import APIError
+            from podman.errors import APIError as PodManErr
+
+            global APIError
+            APIError = PodManErr
         except ModuleNotFoundError as e:
             msg = f"Module {e} not found, see documentation for details"
             logging.error(msg)

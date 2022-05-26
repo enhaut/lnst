@@ -6,7 +6,7 @@ from json import loads
 from lnst.Controller.AgentPoolManager import PoolManagerError
 from lnst.Controller.Machine import Machine
 
-APIError = object()
+APIError = Exception
 
 
 class ContainerPoolManager(object):

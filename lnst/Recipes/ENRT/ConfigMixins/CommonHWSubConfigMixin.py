@@ -25,4 +25,3 @@ class CommonHWSubConfigMixin(
     convenience. For more details, see the documentation of the individual
     ancestor classes.
     """
-    pass

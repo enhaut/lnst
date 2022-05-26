@@ -110,7 +110,7 @@ class ContainerPoolManager(object):
         logging.debug("Connecting to Podman API")
         try:
             from podman import PodmanClient
-            client = PodmanClient(base_url="XXXX" + podman_uri, timeout=60)
+            client = PodmanClient(base_url=podman_uri + "xxxxx", timeout=60)
             client.info()  # info() will try to connect to the API
         except ModuleNotFoundError:
             msg = f"Module podman not found, see documentation for details"

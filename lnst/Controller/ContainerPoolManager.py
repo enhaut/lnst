@@ -6,6 +6,8 @@ from json import loads
 from lnst.Controller.AgentPoolManager import PoolManagerError
 from lnst.Controller.Machine import Machine
 
+APIError = object()
+
 
 class ContainerPoolManager(object):
     """This class implements managing containers and networks.

@@ -322,6 +322,12 @@ def not_imported(*args, **kwargs):
     raise Exception("Object not imported.")
 
 
+def not_imported_error(module, to_raise: callable):
+    message = f"Could not import {module}, please install it."
+    logging.error(message)
+    raise to_raise(message)
+
+
 def pairwise(iterable: Iterable) -> Iterable:
     """
     s -> (s0,s1), (s1,s2), (s2, s3), ...

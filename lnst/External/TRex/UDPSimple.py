@@ -1,5 +1,6 @@
 import logging
 from lnst.External.TRex.TRexLib import TRexError
+from lnst.Common.Utils import not_imported_error
 
 
 class UDPSimple(object):
@@ -18,10 +19,8 @@ class UDPSimple(object):
     def _import_optionals():
         try:
             from trex_stl_lib.api import *
-        except ModuleNotFoundError:
-            msg = f"Module trex_stl_lib not found, please install it"
-            logging.error(msg)
-            raise TRexError(msg)
+        except ModuleNotFoundError as e:
+            not_imported_error(e, TRexError)
 
     def create_stream (self, **kwargs):
         # Use port's configured mac and ip addresses

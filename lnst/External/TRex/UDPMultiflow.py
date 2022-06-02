@@ -1,5 +1,5 @@
-import logging
 from lnst.External.TRex.TRexLib import TRexError
+from lnst.Common.Utils import not_imported_error
 
 
 class UDPMultiflow(object):
@@ -19,9 +19,7 @@ class UDPMultiflow(object):
             from trex_stl_lib.api import *
             from trex.stl.trex_stl_hltapi import *
         except ModuleNotFoundError as e:
-            msg = f"Module {e} not found, please install it"
-            logging.error(msg)
-            raise TRexError(msg)
+            not_imported_error(e, TRexError)
 
     def create_stream (self, **kwargs):
         size = kwargs.get("msg_size", 64)

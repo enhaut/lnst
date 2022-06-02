@@ -6,6 +6,8 @@ import logging
 import subprocess
 import tempfile
 import signal
+from lnst.Common.Utils import not_imported_error
+
 
 TREX_CLI_DEFAULT_PARAMS = {
         "warmup_time": 5,
@@ -45,10 +47,8 @@ class TRexCli:
     def _import_optionals():
         try:
             from trex.stl import api as trex_api
-        except ModuleNotFoundError:
-            msg = "TRex module not found, please install it"
-            logging.error(msg)
-            raise TRexError(msg)
+        except ModuleNotFoundError as e:
+            not_imported_error(e, TRexError)
 
     def get_results(self):
         return self.results
@@ -141,10 +141,8 @@ class TRexSrv:
     def run(self):
         try:
             import yaml
-        except ModuleNotFoundError:
-            msg = "Please install yaml module"
-            logging.error(msg)
-            raise TRexError(msg)
+        except ModuleNotFoundError as e:
+            not_imported_error(e, TRexError)
 
         trex_server_conf = [{'port_limit': len(self.params.flows),
                              'version': 2,

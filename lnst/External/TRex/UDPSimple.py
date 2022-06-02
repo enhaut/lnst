@@ -1,4 +1,5 @@
-from trex_stl_lib.api import *
+from lnst.External.TRex.TRexLib import TRexError
+from lnst.Common.Utils import not_imported_error
 
 
 class UDPSimple(object):
@@ -9,6 +10,16 @@ class UDPSimple(object):
     msg_size: the size of the packet to use (default 64)
     port_id:  The port the stream will be added to
     """
+
+    def __init__(self):
+        self._import_optionals()
+
+    @staticmethod
+    def _import_optionals():
+        try:
+            from trex_stl_lib.api import *
+        except ModuleNotFoundError as e:
+            not_imported_error(e, TRexError)
 
     def create_stream (self, **kwargs):
         # Use port's configured mac and ip addresses

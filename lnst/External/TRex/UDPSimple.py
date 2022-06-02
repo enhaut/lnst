@@ -1,4 +1,3 @@
-import logging
 from lnst.External.TRex.TRexLib import TRexError
 from lnst.Common.Utils import not_imported_error
 

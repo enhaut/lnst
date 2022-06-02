@@ -7,7 +7,10 @@ from lnst.Controller.AgentPoolManager import PoolManagerError
 from lnst.Controller.Machine import Machine
 from lnst.Common.Utils import not_imported
 
-APIError = not_imported  # just workaround, it is later replaced by podman.APIError
+APIError = not_imported
+Container = not_imported
+Network = not_imported
+# ^^ just workarounds, it's later replaced by imported modules
 
 
 class ContainerPoolManager(object):
@@ -73,12 +76,17 @@ class ContainerPoolManager(object):
 
         self._image = name
 
-    def _import_optionals(self):
+    @staticmethod
+    def _import_optionals():
         try:
-            from podman.errors import APIError as PodmanErr
-
             global APIError
-            APIError = PodmanErr
+            global Container
+            global Network
+
+            from podman.errors import APIError
+            from podman.domain.containers import Container
+            from podman.domain.networks import Network
+
         except ModuleNotFoundError as e:
             msg = f"Module {e} not found, see documentation for details"
             logging.error(msg)
@@ -122,7 +130,7 @@ class ContainerPoolManager(object):
 
         self._podman_client = client
 
-    def _check_machine(self, machine):
+    def _check_machine(self, machine: Machine):
         """Method checks if the agent process inside of the container is running."""
         hostname = machine.get_hostname()
         logging.debug(f"Checking connection with machine {hostname}")
@@ -155,7 +163,7 @@ class ContainerPoolManager(object):
         logging.info(f"Agent process is running at {hostname}")
 
     @staticmethod
-    def _start_container(container, machine):
+    def _start_container(container: Container, machine: Machine):
         logging.debug("Starting container " + container.name)
         container.start()
 
@@ -250,7 +258,7 @@ class ContainerPoolManager(object):
 
         return network
 
-    def _connect_to_network(self, container, network):
+    def _connect_to_network(self, container: Container, network: Network):
         """There is no way to get MAC address of remote interface except
         executing "ip l" inside container.
         """
@@ -288,7 +296,7 @@ class ContainerPoolManager(object):
 
         return True
 
-    def _connect_to_networks(self, container, network_reqs: dict):
+    def _connect_to_networks(self, container: Container, network_reqs: dict):
         for _, params in network_reqs["interfaces"].items():
             name = params["network"]
             logging.debug(f"Connecting {container.name} to {name}")

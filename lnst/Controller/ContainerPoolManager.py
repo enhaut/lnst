@@ -5,7 +5,7 @@ from time import sleep
 from json import loads
 from lnst.Controller.AgentPoolManager import PoolManagerError
 from lnst.Controller.Machine import Machine
-from lnst.Common.Utils import not_imported
+from lnst.Common.Utils import not_imported, not_imported_error
 
 APIError = not_imported
 Container = not_imported
@@ -88,9 +88,7 @@ class ContainerPoolManager(object):
             from podman.domain.networks import Network
 
         except ModuleNotFoundError as e:
-            msg = f"Module {e} not found, see documentation for details"
-            logging.error(msg)
-            raise PoolManagerError(msg)
+            not_imported_error(e, PoolManagerError)
 
     def get_pool(self):
         return self.get_pools()["default"]
@@ -121,10 +119,8 @@ class ContainerPoolManager(object):
             from podman import PodmanClient
             client = PodmanClient(base_url=podman_uri, timeout=60)
             client.info()  # info() will try to connect to the API
-        except ModuleNotFoundError:
-            msg = f"Module podman not found, see documentation for details"
-            logging.error(msg)
-            raise PoolManagerError(msg)
+        except ModuleNotFoundError as e:
+            not_imported_error(e, PoolManagerError)
         except APIError as e:
             raise PoolManagerError(f"Could not connect to Podman API: {e}")
 

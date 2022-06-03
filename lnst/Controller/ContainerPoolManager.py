@@ -154,7 +154,7 @@ class ContainerPoolManager(object):
         logging.info(f"Agent process is running at {hostname}")
 
     @staticmethod
-    def _start_container(container: Container, machine: Machine):
+    def _start_container(container: "Container", machine: Machine):
         logging.debug("Starting container " + container.name)
         container.start()
 

@@ -249,7 +249,7 @@ class ContainerPoolManager(object):
 
         return network
 
-    def _connect_to_network(self, container: Container, network: Network):
+    def _connect_to_network(self, container: "Container", network: "Network"):
         """There is no way to get MAC address of remote interface except
         executing "ip l" inside container.
         """
@@ -287,7 +287,7 @@ class ContainerPoolManager(object):
 
         return True
 
-    def _connect_to_networks(self, container: Container, network_reqs: dict):
+    def _connect_to_networks(self, container: "Container", network_reqs: dict):
         for _, params in network_reqs["interfaces"].items():
             name = params["network"]
             logging.debug(f"Connecting {container.name} to {name}")

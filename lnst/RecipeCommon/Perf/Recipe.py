@@ -100,7 +100,7 @@ class RecipeResults(object):
         warm up and warm down periods.
     """
     def _get_real_flow_times(self, flows: List[BaseMeasurementResults]):
-
+        return max([res.start_timestamp for res in flows]), min([res.end_timestamp for res in flows])
         if isinstance(flows[-1], FlowMeasurementResults):
             logging.debug(f"Results alignment: Using times of flow measurement: {flows[-1]}")
             return flows[-1].warmup_end, flows[-1].warmdown_start

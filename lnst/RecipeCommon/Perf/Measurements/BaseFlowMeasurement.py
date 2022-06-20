@@ -232,9 +232,10 @@ class FlowMeasurementResults(BaseMeasurementResults):
         if self.warmup_duration == 0:
             return self.end_timestamp
 
+        # +1 bellow because Results are sliced to (n, m] intervals, and we don't want to include warmdown start interval
         return min(
             [
-                parallel[-self.warmup_duration].start_timestamp
+                parallel[-(self.warmup_duration + 1)].start_timestamp
                 for parallel in (*self.generator_results, *self.receiver_results)
             ]
         )

@@ -104,6 +104,8 @@ class RecipeResults(object):
             logging.debug(f"Results alignment: Using times of flow measurement: {flows[-1]}")
             logging.info("original start, end: ", max([res.start_timestamp for res in flows]), min([res.end_timestamp for res in flows]))
             logging.info("new start, end: ", flows[-1].warmup_end, flows[-1].warmdown_start)
+            logging.info("starts:", [res.start_timestamp for res in flows])
+            logging.info("ends:", [res.end_timestamp for res in flows])
             return flows[-1].warmup_end, flows[-1].warmdown_start
         else:
             logging.debug("Results alignment: Using times from latest start and earliest end")

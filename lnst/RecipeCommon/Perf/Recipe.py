@@ -102,10 +102,10 @@ class RecipeResults(object):
     def _get_real_flow_times(self, flows: List[BaseMeasurementResults]):
         if isinstance(flows[-1], FlowMeasurementResults):
             logging.debug(f"Results alignment: Using times of flow measurement: {flows[-1]}")
-            logging.info("original start, end: ", max([res.start_timestamp for res in flows]), min([res.end_timestamp for res in flows]))
-            logging.info("new start, end: ", flows[-1].warmup_end, flows[-1].warmdown_start)
-            logging.info("starts:", [res.start_timestamp for res in flows])
-            logging.info("ends:", [res.end_timestamp for res in flows])
+            logging.info(f"original start, end: {max([res.start_timestamp for res in flows])}, {min([res.end_timestamp for res in flows])}")
+            logging.info(f"new start, end: {flows[-1].warmup_end}, {flows[-1].warmdown_start}")
+            logging.info(f"starts: {[res.start_timestamp for res in flows]}")
+            logging.info(f"ends: {[res.end_timestamp for res in flows]}")
             return flows[-1].warmup_end, flows[-1].warmdown_start
         else:
             logging.debug("Results alignment: Using times from latest start and earliest end")

@@ -217,7 +217,8 @@ class FlowMeasurementResults(BaseMeasurementResults):
 
     @property
     def warmup_end(self):
-        return self.start_timestamp
+        if self.warmup_duration == 0:
+            return self.start_timestamp
 
         return max(
             [
@@ -228,7 +229,8 @@ class FlowMeasurementResults(BaseMeasurementResults):
 
     @property
     def warmdown_start(self):
-        return self.end_timestamp
+        if self.warmup_duration == 0:
+            return self.end_timestamp
 
         # +1 bellow because Results are sliced to (n, m] intervals, and we don't want to include warmdown start interval
         return min(

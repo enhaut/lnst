@@ -6,6 +6,7 @@ __author__ = """
 olichtne@redhat.com (Ondrej Lichtner)
 """
 
+from typing import Union
 import copy
 import datetime
 import logging
@@ -152,9 +153,13 @@ class BaseRecipe(object):
         else:
             return None
 
-    def add_result(self, success, description="", data=None,
+    def add_result(self, result: Union[ResultType, bool], description="", data=None,
                    level=None, data_level=None):
-        self.current_run.add_result(Result(success, description, data,
+        if not isinstance(result, ResultType):  # backwards compatibility
+            result = ResultType(result)
+            logging.debug("Please use ResultType for job results instead of boolean value")
+
+        self.current_run.add_result(Result(result, description, data,
                                            level, data_level))
 
     def __getstate__(self):
@@ -181,10 +186,9 @@ class RecipeRun(object):
 
         self._results.append(result)
 
-        result_str = (
-            decorate_with_preset("PASS", "pass")
-            if result.success
-            else decorate_with_preset("FAIL", "fail")
+        result_str = decorate_with_preset(
+            str(result.result),
+            str(result.result).lower()
         )
         if len(result.description.split("\n")) == 1:
             logging.info(

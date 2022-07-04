@@ -81,8 +81,11 @@ class BaselineFlowAverageEvaluator(BaselineEvaluator):
             diff=abs(difference),
             direction="higher" if difference >= 0 else "lower",
         )
-        comparison = abs(difference) <= self._pass_difference
-        if comparison:  # TODO
+
+        if difference < -self._pass_difference:
+            comparison = ResultType.WARNING
+            result_text = "IMPROVEMENT: " + result_text
+        elif difference <= self._pass_difference:
             comparison = ResultType.PASS
         else:
             comparison = ResultType.FAIL

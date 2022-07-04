@@ -30,15 +30,14 @@ class RunSummaryFormatter(object):
         self._level = level
         self._colourize = colourize
 
-    def _format_success(self, success):
-        if success:
-            return (decorate_with_preset("PASS", "pass")
-                    if self._colourize
-                    else "PASS")
-        else:
-            return (decorate_with_preset("FAIL", "fail")
-                    if self._colourize
-                    else "FAIL")
+    def _format_result(self, res):
+        if self._colourize:
+            return decorate_with_preset(
+                str(res.result),
+                str(res.result).lower()
+            )
+
+        return str(res.result)
 
     def _format_source(self, res):
         if isinstance(res, JobResult):
@@ -108,7 +107,7 @@ class RunSummaryFormatter(object):
                 pass
 
             output_lines.append("{res} {src}{desc}".format(
-                res = self._format_success(res.success),
+                res = self._format_result(res),
                 src = self._format_source(res),
                 desc = ("\t{}".format(res.description)
                     if res.description.count('\n') == 0
@@ -118,6 +117,6 @@ class RunSummaryFormatter(object):
                 output_lines.extend(self._format_data(res.data))
 
         output_lines.append("Overall result of this Run: {}".
-                            format(self._format_success(run.overall_result)))
+                            format(run.overall_result))
 
         return "\n".join(output_lines)

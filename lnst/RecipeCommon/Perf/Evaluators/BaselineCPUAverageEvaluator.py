@@ -102,12 +102,7 @@ class BaselineCPUAverageEvaluator(BaselineEvaluator):
                     )
                 )
 
-                if difference < -self._pass_difference:
-                    comparison = ResultType.WARNING
-                    text[-1] = "IMPROVEMENT: " + text[-1]
-                elif difference <= self._pass_difference:
-                    comparison = ResultType.PASS
-                else:
+                if abs(difference) > self._pass_difference:
                     comparison = ResultType.FAIL
             except ZeroDivisionError:
                 text.append(

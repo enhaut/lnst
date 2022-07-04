@@ -51,7 +51,7 @@ class BaselineEvaluator(BaseResultEvaluator):
             comparison, text = self.compare_result_with_baseline(
                 recipe, recipe_conf, result, baseline
             )
-            comparison_result = min(comparison_result, comparison)
+            comparison_result = ResultType.most_important(comparison_result, comparison)
             result_text.extend(text)
 
         recipe.add_result(comparison_result, "\n".join(result_text))

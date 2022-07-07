@@ -221,14 +221,16 @@ class RecipeRun(object):
     @property
     def overall_result(self):
         results = [i.result for i in self.results]
-        no_exception = self.exception is None
 
-        if no_exception and ResultType.WARNING in results:
+        if (ResultType.FAIL in results) or (self.exception is not None):
+            return ResultType.FAIL
+
+        if ResultType.WARNING in results:
             return ResultType.WARNING
-        elif no_exception and all([i == ResultType.PASS for i in results]):
+        elif all([i == ResultType.PASS for i in results]):
             return ResultType.PASS
-
-        return ResultType.FAIL
+        else:
+            raise NotImplementedError(f"Unsupported result type(s): {results}")
 
     @property
     def recipe(self) -> BaseRecipe:

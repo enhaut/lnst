@@ -6,6 +6,7 @@ __author__ = """
 olichtne@redhat.com (Ondrej Lichtner)
 """
 
+from typing import Union
 import copy
 import datetime
 import logging
@@ -16,7 +17,7 @@ from lnst.Common.Parameters import Parameters, Param
 from lnst.Common.Colours import decorate_with_preset
 from lnst.Controller.Requirements import _Requirements, HostReq
 from lnst.Controller.Common import ControllerError
-from lnst.Controller.RecipeResults import BaseResult, Result
+from lnst.Controller.RecipeResults import BaseResult, Result, ResultType
 
 class RecipeError(ControllerError):
     """Exception thrown by the BaseRecipe class"""
@@ -152,9 +153,13 @@ class BaseRecipe(object):
         else:
             return None
 
-    def add_result(self, success, description="", data=None,
+    def add_result(self, result: Union[ResultType, bool], description="", data=None,
                    level=None, data_level=None):
-        self.current_run.add_result(Result(success, description, data,
+        if not isinstance(result, ResultType):  # backwards compatibility
+            result = ResultType(result)
+            logging.debug("Please use ResultType for job results instead of boolean value")
+
+        self.current_run.add_result(Result(result, description, data,
                                            level, data_level))
 
     def __getstate__(self):
@@ -181,10 +186,9 @@ class RecipeRun(object):
 
         self._results.append(result)
 
-        result_str = (
-            decorate_with_preset("PASS", "pass")
-            if result.success
-            else decorate_with_preset("FAIL", "fail")
+        result_str = decorate_with_preset(
+            str(result.result),
+            str(result.result).lower()
         )
         if len(result.description.split("\n")) == 1:
             logging.info(
@@ -216,7 +220,15 @@ class RecipeRun(object):
 
     @property
     def overall_result(self):
-        return all([i.success for i in self.results] + [self.exception is None])
+        results = [i.result for i in self.results]
+        no_exception = self.exception is None
+
+        if no_exception and ResultType.WARNING in results:
+            return ResultType.WARNING
+        elif no_exception and all([i == ResultType.PASS for i in results]):
+            return ResultType.PASS
+
+        return ResultType.FAIL
 
     @property
     def recipe(self) -> BaseRecipe:

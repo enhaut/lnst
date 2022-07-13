@@ -3,6 +3,8 @@ from typing import List, Tuple, Dict
 
 
 from lnst.Controller.Recipe import BaseRecipe
+from lnst.Controller.RecipeResults import ResultType
+
 from lnst.RecipeCommon.Perf.Recipe import RecipeConf as PerfRecipeConf
 from lnst.RecipeCommon.Perf.Results import result_averages_difference
 from lnst.RecipeCommon.Perf.Measurements.BaseMeasurement import (
@@ -77,11 +79,12 @@ class BaselineCPUAverageEvaluator(BaselineEvaluator):
         recipe_conf: PerfRecipeConf,
         result: PerfMeasurementResults,
         baseline: PerfMeasurementResults,
-    ) -> Tuple[bool, List[str]]:
-        comparison = True
+    ) -> Tuple[ResultType, List[str]]:
+        comparison = ResultType.FAIL
         text = []
+
         if baseline is None:
-            comparison = False
+            comparison = ResultType.FAIL
             text.append(
                 "CPU {cpuid}: no baseline found".format(cpuid=result.cpu)
             )
@@ -91,9 +94,6 @@ class BaselineCPUAverageEvaluator(BaselineEvaluator):
                     result.utilization, baseline.utilization
                 )
 
-                if abs(difference) > self._pass_difference:
-                    comparison = False
-
                 text.append(
                     "CPU {cpuid}: utilization {diff:.2f}% {direction} than baseline".format(
                         cpuid=result.cpu,
@@ -101,6 +101,14 @@ class BaselineCPUAverageEvaluator(BaselineEvaluator):
                         direction="higher" if difference >= 0 else "lower",
                     )
                 )
+
+                if difference < -self._pass_difference:
+                    comparison = ResultType.WARNING
+                    text[-1] = "IMPROVEMENT: " + text[-1]
+                elif difference <= self._pass_difference:
+                    comparison = ResultType.PASS
+                else:
+                    comparison = ResultType.FAIL
             except ZeroDivisionError:
                 text.append(
                     "CPU {cpuid}: zero division by baseline".format(

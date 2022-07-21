@@ -37,9 +37,13 @@ class ResultType(IntEnum):
 
     @staticmethod
     def most_important(first, second):
-        if first in (ResultType.FAIL, ResultType.WARNING):
-            return first
-        return second
+        severity = [ResultType.FAIL, ResultType.WARNING, ResultType.PASS]
+
+        for level in severity:
+            if first == level or second == level:
+                return level
+
+        return ResultType.PASS
 
     def __bool__(self):
         # method implemented due to compatibility reasons

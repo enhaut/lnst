@@ -271,6 +271,7 @@ class ContainerPoolManager(object):
                 ["podman", "exec", "-it", container.name, "ip", "-j", "a"]
             ).decode("utf-8")
         )
+        _, interfaces = container.exec_run("ip -j a")
         interface = max(
             interfaces, key=(lambda inf: inf["ifindex"])
         )  # get interface with highest index

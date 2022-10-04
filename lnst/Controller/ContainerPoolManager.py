@@ -266,12 +266,9 @@ class ContainerPoolManager(object):
         logging.debug(
             f"Getting MAC address of remote interface at {container.name} for {network.name}"
         )
-        interfaces = loads(
-            subprocess.check_output(
-                ["podman", "exec", "-it", container.name, "ip", "-j", "a"]
-            ).decode("utf-8")
+        _, interfaces = loads(
+            container.exec_run("ip -j a").decode("utf-8")
         )
-        _, interfaces = container.exec_run("ip -j a")
         interface = max(
             interfaces, key=(lambda inf: inf["ifindex"])
         )  # get interface with highest index

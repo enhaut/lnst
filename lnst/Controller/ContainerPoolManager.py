@@ -220,26 +220,12 @@ class ContainerPoolManager(object):
 
         logging.info(f"Creating network {name}")
         try:
-            with open(f"/etc/cni/net.d/{name}.conflist", "w") as config:
-                config.write(
-                    '''{
-                    "cniVersion": "0.4.0",
-                    "name": "'''
-                    + name
-                    + """",
-                    "plugins": [
-                    {
-                        "bridge": "cni-podman1",
-                        "hairpinMode": true,
-                        "ipam": {},
-                        "isGateway": false,
-                        "type": "bridge"
-                    }
-                ]
-        }
-"""
-                )
-            network = self._podman_client.networks.get(name)
+            network = self._podman_client.networks.create(
+                name=name,
+                dns_enabled=False,
+                driver="bridge",
+                enable_ipv6=True
+            )
         except APIError as e:
             raise PoolManagerError(f"Could not create network {name}: {e}")
         except IOError as e:

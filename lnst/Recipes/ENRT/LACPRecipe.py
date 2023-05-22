@@ -15,8 +15,12 @@ from lnst.Recipes.ENRT.ConfigMixins.CommonHWSubConfigMixin import (
 from lnst.RecipeCommon.Ping.PingEndpoints import PingEndpoints
 from lnst.Devices import BondDevice
 
+import requests
+import os
+
+
 class LACPRecipe(CommonHWSubConfigMixin, OffloadSubConfigMixin,
-    BaremetalEnrtRecipe):
+                 BaremetalEnrtRecipe):
     host1 = HostReq()
     host1.eth0 = DeviceReq(label="net1", driver=RecipeParam("driver"))
     host1.eth1 = DeviceReq(label="net1", driver=RecipeParam("driver"))
@@ -44,14 +48,41 @@ class LACPRecipe(CommonHWSubConfigMixin, OffloadSubConfigMixin,
         ipv6_addr = interface_addresses(self.params.net_ipv6)
         for host in [host1, host2]:
             host.bond0 = BondDevice(mode=self.params.bonding_mode,
-                miimon=self.params.miimon_value)
+                                    miimon=self.params.miimon_value)
             for dev in [host.eth0, host.eth1]:
                 dev.down()
                 host.bond0.slave_add(dev)
+
+            host.bond0.ip_add(next(ipv4_addr))
             host.bond0.ip_add(next(ipv4_addr))
             host.bond0.ip_add(next(ipv6_addr))
             for dev in [host.eth0, host.eth1, host.bond0]:
                 dev.up()
+
+        switch_ip = os.environ["SWITCH_IP"]
+        switch_user = os.environ["SWITCH_USER"]
+        switch_pass = os.environ["SWITCH_PASS"]
+        bond_interfaces = {
+            "port-channel199": [{"name": "ethernet1/1/3:1"}, {"name": "ethernet1/1/3:2"}],
+            "port-channel200": [{"name": "ethernet1/1/3:3"}, {"name": "ethernet1/1/3:4"}]
+        }
+
+        for bond, interfaces in bond_interfaces.items():
+            request = requests.patch(
+                f"https://{switch_ip}/restconf/data/ietf-interfaces:interfaces/interface/{bond}",
+                data={
+                    "ietf-interfaces:interface": [
+                        {
+                            "name": bond,
+                            "dell-interface:member-ports": interfaces
+                        }
+                    ]
+                },
+                auth=(switch_user, switch_pass),
+                verify=False
+            )
+
+            print(request.content)
 
         configuration = super().test_wide_configuration()
         configuration.test_wide_devices = [host1.bond0, host2.bond0]
@@ -74,7 +105,7 @@ class LACPRecipe(CommonHWSubConfigMixin, OffloadSubConfigMixin,
                 "Configured {}.{}.slaves = {}".format(
                     dev.host.hostid, dev.name,
                     ['.'.join([dev.host.hostid, slave.name])
-                        for slave in dev.slaves]
+                     for slave in dev.slaves]
                 )
                 for dev in config.test_wide_devices
             ]),
@@ -94,6 +125,26 @@ class LACPRecipe(CommonHWSubConfigMixin, OffloadSubConfigMixin,
         return desc
 
     def test_wide_deconfiguration(self, config):
+        switch_ip = os.environ["SWITCH_IP"]
+        switch_user = os.environ["SWITCH_USER"]
+        switch_pass = os.environ["SWITCH_PASS"]
+        bond_interfaces = {
+            "port-channel199": [{"name": "ethernet1/1/3:1"}, {"name": "ethernet1/1/3:2"}],
+            "port-channel200": [{"name": "ethernet1/1/3:3"}, {"name": "ethernet1/1/3:4"}]
+        }
+
+        for bond, interfaces in bond_interfaces.items():
+            request = requests.delete(
+                f"https://{switch_ip}/restconf/data/ietf-interfaces:interfaces/interface/{bond}",
+                data={
+                    "dell-interface:member-ports": interfaces
+                },
+                auth=(switch_user, switch_pass),
+                verify=False
+            )
+
+            print(request.content)
+
         del config.test_wide_devices
 
         super().test_wide_deconfiguration(config)

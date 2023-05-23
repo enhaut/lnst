@@ -356,7 +356,7 @@ class BondDevice(MasterDevice):
         m = ["layer2", "layer2+3", "layer3+4", "encap2+3", "encap3+4"]
 
         if val in m:
-            self._set_linkinfo_data_attr("IFLA_BOND_XMIT_HASH_POLICY", val)
+            self._set_linkinfo_data_attr("IFLA_BOND_XMIT_HASH_POLICY", m.index(val))  # TODO: check encap indexes
         else:
             raise DeviceConfigError("Invalid value, must be in {}}.".format(m))
         self._nl_link_sync("set")

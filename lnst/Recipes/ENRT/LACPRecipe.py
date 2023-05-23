@@ -136,16 +136,17 @@ class LACPRecipe(CommonHWSubConfigMixin, OffloadSubConfigMixin,
         }
 
         for bond, interfaces in bond_interfaces.items():
-            request = requests.delete(
-                f"https://{switch_ip}/restconf/data/ietf-interfaces:interfaces/interface/{bond}",
-                json={
-                    "dell-interface:member-ports": interfaces
-                },
-                auth=(switch_user, switch_pass),
-                verify=False
-            )
+            for interface in interfaces:
+                request = requests.delete(
+                    f"https://{switch_ip}/restconf/data/ietf-interfaces:interfaces/interface/{bond}",
+                    json={
+                        "dell-interface:member-ports": [interface]
+                    },
+                    auth=(switch_user, switch_pass),
+                    verify=False
+                )
 
-            print(request.content)
+                print(request.content)
 
         del config.test_wide_devices
 

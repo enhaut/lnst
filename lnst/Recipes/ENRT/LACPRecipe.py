@@ -64,9 +64,10 @@ class LACPRecipe(CommonHWSubConfigMixin, OffloadSubConfigMixin,
         switch_ip = os.environ["SWITCH_IP"]
         switch_user = os.environ["SWITCH_USER"]
         switch_pass = os.environ["SWITCH_PASS"]
+        mode = "ACTIVE"
         bond_interfaces = {
-            "port-channel199": [{"name": "ethernet1/1/3:1"}, {"name": "ethernet1/1/3:2"}],
-            "port-channel200": [{"name": "ethernet1/1/3:3"}, {"name": "ethernet1/1/3:4"}]
+            "port-channel199": [{"name": "ethernet1/1/3:1", "lacp-mode": mode}, {"name": "ethernet1/1/3:2", "lacp-mode": mode}],
+            "port-channel200": [{"name": "ethernet1/1/3:3", "lacp-mode": mode}, {"name": "ethernet1/1/3:4", "lacp-mode": mode}]
         }
 
         for bond, interfaces in bond_interfaces.items():

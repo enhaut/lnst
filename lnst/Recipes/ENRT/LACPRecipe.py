@@ -49,6 +49,8 @@ class LACPRecipe(CommonHWSubConfigMixin, OffloadSubConfigMixin,
         for host in [host1, host2]:
             host.bond0 = BondDevice(mode=self.params.bonding_mode,
                                     miimon=self.params.miimon_value)
+            host.bond0.xmit_hash_policy = "layer2+3"
+
             for dev in [host.eth0, host.eth1]:
                 dev.down()
                 host.bond0.slave_add(dev)
@@ -70,7 +72,7 @@ class LACPRecipe(CommonHWSubConfigMixin, OffloadSubConfigMixin,
         for bond, interfaces in bond_interfaces.items():
             request = requests.patch(
                 f"https://{switch_ip}/restconf/data/ietf-interfaces:interfaces/interface/{bond}",
-                data={
+                json={
                     "ietf-interfaces:interface": [
                         {
                             "name": bond,
@@ -136,7 +138,7 @@ class LACPRecipe(CommonHWSubConfigMixin, OffloadSubConfigMixin,
         for bond, interfaces in bond_interfaces.items():
             request = requests.delete(
                 f"https://{switch_ip}/restconf/data/ietf-interfaces:interfaces/interface/{bond}",
-                data={
+                json={
                     "dell-interface:member-ports": interfaces
                 },
                 auth=(switch_user, switch_pass),

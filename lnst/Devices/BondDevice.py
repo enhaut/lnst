@@ -353,7 +353,7 @@ class BondDevice(MasterDevice):
 
     @xmit_hash_policy.setter
     def xmit_hash_policy(self, val):
-        m = ["layer2", "layer2+3", "layer3+4", "encap2+3", "encap3+4"]
+        m = ["layer2", "layer3+4", "layer2+3",  "encap2+3", "encap3+4"]
 
         if val in m:
             self._set_linkinfo_data_attr("IFLA_BOND_XMIT_HASH_POLICY", m.index(val))  # TODO: check encap indexes

@@ -21,7 +21,7 @@ class BaseRESTConfigMixin:
         kwargs["url"] = self.params.api_url + endpoint
 
         if self.params.rest_user and self.params.rest_password:
-            kwargs["auth"] = (self.rest_user, self.rest_password)
+            kwargs["auth"] = (self.params.rest_user, self.params.rest_password)
 
         kwargs["verify"] = self.params.ssl_verify
 

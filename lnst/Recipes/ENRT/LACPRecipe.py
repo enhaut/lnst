@@ -71,6 +71,7 @@ class LACPRecipe(BaseRESTConfigMixin, CommonHWSubConfigMixin, OffloadSubConfigMi
             request = self.api_request(
                 "patch",
                 f"/restconf/data/ietf-interfaces:interfaces/interface/{bond}",
+                response_code=204,
                 json={
                     "ietf-interfaces:interface": [
                         {
@@ -78,7 +79,7 @@ class LACPRecipe(BaseRESTConfigMixin, CommonHWSubConfigMixin, OffloadSubConfigMi
                             "dell-interface:member-ports": interfaces
                         }
                     ]
-                }
+                },
             )
 
             print(request)
@@ -134,6 +135,7 @@ class LACPRecipe(BaseRESTConfigMixin, CommonHWSubConfigMixin, OffloadSubConfigMi
                 request = self.api_request(
                     "delete",
                     f"/restconf/data/ietf-interfaces:interfaces/interface/{bond}",
+                    response_code=204,
                     json={
                         "dell-interface:member-ports": [interface]
                     }

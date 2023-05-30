@@ -61,9 +61,6 @@ class LACPRecipe(BaseRESTConfigMixin, CommonHWSubConfigMixin, OffloadSubConfigMi
             for dev in [host.eth0, host.eth1, host.bond0]:
                 dev.up()
 
-        switch_ip = os.environ["SWITCH_IP"]
-        switch_user = os.environ["SWITCH_USER"]
-        switch_pass = os.environ["SWITCH_PASS"]
         mode = "ACTIVE"
         bond_interfaces = {
             "port-channel199": [{"name": "ethernet1/1/3:1", "lacp-mode": mode}, {"name": "ethernet1/1/3:2", "lacp-mode": mode}],
@@ -127,9 +124,6 @@ class LACPRecipe(BaseRESTConfigMixin, CommonHWSubConfigMixin, OffloadSubConfigMi
         return desc
 
     def test_wide_deconfiguration(self, config):
-        switch_ip = os.environ["SWITCH_IP"]
-        switch_user = os.environ["SWITCH_USER"]
-        switch_pass = os.environ["SWITCH_PASS"]
         bond_interfaces = {
             "port-channel199": [{"name": "ethernet1/1/3:1"}, {"name": "ethernet1/1/3:2"}],
             "port-channel200": [{"name": "ethernet1/1/3:3"}, {"name": "ethernet1/1/3:4"}]

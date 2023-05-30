@@ -6,8 +6,8 @@ from lnst.Common.Parameters import BoolParam, StrParam
 
 class BaseRESTConfigMixin:
     api_url = StrParam()
-    rest_user = StrParam(default=None)
-    rest_password = StrParam(default=None)
+    rest_user = StrParam()
+    rest_password = StrParam()
     ssl_verify = BoolParam(default=True, mandatory=False)
 
     @staticmethod

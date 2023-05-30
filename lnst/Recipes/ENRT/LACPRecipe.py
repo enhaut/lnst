@@ -12,14 +12,14 @@ from lnst.Recipes.ENRT.ConfigMixins.OffloadSubConfigMixin import (
     OffloadSubConfigMixin)
 from lnst.Recipes.ENRT.ConfigMixins.CommonHWSubConfigMixin import (
     CommonHWSubConfigMixin)
+from lnst.Recipes.ENRT.ConfigMixins.BaseRESTConfigMixin import BaseRESTConfigMixin
 from lnst.RecipeCommon.Ping.PingEndpoints import PingEndpoints
 from lnst.Devices import BondDevice
 
-import requests
 import os
 
 
-class LACPRecipe(CommonHWSubConfigMixin, OffloadSubConfigMixin,
+class LACPRecipe(BaseRESTConfigMixin, CommonHWSubConfigMixin, OffloadSubConfigMixin,
                  BaremetalEnrtRecipe):
     host1 = HostReq()
     host1.eth0 = DeviceReq(label="net1", driver=RecipeParam("driver"))
@@ -71,8 +71,9 @@ class LACPRecipe(CommonHWSubConfigMixin, OffloadSubConfigMixin,
         }
 
         for bond, interfaces in bond_interfaces.items():
-            request = requests.patch(
-                f"https://{switch_ip}/restconf/data/ietf-interfaces:interfaces/interface/{bond}",
+            request = self.api_request(
+                "patch",
+                f"/restconf/data/ietf-interfaces:interfaces/interface/{bond}",
                 json={
                     "ietf-interfaces:interface": [
                         {
@@ -80,12 +81,10 @@ class LACPRecipe(CommonHWSubConfigMixin, OffloadSubConfigMixin,
                             "dell-interface:member-ports": interfaces
                         }
                     ]
-                },
-                auth=(switch_user, switch_pass),
-                verify=False
+                }
             )
 
-            print(request.content)
+            print(request)
 
         configuration = super().test_wide_configuration()
         configuration.test_wide_devices = [host1.bond0, host2.bond0]
@@ -138,16 +137,15 @@ class LACPRecipe(CommonHWSubConfigMixin, OffloadSubConfigMixin,
 
         for bond, interfaces in bond_interfaces.items():
             for interface in interfaces:
-                request = requests.delete(
-                    f"https://{switch_ip}/restconf/data/ietf-interfaces:interfaces/interface/{bond}",
+                request = self.api_request(
+                    "delete",
+                    f"/restconf/data/ietf-interfaces:interfaces/interface/{bond}",
                     json={
                         "dell-interface:member-ports": [interface]
-                    },
-                    auth=(switch_user, switch_pass),
-                    verify=False
+                    }
                 )
 
-                print(request.content)
+                print(request)
 
         del config.test_wide_devices
 

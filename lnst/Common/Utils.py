@@ -75,10 +75,10 @@ def kmod_in_use(modulename, tries = 1):
     mod_file = "/proc/modules"
     handle = open(mod_file, "r")
     for line in handle:
-        match = re.match(r'^(\S+)\s\d+\s(\d+).*$', line)
+        match = re.match(r'^(\S+)\s\d+\s\d+\s\S+\s(Live|Loading|Unloading).*$', line)
         if not match or not match.groups()[0] in re.split('\s+', modulename):
             continue
-        if int(match.groups()[1]) != 0:
+        if match.groups()[1] == "Live":
             ret = True
         break
     handle.close()

@@ -1,17 +1,9 @@
-from lnst.Common.Parameters import ListParam, DictParam
+from lnst.Common.Parameters import DictParam
 from lnst.Recipes.ENRT.ConfigMixins.BaseHWConfigMixin import BaseHWConfigMixin
 
 
 class DevQueuesConfigMixin(BaseHWConfigMixin):
-    dev_queues = ListParam(type=DictParam(), mandatory=False)
-
-    @property
-    def dev_queues_config_dev_list(self):
-        """
-        The value of this property is a list of devices for which the device
-        queues should be configured. It has to be defined by a derived class.
-        """
-        return []
+    dev_queues = DictParam(mandatory=False)
 
     def hw_config(self, config):
         super().hw_config(config)
@@ -22,9 +14,8 @@ class DevQueuesConfigMixin(BaseHWConfigMixin):
         hw_config = config.hw_config
         hw_config["dev_queues"] = {}
 
-        for device, dev_queues in zip(
-            self.dev_queues_config_dev_list, self.params.dev_queues
-        ):
+        device_settings = self._parse_device_settings(self.params.dev_queues)
+        for device, dev_queues in device_settings.items():
             # TODO: handle netlink error: Operation not supported
             ethtool_job = device.host.run(f"ethtool -l {device.name}")
             original_queues = process_queues_output(ethtool_job.stdout)
@@ -64,7 +55,7 @@ class DevQueuesConfigMixin(BaseHWConfigMixin):
 
         dev_queues_config = config.hw_config.get("dev_queues", {})
 
-        if dev_queues_config and self.dev_queues_config_dev_list:
+        if dev_queues_config:
             desc += [
                 f"{device.host.hostid} device {device.name} queues configured: "
                 + " ".join(

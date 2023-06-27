@@ -1,16 +1,11 @@
 import re
 
-from lnst.Common.Parameters import ListParam, StrParam
+from lnst.Common.Parameters import DictParam
 from lnst.Recipes.ENRT.ConfigMixins.BaseHWConfigMixin import BaseHWConfigMixin
 
 class DevRxHashFunctionConfigMixin(BaseHWConfigMixin):
     #TODO: add docs
-    dev_rx_hash_functions = ListParam(type=StrParam(), mandatory=False)
-
-    @property
-    def dev_rx_hash_function_config_dev_list(self):
-        #TODO: add docs
-        return []
+    dev_rx_hash_functions = DictParam(mandatory=False)
 
     def hw_config(self, config):
         super().hw_config(config)
@@ -21,9 +16,8 @@ class DevRxHashFunctionConfigMixin(BaseHWConfigMixin):
         hw_config = config.hw_config
         rx_hash_func_config = hw_config["dev_rx_hash_function_configuration"] = {}
 
-        for device, rx_hash_function in zip(
-            self.dev_rx_hash_function_config_dev_list, self.params.dev_rx_hash_functions
-        ):
+        device_settings = self._parse_device_settings(self.params.dev_rx_hash_functions)
+        for device, rx_hash_function in device_settings.items():
             # TODO: handle netlink error: Operation not supported
             ethtool_job = device.host.run(f"ethtool -x {device.name}")
             original_hash_func = process_hash_func_output(ethtool_job.stdout)
@@ -52,7 +46,7 @@ class DevRxHashFunctionConfigMixin(BaseHWConfigMixin):
 
         rx_hash_func_config = config.hw_config.get("dev_rx_hash_function_configuration", {})
 
-        if rx_hash_func_config and self.dev_rx_hash_function_config_dev_list:
+        if rx_hash_func_config:
             desc += [
                 f"{device.host.hostid} device {device.name} rx hash function configured: {dev_hash_func_config['configured']}"
                 for device, dev_hash_func_config in rx_hash_func_config.items()

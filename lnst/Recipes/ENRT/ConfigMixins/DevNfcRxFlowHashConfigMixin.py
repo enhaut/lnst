@@ -1,17 +1,9 @@
-from lnst.Common.Parameters import ListParam, DictParam
+from lnst.Common.Parameters import DictParam
 from lnst.Recipes.ENRT.ConfigMixins.BaseHWConfigMixin import BaseHWConfigMixin
 
 
 class DevNfcRxFlowHashConfigMixin(BaseHWConfigMixin):
-    dev_nfc_rx_flow_hash_config = ListParam(type=DictParam(), mandatory=False)
-
-    @property
-    def dev_nfc_rx_flow_hash_config_dev_list(self):
-        """
-        The value of this property is a list of devices for which the device
-        queues should be configured. It has to be defined by a derived class.
-        """
-        return []
+    dev_nfc_rx_flow_hash_config = DictParam(mandatory=False)
 
     def hw_config(self, config):
         super().hw_config(config)
@@ -22,9 +14,8 @@ class DevNfcRxFlowHashConfigMixin(BaseHWConfigMixin):
         hw_config = config.hw_config
         nfc_config = hw_config["dev_nfc_rx_flow_hash_configuration"] = {}
 
-        for device, nfc_rx_flow_hash_config in zip(
-            self.dev_nfc_rx_flow_hash_config_dev_list, self.params.dev_nfc_rx_flow_hash_config
-        ):
+        device_settings = self._parse_device_settings(self.params.dev_nfc_rx_flow_hash_config)
+        for device, nfc_rx_flow_hash_config in device_settings.items():
             nfc_config[device] = {}
             for protocol, protocol_setting in nfc_rx_flow_hash_config.items():
                 # TODO: handle netlink error: Operation not supported
@@ -55,7 +46,7 @@ class DevNfcRxFlowHashConfigMixin(BaseHWConfigMixin):
         desc = super().describe_hw_config(config)
 
         nfc_config = config.hw_config.get("dev_nfc_rx_flow_hash_configuration", {})
-        if nfc_config and self.dev_nfc_rx_flow_hash_config_dev_list:
+        if nfc_config:
             desc += [
                 f"{device.host.hostid} device {device.name} nfc rx-flow-hash {protocol} configured: {protocol_setting['configured']}"
                 for device, dev_nfc in nfc_config.items()

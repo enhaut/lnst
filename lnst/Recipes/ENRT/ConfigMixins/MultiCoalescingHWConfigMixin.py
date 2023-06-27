@@ -73,9 +73,10 @@ class MultiCoalescingHWConfigMixin(BaseHWConfigMixin):
     def describe_hw_config(self, config):
         desc = super().describe_hw_config(config)
 
+        device_settings = self._parse_device_settings(self.params.coalescing_settings)
         coalescing_attrs = {
             coalescing_param_to_device_attribute(key)
-            for setting in self.params.get("coalescing_settings")
+            for setting in device_settings.values()
             for key in setting.keys()
         }
         for attr in sorted(coalescing_attrs):

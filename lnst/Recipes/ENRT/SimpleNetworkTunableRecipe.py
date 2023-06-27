@@ -105,7 +105,3 @@ class SimpleNetworkTunableRecipe(
     @property
     def coalescing_hw_config_dev_list(self):
         return [self.matched.host1.eth0, self.matched.host2.eth0]
-
-    @property
-    def dev_interrupt_hw_config_dev_list(self):
-        return [self.matched.host1.eth0, self.matched.host2.eth0]

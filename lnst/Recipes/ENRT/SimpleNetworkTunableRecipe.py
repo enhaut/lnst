@@ -95,10 +95,6 @@ class SimpleNetworkTunableRecipe(
         return [self.matched.host1.eth0, self.matched.host2.eth0]
 
     @property
-    def dev_queues_config_dev_list(self):
-        return [self.matched.host1.eth0, self.matched.host2.eth0]
-
-    @property
     def dev_rx_hash_function_config_dev_list(self):
         return [self.matched.host1.eth0, self.matched.host2.eth0]
 

@@ -91,10 +91,6 @@ class SimpleNetworkTunableRecipe(
     )
 
     @property
-    def dev_nfc_rx_flow_hash_config_dev_list(self):
-        return [self.matched.host1.eth0, self.matched.host2.eth0]
-
-    @property
     def mtu_hw_config_dev_list(self):
         return [self.matched.host1.eth0, self.matched.host2.eth0]
 

@@ -1,6 +1,6 @@
 from copy import copy
 
-from lnst.Common.Parameters import ListParam, DictParam
+from lnst.Common.Parameters import DictParam
 from lnst.Recipes.ENRT.ConfigMixins.BaseHWConfigMixin import BaseHWConfigMixin
 
 
@@ -19,24 +19,13 @@ class MultiCoalescingHWConfigMixin(BaseHWConfigMixin):
         (optional test parameter) dictionary to specify coalescing settings
         for individual devices, in 'ethtool -C ...' format
     """
-
-    coalescing_settings = ListParam(type=DictParam(), mandatory=False, default=[])
-
-    @property
-    def coalescing_hw_config_dev_list(self):
-        """
-        The value of this property is a list of devices for which the
-        interrupt coalescing features should be configured. It has to be
-        defined by a derived class.
-        """
-        return []
+    coalescing_settings = DictParam(mandatory=False, default={})
 
     def hw_config(self, config):
         super().hw_config(config)
 
-        for device, device_setting in zip(
-            self.coalescing_hw_config_dev_list, self.params.get("coalescing_settings")
-        ):
+        device_settings = self._parse_device_settings(self.params.coalescing_settings)
+        for device, device_setting in device_settings.items():
             device_setting_copy = copy(device_setting)
             # first, fetch adaptive setting as it needs to be turned off before
             # configuring individual coalescing settings

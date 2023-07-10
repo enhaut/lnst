@@ -10,7 +10,7 @@ from lnst.Common.Parameters import (
 from lnst.Common.IpAddress import AF_INET, AF_INET6
 
 from lnst.RecipeCommon.Perf.Measurements import Flow as PerfFlow
-from lnst.RecipeCommon.Perf.Measurements import IperfFlowMeasurement, NeperFlowMeasurement
+from lnst.RecipeCommon.Perf.Measurements import IperfFlowMeasurement, NeperFlowMeasurement, XDPBenchMeasurement
 
 from lnst.Recipes.ENRT.MeasurementGenerators.BaseMeasurementGenerator import BaseMeasurementGenerator
 
@@ -19,6 +19,7 @@ from lnst.Recipes.ENRT.MeasurementGenerators.BaseMeasurementGenerator import Bas
 MEASUREMENT_LOOKUP = {
     'iperf': IperfFlowMeasurement,
     'neper': NeperFlowMeasurement,
+    'xdp-bench':XDPBenchMeasurement,
 }
 
 class BaseFlowMeasurementGenerator(BaseMeasurementGenerator):

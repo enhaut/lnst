@@ -4,3 +4,5 @@ from lnst.RecipeCommon.Perf.Measurements.TRexFlowMeasurement import TRexFlowMeas
 from lnst.RecipeCommon.Perf.Measurements.StatCPUMeasurement import StatCPUMeasurement
 from lnst.RecipeCommon.Perf.Measurements.NeperFlowMeasurement import NeperFlowMeasurement
 from lnst.RecipeCommon.Perf.Measurements.LinuxPerfMeasurement import LinuxPerfMeasurement
+from lnst.RecipeCommon.Perf.Measurements.XDPBenchMeasurement import XDPBenchMeasurement
+

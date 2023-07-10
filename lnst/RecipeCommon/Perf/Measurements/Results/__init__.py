@@ -9,3 +9,5 @@ from lnst.RecipeCommon.Perf.Measurements.Results.FlowMeasurementResults import F
 from lnst.RecipeCommon.Perf.Measurements.Results.LinuxPerfMeasurementResults import LinuxPerfMeasurementResults
 from lnst.RecipeCommon.Perf.Measurements.Results.StatCPUMeasurementResults import StatCPUMeasurementResults
 from lnst.RecipeCommon.Perf.Measurements.Results.TcRunMeasurementResults import TcRunMeasurementResults
+from lnst.RecipeCommon.Perf.Measurements.Results.XDPBenchMeasurementResults import XDPBenchMeasurementResults
+

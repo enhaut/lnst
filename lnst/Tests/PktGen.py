@@ -1,3 +1,4 @@
+from asyncio import sleep
 import re
 import time
 import logging
@@ -22,7 +23,7 @@ class PktGenResultsParser:
             self._res[device] = {
                 "params": self._parse_values(params),
                 "current": self._parse_values(current),
-                "state": state,
+                "result": state,
             }
     
     def _read_dev_outputs(self) -> Iterator[tuple[str, str]]:
@@ -33,7 +34,7 @@ class PktGenResultsParser:
             yield device, "\n".join(output)
     
     def _split_output(self, output: str) -> tuple:
-        match = re.search(r"Params:(.+)Current:(.+)Result:\s(\w+)", output, re.DOTALL)
+        match = re.search(r"Params:(.+)Current:(.+)Result:\s(?:\w+)(?::\s(.+))", output, re.DOTALL)
         if not match:
             raise TestModuleError("Could not parse pktgen devide output")
         
@@ -45,7 +46,29 @@ class PktGenResultsParser:
         for key, value in re.findall(r"(\w+):?\s(\S+)", params, re.MULTILINE):
             values[key.lower()] = value
         
-        return values 
+        return values
+
+    def _parse_results(self, results) -> dict[str, int]:
+        match = re.search(r"(\d+).+ usec,\s(\d+)\s\(.+,(\d+)frags\).+?.+errors:\s?(\d+)", results, re.DOTALL)
+        if not match:
+            raise TestModuleError("Could not parse pktgen device result")
+
+        keys = ["duration", "packets", "frags", "errors"]
+
+        try:
+            results = dict(  # converts iterator to actual dict
+                    zip(  # zips values with `keys`
+                        keys,
+                        map(  # converts str numbers to int
+                            int,
+                            match.groups()
+                            )
+                        )
+                    )
+        except ValueError:  # just to be sure all the nums can be converted to int
+            raise TestModuleError("Could not convert numbers in pktgen results")
+        
+        return results
 
 
 class PktGen(BaseTestModule):
@@ -126,10 +149,10 @@ class PktGen(BaseTestModule):
             self._pg_set(cpu, f"dst_mac {self.params.dst_if.hwaddr}")
             self._pg_set(cpu, f"src_mac {self.params.src_if.hwaddr}")
             
-            self._pg_set(cpu, f"{dest}_min {src_ip}")
+            self._pg_set(cpu, f"{dest}_min {dst_ip}")
             self._pg_set(cpu, f"{dest}_max {dst_ip}")
             self._pg_set(cpu, f"{src}_min {src_ip}")
-            self._pg_set(cpu, f"{src}_max {dst_ip}")
+            self._pg_set(cpu, f"{src}_max {src_ip}")
             
             self._pg_set(cpu, f"burst {self.params.burst}")
             self._devices.append(dev)

@@ -1,10 +1,11 @@
+from lnst.Common.IpAddress import ipaddress
 from lnst.Devices.Device import Device
 
 
 class MockedDevice(Device):
     def __init__(self, hwaddr, ips, name):
         self._hwaddr = hwaddr
-        self._ips = ips
+        self._ips = [ipaddress(addr) for addr in ips]
         self._name = name
 
     @property

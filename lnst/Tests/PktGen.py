@@ -23,7 +23,7 @@ class PktGenResultsParser:
             self._res[device] = {
                 "params": self._parse_values(params),
                 "current": self._parse_values(current),
-                "result": state,
+                "result": self._parse_results(state),
             }
     
     def _read_dev_outputs(self) -> Iterator[tuple[str, str]]:

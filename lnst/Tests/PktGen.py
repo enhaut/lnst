@@ -113,8 +113,8 @@ class PktGen(BaseTestModule):
         dst_ip = self.params.dst_if.ips[0]
         
         for cpu in self.params.cpus:
-            dev = f"{self.params.interface}@{cpu}"
-            logging.debug(f"Adding interface {self.params.interface} to cpu {cpu}")
+            dev = f"{self.params.src_if.name}@{cpu}"
+            logging.debug(f"Adding interface {self.params.src_if.name} to cpu {cpu}")
             
             self._pg_thread(cpu, f"add_device {dev}")
             

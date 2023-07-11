@@ -148,7 +148,7 @@ class PktGen(BaseTestModule):
         self._write_command(f"/proc/net/pktgen/kpktgend_{thread}", cmd)
     
     def _pg_set(self, thread: int, cmd: str):
-        self._write_command(f"/proc/net/pktgen/{self.params.interface}@{thread}", cmd)
+        self._write_command(f"/proc/net/pktgen/{self.params.src_if.name}@{thread}", cmd)
     
     def _write_command(self, file: str, cmd: str):
         with open(file, "w") as f:

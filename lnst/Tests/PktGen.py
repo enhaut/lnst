@@ -2,7 +2,7 @@ from asyncio import sleep
 import re
 import time
 import logging
-from typing import Iterator
+from typing import Iterator, Union
 from subprocess import Popen
 
 from lnst.Common.Utils import kmod_in_use
@@ -18,12 +18,12 @@ class PktGenResultsParser:
     
     def parse_dev_outputs(self):
         for device, output in self._read_dev_outputs():
-            params, current, state = self._split_output(output)
+            params, current, result = self._split_output(output)
             
             self._res[device] = {
                 "params": self._parse_values(params),
                 "current": self._parse_values(current),
-                "result": self._parse_results(state),
+                "result": self._parse_results(result),
             }
     
     def _read_dev_outputs(self) -> Iterator[tuple[str, str]]:
@@ -48,7 +48,7 @@ class PktGenResultsParser:
         
         return values
 
-    def _parse_results(self, results) -> dict[str, int]:
+    def _parse_results(self, results):
         match = re.search(r"(\d+).+ usec,\s(\d+)\s\(.+,(\d+)frags\).+?.+errors:\s?(\d+)", results, re.DOTALL)
         if not match:
             raise TestModuleError("Could not parse pktgen device result")
@@ -68,6 +68,7 @@ class PktGenResultsParser:
         except ValueError:  # just to be sure all the nums can be converted to int
             raise TestModuleError("Could not convert numbers in pktgen results")
         
+        results["duration"] /= 1_000_000  # from usec to sec
         return results
 
 

@@ -51,6 +51,10 @@ class Param(object):
         """
         return value
 
+class ConstParam(Param):
+    def __init__(self, value):
+        super().__init__(default=value)
+
 class IntParam(Param):
     def type_check(self, value):
         try:

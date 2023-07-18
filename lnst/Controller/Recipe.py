@@ -15,7 +15,7 @@ import os
 import pickle
 from functools import reduce
 
-from lnst.Common.Parameters import Parameters, Param
+from lnst.Common.Parameters import ConstParam, Parameters, Param
 from lnst.Common.Colours import decorate_with_preset
 from lnst.Controller.Requirements import _Requirements, HostReq
 from lnst.Controller.Common import ControllerError
@@ -106,6 +106,8 @@ class BaseRecipe(object):
         params = ((name, val) for name, val in attrs.items() if isinstance(val, Param))
         for name, val in params:
             if name in kwargs:
+                if isinstance(val, ConstParam):
+                    raise RecipeError(f"Value for constant parameter {name} was provided")
                 param_val = kwargs.pop(name)
                 param_val = val.type_check(param_val)
                 setattr(self.params, name, param_val)

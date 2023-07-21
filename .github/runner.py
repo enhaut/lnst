@@ -1,38 +1,36 @@
 from lnst.Controller import Controller, HostReq, DeviceReq, BaseRecipe
 from lnst.Controller.ContainerPoolManager import ContainerPoolManager
 from lnst.Controller.MachineMapper import ContainerMapper
+from lnst.Recipes.ENRT.XDPRecipe import XDPRecipe
+from lnst.Tests.XDPBench import XDPBench
 
-
-class HelloWorldRecipe(BaseRecipe):
-    machine1 = HostReq()
-    machine1.nic1 = DeviceReq(label="net1")
-
-    machine2 = HostReq()
-    machine2.nic1 = DeviceReq(label="net1")
-
-    def test(self):
-        self.matched.machine1.nic1.ip_add("192.168.1.1/24")
-        self.matched.machine1.nic1.up()
-        self.matched.machine2.nic1.ip_add("192.168.1.2/24")
-        self.matched.machine2.nic1.up()
-
-        self.matched.machine1.run("ping 192.168.1.2 -c 5")
-        self.matched.machine2.run("ping 192.168.1.1 -c 5")
-
-
-podman_uri = "unix:///run/podman/podman.sock"
-image_name = "lnst"
 ctl = Controller(
-    poolMgr=ContainerPoolManager,
-    mapper=ContainerMapper,
-    podman_uri=podman_uri,
-    image=image_name,
     debug=1,
 )
 
-recipe_instance = HelloWorldRecipe()
-ctl.run(recipe_instance)
+recipe_instance = XDPBench(
+        driver='ice',
+        perf_tool_cpu=[5,6,7,8,9],
+        perf_tool_cpu_policy='all',
+        perf_parallel_processes=1,
+        perf_duration=60,
+        ip_versions=['ipv4'],
+        perf_tests=['tcp_stream'],
+        perf_msg_sizes=[60],
+        rx_pause_frames=False,
+        tx_pause_frames=False,
+        disable_turboboost=True,
+        minimal_idlestates_latency=0,
+        drop_caches=True,
+        offload_combinations=[{'gro': 'on', 'gso': 'on', 'tso': 'on', 'tx': 'on'}],
+        perf_warmup_duration=3)
+r = ctl.run(recipe_instance)
+
+from lnst.Controller.Recipe import export_recipe_run
+
+export_recipe_run(recipe_instance.runs[0], "/root/")
 
 overall_result = all([run.overall_result for run in recipe_instance.runs])
 
 exit(not overall_result)
+

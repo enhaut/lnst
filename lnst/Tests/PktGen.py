@@ -133,7 +133,6 @@ class PktGen(BaseTestModule):
         ipv6 = False
         if isinstance(self.params.src_ip, Ip4Address):
             ipv6 = False
-        # breakpoint()
 
         src = f"src{6 if ipv6 else ''}"
         dest = f"dst{6 if ipv6 else ''}"

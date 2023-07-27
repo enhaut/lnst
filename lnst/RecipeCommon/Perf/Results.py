@@ -75,6 +75,18 @@ class PerfInterval(PerfResult):
         return "{:.2f} {} in {:.2f} seconds".format(
                 float(self.value), self.unit, float(self.duration))
 
+    def resample(self, samples: int):
+        if samples <= 0:
+            raise EmptySlice(f"Invalid count of samples: {samples}")
+
+        sample_val = self.value / samples
+        sample_duration = self.duration / samples
+
+        return [
+            PerfInterval(sample_val, sample_duration, self.unit, sample_duration * i)
+            for i in range(samples)
+        ]
+
     def time_slice(self, start, end):
         if end <= self.start_timestamp or start >= self.end_timestamp:
             raise EmptySlice(

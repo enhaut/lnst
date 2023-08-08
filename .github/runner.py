@@ -1,14 +1,13 @@
 from lnst.Controller import Controller, HostReq, DeviceReq, BaseRecipe
 from lnst.Controller.ContainerPoolManager import ContainerPoolManager
 from lnst.Controller.MachineMapper import ContainerMapper
-from lnst.Recipes.ENRT.XDPRecipe import XDPRecipe
-from lnst.Tests.XDPBench import XDPBench
+from lnst.Recipes.ENRT.XDPDropRecipe import XDPDropRecipe
 
 ctl = Controller(
     debug=1,
 )
 
-recipe_instance = XDPBench(
+recipe_instance = XDPDropRecipe(
         driver='ice',
         perf_tool_cpu=[5,6,7,8,9],
         perf_tool_cpu_policy='all',

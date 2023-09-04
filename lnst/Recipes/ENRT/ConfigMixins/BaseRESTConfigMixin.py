@@ -33,6 +33,14 @@ class BaseRESTConfigMixin:
         req_func = self.__get_request_function(method)
 
         response = req_func(**request)
+
+        logging.info(response.request.headers)
+        logging.info(response.request.body)
+        try:
+            logging.info(**kwargs)
+        except:
+            pass
+
         if response.status_code != response_code:
             raise LnstError(f"Request failed with status code {response.status_code}")
 

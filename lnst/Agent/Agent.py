@@ -19,7 +19,8 @@ import datetime
 import socket
 import ctypes
 import multiprocessing
-import imp
+import importlib.util
+import importlib.machinery
 import types
 from time import sleep
 from inspect import isclass
@@ -43,6 +44,19 @@ from lnst.Agent.Job import Job, JobContext
 from lnst.Agent.InterfaceManager import InterfaceManager
 from lnst.Agent.BridgeTool import BridgeTool
 from lnst.Agent.AgentSecSocket import AgentSecSocket, SecSocketException
+
+
+def load_source(modname, filename):
+    loader = importlib.machinery.SourceFileLoader(modname, filename)
+    spec = importlib.util.spec_from_file_location(modname, filename, loader=loader)
+    module = importlib.util.module_from_spec(spec)
+
+    # The module is always executed and not cached in sys.modules.
+    # Uncomment the following line to cache the module.
+    sys.modules[module.__name__] = module
+    loader.exec_module(module)
+    return module
+
 
 # maximum time the server should block on select -- forces frequent Netlink
 # checks
@@ -161,7 +175,7 @@ class RemoteMethods:
         if module_name in self._dynamic_modules:
             return
         module_path = self._cache.get_path(res_hash)
-        module = imp.load_source(module_name, module_path)
+        module = load_source(module_name, module_path)
         self._dynamic_modules[module_name] = module
 
     def init_cls(self, cls_name, module_name, args, kwargs):

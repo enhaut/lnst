@@ -17,7 +17,7 @@ packages = [
 include = ["schema-am.rng", "install/*", "lnst-ctl.conf"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = ">=3.9"
 lxml = "*"
 ethtool = "*"
 pyroute2 = "*"

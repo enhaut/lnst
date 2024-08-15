@@ -164,7 +164,7 @@ class LongLivedClient(BaseLongLivedTestModule):
         )  # needs to be binded to specific IP to respect flow IPs
         sck.connect((str(self.params.server_ip), self.params.server_port))
 
-        sck.setblocking(False)
+        # sck.setblocking(False)
         # no idea why this is needed, but it is. Otherwise, connections
         # are closed when jumping out of this function's scope
         # see https://github.com/LNST-project/lnst/pull/370#discussion_r1627825733

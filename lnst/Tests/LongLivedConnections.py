@@ -117,7 +117,7 @@ class LongLivedServer(BaseLongLivedTestModule):
 
                 for conn in ready:
                     client_socket, client_address = server_socket.accept()
-                    client_socket.setblocking(False)
+                    # client_socket.setblocking(False)
 
                     self._connections.append(client_socket)
 

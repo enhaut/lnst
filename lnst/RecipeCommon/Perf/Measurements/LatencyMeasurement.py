@@ -60,8 +60,6 @@ class LatencyMeasurement(BaseFlowMeasurement):
 
         jobs = self._prepare_jobs()
 
-        breakpoint()
-
         for measurements in self._latency_flows:
             measurements.server_job.start(bg=True)
             time.sleep(5)

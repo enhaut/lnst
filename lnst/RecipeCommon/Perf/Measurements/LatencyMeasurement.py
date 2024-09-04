@@ -111,6 +111,8 @@ class LatencyMeasurement(BaseFlowMeasurement):
             measurements.client_job.kill(signal.SIGINT)
             measurements.server_job.kill(signal.SIGINT)
 
+            logging.info(f"LatencySamples: {measurements.client_job.result}")
+
     def collect_results(self) -> list[LatencyMeasurementResults]:
         results = []
         # each list element represents measuremet results for one flow

@@ -226,6 +226,11 @@ class ParallelPerfResult(PerfList, PerfResult):
         return max_end - min_start
 
     @property
+    def max_duration(self):
+        durations = [sample.duration for sample in self]
+        return max(durations)
+
+    @property
     def unit(self):
         if len(self) > 0:
             return self[0].unit

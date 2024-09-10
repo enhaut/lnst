@@ -17,9 +17,9 @@ from lnst.Recipes.ENRT.MeasurementGenerators.LatencyMeasurementGenerator import 
 class CTLatencyOnCacheMissRecipe(LatencyMeasurementGenerator, LongLivedConnectionsMixin, CTInsertionRateNftablesRecipe):
     @property
     def cache_poison_tool(self) -> callable:
-        return self.poison_caches
+        return self.open_bg_conns
     
-    def poison_caches(self, recipe_conf):
+    def open_bg_conns(self, recipe_conf):
         """
         Function opens `long_lived_connections` number of long-lived connections
         that should force CPU to replace cached pages with latency measurement

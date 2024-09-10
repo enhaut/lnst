@@ -52,6 +52,18 @@ class LatencyMeasurement(BaseFlowMeasurement):
         return "1.0"
 
     @property
+    def data_size(self):
+        return self._data_size
+
+    @property
+    def samples_count(self):
+        return self._samples_count
+
+    @property
+    def cache_poison_tool_name(self):
+        return self._cache_poison_tool.__name__
+
+    @property
     def flows(self):
         return self._flows
 

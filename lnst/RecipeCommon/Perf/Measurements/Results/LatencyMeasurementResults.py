@@ -38,13 +38,13 @@ class LatencyMeasurementResults(BaseMeasurementResults):
         # NOTE: Latencymeasurement doesn't support variable samples count
         # if there are multiple measurements, so it's safe to take
         # length of first samples container
-        return self.cached_samples.real_duration / (
+        return self.cached_samples.max_duration / (
             len(self.cached_samples[0]) - 2
         )
     
     @property
     def uncached_latency_average(self):
-        return self.uncached_samples.real_duration / 2
+        return self.uncached_samples.max_duration / 2
 
     @property
     def metrics(self) -> list[str]:

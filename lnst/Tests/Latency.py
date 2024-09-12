@@ -52,10 +52,10 @@ class LatencyClient(BaseTestModule):
         packet_id = f"{i+1:03}"
         message = packet_id.ljust(self.params.data_size, " ")
 
-        start_time = time.time()
+        start_time = time.perf_counter_ns()
         client_socket.sendall(message.encode())
         data = client_socket.recv(1024)
-        end_time = time.time()
+        end_time = time.perf_counter_ns()
 
         latency = end_time - start_time
         self._samples.append((latency, start_time))

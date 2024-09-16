@@ -21,8 +21,9 @@ from lnst.Controller.Job import Job
 
 from lnst.RecipeCommon.Perf.Results import (
     PerfInterval,
+    ScalarSample,
     ParallelPerfResult,
-    SequentialPerfResult,
+    SequentialScalarResult,
 )
 from lnst.Controller.RecipeResults import ResultType
 
@@ -137,14 +138,14 @@ class LatencyMeasurement(BaseFlowMeasurement):
                 flow=measurements.flow,
             )
 
-            flow_results.latency = SequentialPerfResult()
+            flow_results.latency = SequentialScalarResult()
 
             samples = []
             prev_duration = 0
             prev_timestamp, _ = measurements.client_job.result[0]
             for latency, timestamp in measurements.client_job.result:
                 samples.append(
-                    PerfInterval(1, latency, "second", prev_timestamp + prev_duration)
+                    ScalarSample(latency, "second", prev_timestamp + prev_duration)
                 )
                 prev_duration = latency
                 prev_timestamp = timestamp

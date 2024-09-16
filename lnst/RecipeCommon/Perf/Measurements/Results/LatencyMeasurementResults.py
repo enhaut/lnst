@@ -1,4 +1,4 @@
-from lnst.RecipeCommon.Perf.Results import SequentialPerfResult
+from lnst.RecipeCommon.Perf.Results import SequentialScalarResult
 from lnst.RecipeCommon.Perf.Measurements.Results.FlowMeasurementResults import (
     FlowMeasurementResults,
 )
@@ -9,23 +9,27 @@ from .BaseMeasurementResults import BaseMeasurementResults
 class LatencyMeasurementResults(BaseMeasurementResults):
     def __init__(self, flow, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._latency_samples = SequentialPerfResult()  # samples are ALWAYS sequential
-        self.flow = flow
+        self._latency_samples = SequentialScalarResult()  # samples are ALWAYS sequential
+        self._flow = flow
 
     @property
-    def latency(self) -> SequentialPerfResult:
+    def flow(self):
+        return self._flow
+
+    @property
+    def latency(self) -> SequentialScalarResult:
         return self._latency_samples
 
     @latency.setter
-    def latency(self, value: SequentialPerfResult):
+    def latency(self, value: SequentialScalarResult):
         self._latency_samples = value
 
     @property
-    def cached_samples(self):
+    def cached_latency(self):
         return self.latency.samples_slice(slice(1, -1))
 
     @property
-    def uncached_samples(self):
+    def uncached_latency(self):
         first = self.latency.samples_slice(slice(None, 1))
         last = self.latency.samples_slice(slice(-1, None))
         merged = first.merge_with(last)
@@ -33,22 +37,8 @@ class LatencyMeasurementResults(BaseMeasurementResults):
         return merged
 
     @property
-    def cached_latency_average(self):
-        # using real_duration to exclude time between samples
-        # NOTE: Latencymeasurement doesn't support variable samples count
-        # if there are multiple measurements, so it's safe to take
-        # length of first samples container
-        return self.cached_samples.max_duration / (
-            len(self.cached_samples[0]) - 2
-        )
-    
-    @property
-    def uncached_latency_average(self):
-        return self.uncached_samples.max_duration / 2
-
-    @property
     def metrics(self) -> list[str]:
-        return ["latency_cached", "latency_uncached"]
+        return ["cached_latency", "uncached_latency"]
 
     def add_results(self, results):
         if results is None:
@@ -66,8 +56,8 @@ class LatencyMeasurementResults(BaseMeasurementResults):
         return self
 
     def describe(self) -> str:
-        uncached_average = self.uncached_latency_average
-        cached_average = self.cached_latency_average
+        uncached_average = self.uncached_latency.average
+        cached_average = self.cached_latency.average 
 
         desc = []
         desc.append(str(self.flow))

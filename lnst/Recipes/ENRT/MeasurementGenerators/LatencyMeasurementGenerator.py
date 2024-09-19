@@ -2,7 +2,7 @@ from .BaseMeasurementGenerator import BaseMeasurementGenerator
 from lnst.RecipeCommon.Perf.Measurements.LatencyMeasurement import LatencyMeasurement
 
 from lnst.RecipeCommon.Perf.Measurements.BaseFlowMeasurement import BaseFlowMeasurement
-from lnst.Common.Parameters import IntParam
+from lnst.Common.Parameters import IntParam, ListParam
 from lnst.Common.IpAddress import Ip4Address, Ip6Address
 
 
@@ -10,6 +10,7 @@ class LatencyMeasurementGenerator(BaseMeasurementGenerator):
     latency_packets_count = IntParam(default=10)
     latency_packet_size = IntParam(default=64)
     latency_measurement_port = IntParam(default=19999)
+    latency_cpu_pin = ListParam(default=[])
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -50,6 +51,7 @@ class LatencyMeasurementGenerator(BaseMeasurementGenerator):
                     payload_size=self.params.latency_packet_size,
                     samples_count=self.params.latency_packets_count,
                     cache_poison_tool=self.cache_poison_tool,
+                    cpu_pin=self.params.latency_cpu_pin,
                 )
 
                 yield [latency_measurement] + com

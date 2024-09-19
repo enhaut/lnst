@@ -37,6 +37,7 @@ class LatencyMeasurement(BaseFlowMeasurement):
         payload_size: int,
         samples_count: int,
         cache_poison_tool: callable = None,
+        cpu_pin: list = [],
     ):
         super().__init__(recipe_conf)
 
@@ -48,6 +49,7 @@ class LatencyMeasurement(BaseFlowMeasurement):
         self._samples_count = samples_count
 
         self._cache_poison_tool = cache_poison_tool
+        self._cpu_pin = cpu_pin
 
     def version(self):
         return "1.0"
@@ -104,6 +106,7 @@ class LatencyMeasurement(BaseFlowMeasurement):
             "duration": flow.duration,
             "samples_count": self._samples_count,
             "data_size": self._data_size,
+            "cpu_pin": self._cpu_pin,
         }
 
         client = LatencyClient(**params)
@@ -114,6 +117,7 @@ class LatencyMeasurement(BaseFlowMeasurement):
             "host": flow.receiver_bind,
             "samples_count": self._samples_count,
             "data_size": self._data_size,
+            "cpu_pin": self._cpu_pin,
         }
 
         server = LatencyServer(**params)

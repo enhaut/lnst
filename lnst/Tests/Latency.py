@@ -1,10 +1,11 @@
+import os
 import socket
 import time
 import logging
 import signal
 
 
-from lnst.Common.Parameters import IpParam, IntParam
+from lnst.Common.Parameters import IpParam, IntParam, ListParam
 from .BaseTestModule import BaseTestModule
 
 
@@ -13,12 +14,19 @@ class LatencyClient(BaseTestModule):
     data_size = IntParam(default=64)
     host = IpParam()
     port = IntParam(default=19999)
+    cpu_pin = ListParam(default=[])
 
     duration = IntParam(default=60)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._samples: list[tuple(float, float)] = []
+
+        if self.params.cpu_pin != -1:
+            logging.info(f"Setting CPU affinity of LatencyClient to {self.params.cpu_pin}")
+            os.sched_setaffinity(0, self.params.cpu_pin)
+        else:
+            logging.warning("No CPU affinity set for LatencyClient. Is that intended?")
 
     def run(self):
         self._connection = socket.socket(self.params.host.family, socket.SOCK_STREAM)
@@ -71,6 +79,16 @@ class LatencyServer(BaseTestModule):
     port = IntParam(default=19999)
     samples_count = IntParam(default=10)
     data_size = IntParam(default=64)
+    cpu_pin = ListParam(default=[])
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if self.params.cpu_pin != -1:
+            logging.info(f"Setting CPU affinity of LatencyServer to {self.params.cpu_pin}")
+            os.sched_setaffinity(0, self.params.cpu_pin)
+        else:
+            logging.warning("No CPU affinity set for LatencyServer. Is that intended?")
 
     def run(self):
         with socket.socket(

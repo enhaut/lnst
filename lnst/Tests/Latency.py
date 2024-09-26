@@ -16,7 +16,8 @@ class LatencyClient(BaseTestModule):
     port = IntParam(default=19999)
     cpu_pin = ListParam(default=[])
 
-    duration = IntParam(default=60)
+    sampling_duration = IntParam(default=60)
+    sampling_period = FloatParam(default=0.1)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -28,24 +29,30 @@ class LatencyClient(BaseTestModule):
         else:
             logging.warning("No CPU affinity set for LatencyClient. Is that intended?")
 
+        self._running = False
+
     def run(self):
+        def signal_handler(sig, frame):
+            raise TimeoutError("Sampling duration exceeded")
+
+        self._running = True
         self._connection = socket.socket(self.params.host.family, socket.SOCK_STREAM)
         self._connection.connect((str(self.params.host), self.params.port))
 
         logging.debug("LatencyMeasurement: connection established")
 
-        for i in range(
-            self.params.samples_count - 1
-        ):  # last sample is measured after the sleep
-            sample = self._measure_latency(self._connection, i)
-            logging.info(
-                f"{i+1}/{self.params.samples_count} data transfer: {sample:.9f} s"
-            )
-
-        try:
-            time.sleep(self.params.duration)
+        try: 
+            while self._running:
+                try:
+                    # sample = self._measure_latency(self._connection, i)
+                    # logging.info(
+                    #     f"{i+1}/{self.params.samples_count} data transfer: {sample:.9f} s"
+                    # )
+                    self._measure_samples()
+                except TimeoutError:
+                    continue
         except KeyboardInterrupt:
-            pass
+            logging.info("LatencyClient was interrupted")
 
         sample = self._measure_latency(self._connection, self.params.samples_count)
         logging.info(f"Last data transfer: {sample:.9f} s")
@@ -55,6 +62,28 @@ class LatencyClient(BaseTestModule):
         self._res_data = self._samples
 
         return True
+
+    def _measure_samples(self):
+        def signal_handler(sig, frame):
+            raise TimeoutError("Sampling period exceeded")
+
+        signal.signal(signal.SIGALRM, signal_handler)
+        signal.setitimer(signal.ITIMER_REAL, self.params.sampling_duration)  # signal.alarm doesn't support subsecond precision
+
+        samples = []
+        try:
+            while True:
+                signal.pthread_sigmask(signal.SIG_BLOCK, {signal.SIGALRM})
+                self._measure_latency(self._connection, 1)
+
+                time.sleep(self.params.sampling_period)
+
+                signal.pthread_sigmask(signal.SIG_UNBLOCK, {signal.SIGALRM})
+        except TimeoutError:
+            pass
+            
+
+        return samples
 
     def _measure_latency(self, client_socket, i):
         packet_id = f"{i+1:03}"

@@ -7,28 +7,7 @@ class NftablesConntrackMixin(NftablesMixin):
     @NftablesMixin.firewall_rulesets.getter
     def firewall_rulesets(self):
         nic = self.matched.host2.eth0.name
-        ruleset = (
-            f"""table inet NotrackUnrelatedTraffic {{
-  chain controllerInfNoTrackIn {{
-    type filter hook prerouting priority raw;
-
-    iif != {nic} counter notrack
-    policy accept
-  }}
-  chain controllerInfNoTrackOut {{
-    type filter hook output priority raw;
-
-    iif != {nic} counter notrack
-    policy accept
-  }}
-  chain InterfaceUnderTest {{
-    type filter hook input priority 0; policy accept;
-
-    # Allow established connections to pass
-    iif {nic} ct state {{ new, established, related }} accept
-  }}
-}}"""
-        )
+        ruleset = ""
         return {self.matched.host2: ruleset}
 
     def apply_sub_configuration(self, config):

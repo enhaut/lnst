@@ -123,6 +123,9 @@ class PktGen(BaseTestModule):
     src_ip = IpParam()
     dst_ip = IpParam()
 
+    src_port = IntParam(default=9)
+    dst_port = IntParam(default=9) #  WARN: port 9 is discard protocol!
+
     count = IntParam(default=0)  # 0 = no upper limit
     pkt_size = IntParam(default=60)  # 4 bytes are added for CRC by NIC
     frags = IntParam(default=1)
@@ -193,6 +196,11 @@ class PktGen(BaseTestModule):
             else:
                 self._pg_set(cpu, f"dst6 {self.params.dst_ip}")
                 self._pg_set(cpu, f"src6 {self.params.src_ip}")
+
+            self._pg_set(cpu, f"udp_src_min {self.params.src_port}")
+            self._pg_set(cpu, f"udp_src_max {self.params.src_port}")
+            self._pg_set(cpu, f"udp_dst_min {self.params.dst_port}")
+            self._pg_set(cpu, f"udp_dst_max {self.params.dst_port}")
 
             self._pg_set(cpu, f"burst {self.params.burst}")
             self._devices.append(dev)

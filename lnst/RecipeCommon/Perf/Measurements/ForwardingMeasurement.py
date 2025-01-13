@@ -50,7 +50,7 @@ class ForwardingMeasurement(XDPBenchMeasurement):
             "dst_mac": flow.receiver_nic.hwaddr,
             "src_ip": flow.generator_bind,
             "dst_ip": flow.receiver_bind,
-            "cpus": [0],# flow.generator_cpupin,
+            "cpus": flow.generator_cpupin,
             "pkt_size": flow.msg_size,
             "duration": flow.duration + flow.warmup_duration * 2,
             "src_port": flow.generator_port,

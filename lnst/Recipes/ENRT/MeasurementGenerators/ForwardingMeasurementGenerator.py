@@ -41,8 +41,6 @@ class ForwardingMeasurementGenerator(BaseFlowMeasurementGenerator):
                     self.generator_cpupin(i),
                     self.receiver_cpupin(i),
                 )
-                flow.target = self.matched.host1
-                flow.target_nic = self.matched.host1.eth1
 
                 flows.append(flow)
 

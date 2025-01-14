@@ -36,11 +36,11 @@ class ForwardingMeasurement(XDPBenchMeasurement):
         params = {
             "command": "drop",
             "xdp_mode": self.mode,
-            "interface": flow.target_nic,
+            "interface": flow.generator.receiver_ns.eth1,
             "duration": flow.duration + flow.warmup_duration * 2,
         }
         bench = XDPBench(**params)
-        job = flow.target.prepare_job(bench)
+        job = flow.generator.receiver_ns.prepare_job(bench)
 
         return job
 

@@ -1,5 +1,6 @@
 import pprint
 import copy
+from itertools import product
 from contextlib import contextmanager
 from typing import Literal, Optional
 
@@ -384,11 +385,12 @@ class BaseEnrtRecipe(
                 endpoint1_ips = endpoint1.ips_filter(**ip_filter)
                 endpoint2_ips = endpoint2.ips_filter(**ip_filter)
 
-                if len(endpoint1_ips) != len(endpoint2_ips):
+                if len(endpoint1_ips) != len(endpoint2_ips) and not endpoints.use_product_combinations:
                     raise LnstError("Source/destination ip lists are of different size.")
 
                 ping_conf_list = []
-                for src_addr, dst_addr in zip(endpoint1_ips, endpoint2_ips):
+                combined  = zip(endpoint1_ips, endpoint2_ips) if not endpoints.use_product_combinations else product(endpoint1_ips, endpoint2_ips)
+                for src_addr, dst_addr in combined:
                     pconf = PingConf(client = endpoint1.netns,
                                      client_bind = src_addr,
                                      destination = endpoint2.netns,

@@ -27,7 +27,7 @@ from lnst.RecipeCommon.Perf.Measurements.BaseFlowMeasurement import BaseFlowMeas
 
 class ForwardingMeasurement(XDPBenchMeasurement):
     def __init__(self, flows, recipe_conf=None):
-        super().__init__(flows, "drop", "skb", recipe_conf=recipe_conf)
+        super().__init__(flows, "drop", "native", recipe_conf=recipe_conf)
 
     def _prepare_forwarder(self, flow):
         pass

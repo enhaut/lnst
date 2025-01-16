@@ -75,8 +75,10 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
             config.configure_and_track_ip(host.eth0, next(egress6))
             host.eth0.up_and_wait()
 
-        config.configure_and_track_ip(host1.receiver_ns.eth1, next(ingress4))
-        config.configure_and_track_ip(host1.receiver_ns.eth1, next(ingress6))
+        receiver_ip = next(ingress4)
+        receiver_ip6 = next(ingress6)
+        config.configure_and_track_ip(host1.receiver_ns.eth1, receiver_ip)
+        config.configure_and_track_ip(host1.receiver_ns.eth1, receiver_ip6)
         host1.receiver_ns.eth1.up_and_wait()
 
         config.configure_and_track_ip(host2.eth1, next(ingress4))
@@ -102,23 +104,22 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         for net4, net6 in self.routed:
             config.configure_and_track_ip(host1.receiver_ns.eth1, Ip4Address(f"{net4[1]}/{net4.prefixlen}"))
             config.configure_and_track_ip(host1.receiver_ns.eth1, Ip6Address(f"{net6[1]}/{net6.prefixlen}"))
-            config.configure_and_track_ip(host2.eth1, Ip4Address(f"{net4[2]}/{net4.prefixlen}"))
-            config.configure_and_track_ip(host2.eth1, Ip6Address(f"{net6[2]}/{net6.prefixlen}"))
+            # IPs above don't even need to be configured, they are
+            # needed just for connectivity check. The routing is
+            # based on static routes added bellow.
 
-            host1.run(f"ip route add {net4} via {filter_ip(host2.eth0, AF_INET)} dev {host1.eth0.name}")
-            host1.run(f"ip -6 route add {net6} via {filter_ip(host2.eth0, AF_INET6)} dev {host1.eth0.name}")
+            host2.run(f"ip route add {net4} via {receiver_ip} dev {host2.eth1.name}")
+            host2.run(f"ip -6 route add {net6} via {receiver_ip6} dev {host2.eth1.name}")
 
-            # MacOS specific workaround
-            # Sometimes happen that IPv6 networking doesn't work for couple of seconds
-            # no idea why, the network is just not reachable.
-            # This removes ndp entry and for some reason when the connection is restored
-            # it doesn't ask for new NDP.
-            # TODO: check if present on x86
-            host2.run(f"ip -6 neigh add {net6[1]} lladdr {host1.receiver_ns.eth1.hwaddr} dev {host2.eth1.name}")
+        # neighbors needs to be static as receiver is running XDP drop
+        # which drops ARP/NDP packets as well
+        host2.run(f"ip neigh add {receiver_ip} lladdr {host1.receiver_ns.eth1.hwaddr} dev {host2.eth1.name}")
+        host2.run(f"ip -6 neigh add {receiver_ip6} lladdr {host1.receiver_ns.eth1.hwaddr} dev {host2.eth1.name}")
+        self.router_ips = receiver_ip, receiver_ip6
 
         # setup default routes in receiver namespace to enable communication TO outside
-        host1.receiver_ns.run(f"ip route add 0.0.0.0/0 via {self.routed[0][0][2]} dev {host1.receiver_ns.eth1.name}")
-        host1.receiver_ns.run(f"ip -6 route add ::/0 via {self.routed[0][1][2]} dev {host1.receiver_ns.eth1.name}")
+        host1.receiver_ns.run(f"ip route add 0.0.0.0/0 via {filter_ip(host2.eth0, AF_INET)} dev {host1.receiver_ns.eth1.name}")
+        host1.receiver_ns.run(f"ip -6 route add ::/0 via {filter_ip(host2.eth0, AF_INET6)} dev {host1.receiver_ns.eth1.name}")
 
         return config
 
@@ -135,8 +136,8 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
                 host.run(f"ip route del {net4}")
                 host.run(f"ip route del {net6}")
 
-            # MacOS specific workaround
-            host2.run(f"ip -6 neigh del {net6[1]} dev {host2.eth1.name}")
+        host2.run(f"ip -6 neigh del {self.router_ips[0]} dev {host2.eth1.name}")
+        host2.run(f"ip -6 neigh del {self.router_ips[1]} dev {host2.eth1.name}")
 
         return config
 

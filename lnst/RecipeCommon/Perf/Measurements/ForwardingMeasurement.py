@@ -109,7 +109,6 @@ class ForwardingMeasurement(XDPBenchMeasurement):
         super().finish()
 
     def collect_results(self):
-        breakpoint()
         results = []
         for flow in self._finished_measurements:
             result = ForwardingMeasurementResults(measurement=self, measurement_success=True, flow=flow, warmup_duration=flow.flow.warmup_duration)

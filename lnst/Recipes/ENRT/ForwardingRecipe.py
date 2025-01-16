@@ -19,10 +19,11 @@ from lnst.RecipeCommon.endpoints import EndpointPair, IPEndpoint
 from lnst.Recipes.ENRT.ConfigMixins.MultiDevInterruptHWConfigMixin import (
     MultiDevInterruptHWConfigMixin,
 )
+from lnst.Recipes.ENRT.ConfigMixins.OffloadSubConfigMixin import OffloadSubConfigMixin
 
 from lnst.Controller.NetNamespace import NetNamespace
 
-class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGenerator, BaremetalEnrtRecipe):
+class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGenerator, OffloadSubConfigMixin, BaremetalEnrtRecipe):
     host1 = HostReq()
     host1.eth0 = DeviceReq(label="net1", driver=RecipeParam("driver"))
     host1.eth1 = DeviceReq(label="net1", driver=RecipeParam("driver2"))
@@ -62,6 +63,8 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         ingress4 = interface_addresses(ingress4_net)
         egress6 = interface_addresses(egress6_net)
         ingress6 = interface_addresses(ingress6_net)
+        # TODO:ingress net might be removed completely
+        # as destination networks are routed (but in separate NS)
 
         host1.receiver_ns = NetNamespace("lnst-receiver_ns")
         host1.receiver_ns.eth1 = host1.eth1
@@ -159,8 +162,8 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
             [PingEndpoints(self.matched.host1.eth0, self.matched.host2.eth0)]
         """
         return [PingEndpoints(self.matched.host1.eth0, self.matched.host2.eth0),
-                PingEndpoints(self.matched.host2.eth1, self.matched.host1.receiver_ns.eth1)]#,
-        #PingEndpoints(self.matched.host1.eth0, self.matched.host1.receiver_ns.eth1)]  # TODO:
+                PingEndpoints(self.matched.host2.eth1, self.matched.host1.receiver_ns.eth1, use_product_combinations=True)]
+                # PingEndpoints(self.matched.host1.eth0, self.matched.host1.receiver_ns.eth1, use_product_combinations=True)]  # TODO:
 
     def generate_perf_endpoints(
         self, config: EnrtConfiguration
@@ -197,10 +200,7 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
                 )
 
         return [endpoint_pairs]
-    # def do_perf_tests(self, recipe_config):
-    #     print("testing...")
-    #     time.sleep(10)
-    #     input("waiting")
-    #     self.matched.host1.run("ip link")
-    #     self.matched.host2.run("ip link")
-    #     return
+
+    @property
+    def offload_nics(self):
+        return [self.matched.host1.receiver_ns.eth1, self.matched.host2.eth0, self.matched.host2.eth1]

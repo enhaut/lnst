@@ -1,5 +1,7 @@
 from .ForwardingRecipe import ForwardingRecipe
 
+from lnst.Common.LnstError import LnstError
+
 
 class XDPForwardingRecipe(ForwardingRecipe):
     """
@@ -14,7 +16,9 @@ class XDPForwardingRecipe(ForwardingRecipe):
 
     def test_wide_configuration(self):
         config = super().test_wide_configuration()
-        self.matched.host2.run(f"xdp-forward load {self.matched.host2.eth0.name} {self.matched.host2.eth1.name}")
+        job = self.matched.host2.run(f"xdp-forward load {self.matched.host2.eth0.name} {self.matched.host2.eth1.name}")
+        if not job.passed:
+            raise LnstError(f"Failed to load XDP program: {job.stderr}")
         return config
 
     def test_wide_deconfiguration(self, config):

@@ -88,6 +88,9 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         host1.receiver_ns.run(f"ip route add 0.0.0.0/0 via {filter_ip(config, host2.eth1, AF_INET)} dev {host1.receiver_ns.eth1.name}")
         host1.receiver_ns.run(f"ip -6 route add ::/0 via {filter_ip(config, host2.eth1, AF_INET6)} dev {host1.receiver_ns.eth1.name}")
 
+        host1.run(f"ip route add 0.0.0.0/0 via {filter_ip(config, host2.eth0, AF_INET)} dev {host1.eth0.name}")
+        host1.run(f"ip -6 route add ::/0 via {filter_ip(config, host2.eth0, AF_INET6)} dev {host1.eth0.name}")
+
     def setup_sink_ips(self, config):
         host1, host2 = self.matched.host1, self.matched.host2
         minimal_prefix_len = max(
@@ -107,8 +110,6 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
             # needed just for connectivity check. The routing is
             # based on static routes added bellow.
 
-            host1.run(f"ip route add {net4} via {filter_ip(config, host2.eth0, AF_INET)} dev {host1.eth0.name}")
-            host1.run(f"ip -6 route add {net6} via {filter_ip(config, host2.eth0, AF_INET6)} dev {host1.eth0.name}")
             host2.run(f"ip route add {net4} via {config.sink_router_ip} dev {host2.eth1.name}")
             host2.run(f"ip -6 route add {net6} via {config.sink_router_ip6} dev {host2.eth1.name}")
             config.sink_ips.append((net4, net6))
@@ -148,17 +149,13 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
 
     def test_wide_deconfiguration(self, config):
         super().test_wide_deconfiguration(config)
-        host1, host2 = self.matched.host1, self.matched.host2
+        host2 = self.matched.host2
 
         host2.run("echo 0 > /proc/sys/net/ipv4/ip_forward")
         host2.run("echo 0 > /proc/sys/net/ipv6/conf/all/forwarding")
 
         # remove routes and neighs for routed networks:
-        # TODO: fix
         for net4, net6 in config.sink_ips:
-            host1.run(f"ip route del {net4}")  # remove routes at generator side
-            host1.run(f"ip -6 route del {net6}")  # remove routes at generator side
-
             host2.run(f"ip route del {net4}")  # remove routes at forwarder side
             host2.run(f"ip -6 route del {net6}")  # remove routes at forwarder side
 
@@ -188,9 +185,9 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
 
             [PingEndpoints(self.matched.host1.eth0, self.matched.host2.eth0)]
         """
-        return [PingEndpoints(self.matched.host1.eth0, self.matched.host2.eth0),
-                PingEndpoints(self.matched.host2.eth1, self.matched.host1.receiver_ns.eth1, use_product_combinations=True)]#,
-                # PingEndpoints(self.matched.host1.eth0, self.matched.host1.receiver_ns.eth1, use_product_combinations=True)]
+        return [PingEndpoints(self.matched.host1.eth0, self.matched.host2.eth0),  # host1 -> host2
+                PingEndpoints(self.matched.host2.eth1, self.matched.host1.receiver_ns.eth1, use_product_combinations=True),  # host2 -> host1
+                PingEndpoints(self.matched.host1.eth0, self.matched.host1.receiver_ns.eth1, use_product_combinations=True)]  # host1 -> host1.receiver_ns
 
     def generate_perf_endpoints(
         self, config: EnrtConfiguration

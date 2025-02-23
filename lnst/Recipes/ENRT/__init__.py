@@ -119,3 +119,5 @@ from lnst.Recipes.ENRT.BaseEnrtRecipe import BaseEnrtRecipe
 from lnst.Recipes.ENRT.BaseTunnelRecipe import BaseTunnelRecipe
 from .ForwardingRecipe import ForwardingRecipe
 from .XDPForwardingRecipe import XDPForwardingRecipe
+from .ForwardingMRTRoutesRecipe import ForwardingMRTRoutesRecipe
+from .XDPForwardingMRTRoutesRecipe import XDPForwardingMRTRoutesRecipe

@@ -23,6 +23,11 @@ from lnst.Recipes.ENRT.ConfigMixins.OffloadSubConfigMixin import OffloadSubConfi
 
 from lnst.Controller.NetNamespace import NetNamespace
 
+
+def filter_ip(config, iface, family):
+    return [ip for ip in config._device_ips[iface] if ip.family == family][0]
+
+
 class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGenerator, OffloadSubConfigMixin, BaremetalEnrtRecipe):
     host1 = HostReq()
     host1.eth0 = DeviceReq(label="net1", driver=RecipeParam("driver"))
@@ -72,8 +77,6 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         return config
 
     def setup_routes(self, config):
-        def filter_ip(iface, family):
-            return [ip for ip in config._device_ips[iface] if ip.family == family][0]
         host1, host2 = self.matched.host1, self.matched.host2
 
         # neighbors needs to be static as receiver is running XDP drop
@@ -82,8 +85,8 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         host2.run(f"ip -6 neigh add {config.sink_router_ip6} lladdr {host1.receiver_ns.eth1.hwaddr} dev {host2.eth1.name}")
 
         # setup default routes in receiver namespace to enable communication TO outside
-        host1.receiver_ns.run(f"ip route add 0.0.0.0/0 via {filter_ip(host2.eth0, AF_INET)} dev {host1.receiver_ns.eth1.name}")
-        host1.receiver_ns.run(f"ip -6 route add ::/0 via {filter_ip(host2.eth0, AF_INET6)} dev {host1.receiver_ns.eth1.name}")
+        host1.receiver_ns.run(f"ip route add 0.0.0.0/0 via {filter_ip(config, host2.eth1, AF_INET)} dev {host1.receiver_ns.eth1.name}")
+        host1.receiver_ns.run(f"ip -6 route add ::/0 via {filter_ip(config, host2.eth1, AF_INET6)} dev {host1.receiver_ns.eth1.name}")
 
     def setup_sink_ips(self, config):
         host1, host2 = self.matched.host1, self.matched.host2
@@ -104,6 +107,8 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
             # needed just for connectivity check. The routing is
             # based on static routes added bellow.
 
+            host1.run(f"ip route add {net4} via {filter_ip(config, host2.eth0, AF_INET)} dev {host1.eth0.name}")
+            host1.run(f"ip -6 route add {net6} via {filter_ip(config, host2.eth0, AF_INET6)} dev {host1.eth0.name}")
             host2.run(f"ip route add {net4} via {config.sink_router_ip} dev {host2.eth1.name}")
             host2.run(f"ip -6 route add {net6} via {config.sink_router_ip6} dev {host2.eth1.name}")
             config.sink_ips.append((net4, net6))
@@ -150,11 +155,14 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
 
         # remove routes and neighs for routed networks:
         # TODO: fix
-        for net in host1.receiver_ns.eth1.ips:
-            host1.run(f"ip route del {net}")  # remove routes at generator side
-            host2.run(f"ip route del {net}")  # remove routes at forwarder side
+        for net4, net6 in config.sink_ips:
+            host1.run(f"ip route del {net4}")  # remove routes at generator side
+            host1.run(f"ip -6 route del {net6}")  # remove routes at generator side
 
-        host2.run(f"ip -6 neigh del {config.sink_router_ip} dev {host2.eth1.name}")
+            host2.run(f"ip route del {net4}")  # remove routes at forwarder side
+            host2.run(f"ip -6 route del {net6}")  # remove routes at forwarder side
+
+        host2.run(f"ip neigh del {config.sink_router_ip} dev {host2.eth1.name}")
         host2.run(f"ip -6 neigh del {config.sink_router_ip6} dev {host2.eth1.name}")
 
         return config
@@ -164,7 +172,6 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         Test wide description is extended with the configured addresses
         """
         desc = super().generate_test_wide_description(config)
-        breakpoint()
         desc += [
             "Configured {}.{}.ips = {}".format(dev.host.hostid, dev.name, dev.ips)
             for dev in config.configured_devices

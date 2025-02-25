@@ -87,7 +87,6 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         # setup default routes in receiver namespace to enable communication TO outside
         host1.receiver_ns.run(f"ip route add 0.0.0.0/0 via {filter_ip(config, host2.forwarder_ns.eth1, AF_INET)} dev {host1.receiver_ns.eth1.name}")
         host1.receiver_ns.run(f"ip -6 route add ::/0 via {filter_ip(config, host2.forwarder_ns.eth1, AF_INET6)} dev {host1.receiver_ns.eth1.name}")
-        breakpoint()
 
         # host1.run(f"ip route add 0.0.0.0/0 via {filter_ip(config, host2.eth0, AF_INET)} dev {host1.eth0.name}")
         # host1.run(f"ip -6 route add ::/0 via {filter_ip(config, host2.eth0, AF_INET6)} dev {host1.eth0.name}")
@@ -193,7 +192,6 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
 
             [PingEndpoints(self.matched.host1.eth0, self.matched.host2.eth0)]
         """
-        breakpoint()
         return [PingEndpoints(self.matched.host1.eth0, self.matched.host2.forwarder_ns.eth0),  # host1 -> host2
                 PingEndpoints(self.matched.host2.forwarder_ns.eth1, self.matched.host1.receiver_ns.eth1, use_product_combinations=True),  # host2 -> host1
                 PingEndpoints(self.matched.host1.eth0, self.matched.host1.receiver_ns.eth1, use_product_combinations=True)]  # host1 -> host1.receiver_ns

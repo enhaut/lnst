@@ -98,6 +98,11 @@ class BaseHWConfigMixin(BaseSubConfigMixin):
         """
         result_mapping = {}
         for host in settings:
+            namespace = None
+            settings_host = host
+            if "." in host:
+                host, namespace = host.split(".")
+
             try:
                 matched_host = getattr(self.matched, host)
             except AttributeError:
@@ -105,19 +110,29 @@ class BaseHWConfigMixin(BaseSubConfigMixin):
                     f"Host {host} not found in matched hosts, while parsing {settings}"
                 )
 
-            for device, device_setting in settings[host].items():
+            if namespace:
                 try:
+                    getattr(matched_host, namespace)
+                except AttributeError:
+                    raise Exception(
+                        f"Namespace {namespace} not found on {host}, while parsing {settings}"
+                    )
+
+            for device, device_setting in settings[settings_host].items():
+                try:
+                    if namespace:
+                        matched_host = getattr(matched_host, namespace)
                     matched_device = getattr(matched_host, device)
                 except AttributeError:
                     raise Exception(
-                        f"Device {device} not found on {host}, while parsing {settings}"
+                        f"Device {device} not found on {settings_host}, while parsing {settings}"
                     )
 
                 if matched_device not in result_mapping:
                     result_mapping[matched_device] = device_setting
                 else:
                     raise Exception(
-                        f"Device host {host} device {device} specified multiple times"
+                        f"Device host {settings_host} device {device} specified multiple times"
                     )
 
         return result_mapping

@@ -61,6 +61,8 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
             prefixlen_diff=2
         )
         #  ^          ^  direction based on generator PoV
+        self.setup_namespaces(config)
+
         receiver_ip, receiver_ip6 = self.setup_infra_ips(config)
         config.sink_router_ip = receiver_ip
         config.sink_router_ip6 = receiver_ip6
@@ -73,26 +75,45 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         self.setup_sink_ips(config)
 
         self.setup_routes(config)
+        breakpoint()
 
         return config
+    
+    def setup_namespaces(self, config):
+        host1, host2 = self.matched.host1, self.matched.host2
+        host1.generator_ns = NetNamespace("lnst-generator_ns")
+        host1.generator_ns.eth0 = host1.eth0
+        host1.generator_ns.run("ip link set dev lo up")
+
+        host1.receiver_ns = NetNamespace("lnst-receiver_ns")
+        host1.receiver_ns.eth1 = host1.eth1
+        host1.receiver_ns.run("ip link set dev lo up")
+
+        host2.forwarder_ns = NetNamespace("lnst-forwarder_ns")
+        host2.forwarder_ns.eth0 = host2.eth0
+        host2.forwarder_ns.eth1 = host2.eth1
+        host2.forwarder_ns.run("ip link set dev lo up")
+        host2.forwarder_ns.run("echo 1 > /proc/sys/net/ipv4/ip_forward")
+        host2.forwarder_ns.run("echo 1 > /proc/sys/net/ipv6/conf/all/forwarding")
 
     def setup_routes(self, config):
-        host1, host2 = self.matched.host1, self.matched.host2
+        generator, forwarder, receiver = self.matched.host1.generator_ns, self.matched.host2.forwarder_ns, self.matched.host1.receiver_ns
 
         # neighbors needs to be static as receiver is running XDP drop
         # which drops ARP/NDP packets as well
-        host2.forwarder_ns.run(f"ip neigh add {config.sink_router_ip} lladdr {host1.receiver_ns.eth1.hwaddr} dev {host2.forwarder_ns.eth1.name}")
-        host2.forwarder_ns.run(f"ip -6 neigh add {config.sink_router_ip6} lladdr {host1.receiver_ns.eth1.hwaddr} dev {host2.forwarder_ns.eth1.name}")
+        # forwarder.run(f"ip neigh add {config.sink_router_ip} lladdr {receiver.eth1.hwaddr} dev {forwarder.eth1.name}")
+        # forwarder.run(f"ip -6 neigh add {config.sink_router_ip6} lladdr {receiver.eth1.hwaddr} dev {forwarder.eth1.name}")
 
         # setup default routes in receiver namespace to enable communication TO outside
-        host1.receiver_ns.run(f"ip route add 0.0.0.0/0 via {filter_ip(config, host2.forwarder_ns.eth1, AF_INET)} dev {host1.receiver_ns.eth1.name}")
-        host1.receiver_ns.run(f"ip -6 route add ::/0 via {filter_ip(config, host2.forwarder_ns.eth1, AF_INET6)} dev {host1.receiver_ns.eth1.name}")
+        receiver.run(f"ip route add 0.0.0.0/0 via {filter_ip(config, forwarder.eth1, AF_INET)} dev {receiver.eth1.name}")
+        receiver.run(f"ip -6 route add ::/0 via {filter_ip(config, forwarder.eth1, AF_INET6)} dev {receiver.eth1.name}")
 
-        # host1.run(f"ip route add 0.0.0.0/0 via {filter_ip(config, host2.eth0, AF_INET)} dev {host1.eth0.name}")
-        # host1.run(f"ip -6 route add ::/0 via {filter_ip(config, host2.eth0, AF_INET6)} dev {host1.eth0.name}")
+        generator.run(f"ip route add 0.0.0.0/0 via {filter_ip(config, forwarder.eth0, AF_INET)} dev {generator.eth0.name}")
+        generator.run(f"ip -6 route add ::/0 via {filter_ip(config, forwarder.eth0, AF_INET6)} dev {generator.eth0.name}")
 
     def setup_sink_ips(self, config):
         host1, host2 = self.matched.host1, self.matched.host2
+        generator, forwarder, receiver = self.matched.host1.generator_ns, self.matched.host2.forwarder_ns, self.matched.host1.receiver_ns
         minimal_prefix_len = max(
             1, math.ceil(math.log2(self.params.perf_parallel_streams))
         )  # how many bites needed for networks
@@ -104,14 +125,14 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
             net4 = next(routed4)
             net6 = next(routed6)
 
-            config.configure_and_track_ip(host1.receiver_ns.eth1, Ip4Address(f"{net4[1]}/{net4.prefixlen}"))
-            config.configure_and_track_ip(host1.receiver_ns.eth1, Ip6Address(f"{net6[1]}/{net6.prefixlen}"))
+            config.configure_and_track_ip(receiver.eth1, Ip4Address(f"{net4[1]}/{net4.prefixlen}"))
+            config.configure_and_track_ip(receiver.eth1, Ip6Address(f"{net6[1]}/{net6.prefixlen}"))
             # IPs above don't even need to be configured, they are
             # needed just for connectivity check. The routing is
             # based on static routes added bellow.
 
-            host2.forwarder_ns.run(f"ip route add {net4} via {config.sink_router_ip} dev {host2.forwarder_ns.eth1.name}")
-            host2.forwarder_ns.run(f"ip -6 route add {net6} via {config.sink_router_ip6} dev {host2.forwarder_ns.eth1.name}")
+            forwarder.run(f"ip route add {net4} via {config.sink_router_ip} dev {forwarder.eth1.name}")
+            forwarder.run(f"ip -6 route add {net6} via {config.sink_router_ip6} dev {forwarder.eth1.name}")
             config.sink_ips.append((net4, net6))
 
     def setup_infra_ips(self, config):
@@ -125,49 +146,40 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         ingress6 = interface_addresses(config.ingress6_net)
         # TODO:ingress net might be removed completely
         # as destination networks are routed (but in separate NS)
+        generator, forwarder, receiver = self.matched.host1.generator_ns, self.matched.host2.forwarder_ns, self.matched.host1.receiver_ns
 
-        host1.receiver_ns = NetNamespace("lnst-receiver_ns")
-        host1.receiver_ns.eth1 = host1.eth1
-        host1.receiver_ns.run("ip link set dev lo up")
-
-        host2.forwarder_ns = NetNamespace("lnst-forwarder_ns")
-        host2.forwarder_ns.eth0 = host2.eth0
-        host2.forwarder_ns.eth1 = host2.eth1
-        host2.forwarder_ns.run("ip link set dev lo up")
-        host2.forwarder_ns.run("echo 1 > /proc/sys/net/ipv4/ip_forward")
-        host2.forwarder_ns.run("echo 1 > /proc/sys/net/ipv6/conf/all/forwarding")
-
-        for dev in [host1.eth0, host2.forwarder_ns.eth0]:
+        for dev in [generator.eth0, forwarder.eth0]:
             config.configure_and_track_ip(dev, next(egress4))
             config.configure_and_track_ip(dev, next(egress6))
             dev.up_and_wait()
 
         receiver_ip = next(ingress4)
         receiver_ip6 = next(ingress6)
-        config.configure_and_track_ip(host1.receiver_ns.eth1, receiver_ip)
-        config.configure_and_track_ip(host1.receiver_ns.eth1, receiver_ip6)
-        host1.receiver_ns.eth1.up_and_wait()
+        config.configure_and_track_ip(receiver.eth1, receiver_ip)
+        config.configure_and_track_ip(receiver.eth1, receiver_ip6)
+        receiver.eth1.up_and_wait()
 
-        config.configure_and_track_ip(host2.forwarder_ns.eth1, next(ingress4))
-        config.configure_and_track_ip(host2.forwarder_ns.eth1, next(ingress6))
-        host2.forwarder_ns.eth1.up_and_wait()
+        config.configure_and_track_ip(forwarder.eth1, next(ingress4))
+        config.configure_and_track_ip(forwarder.eth1, next(ingress6))
+        forwarder.eth1.up_and_wait()
 
         return receiver_ip, receiver_ip6
 
     def test_wide_deconfiguration(self, config):
         super().test_wide_deconfiguration(config)
         host2 = self.matched.host2
+        generator, forwarder, receiver = self.matched.host1.generator_ns, self.matched.host2.forwarder_ns, self.matched.host1.receiver_ns
 
         host2.run("echo 0 > /proc/sys/net/ipv4/ip_forward")
         host2.run("echo 0 > /proc/sys/net/ipv6/conf/all/forwarding")
 
         # remove routes and neighs for routed networks:
         for net4, net6 in config.sink_ips:
-            host2.forwarder_ns.run(f"ip route del {net4}")  # remove routes at forwarder side
-            host2.forwarder_ns.run(f"ip -6 route del {net6}")  # remove routes at forwarder side
+            forwarder.run(f"ip route del {net4}")  # remove routes at forwarder side
+            forwarder.run(f"ip -6 route del {net6}")  # remove routes at forwarder side
 
-        host2.forwarder_ns.run(f"ip neigh del {config.sink_router_ip} dev {host2.forwarder_ns.eth1.name}")
-        host2.forwarder_ns.run(f"ip -6 neigh del {config.sink_router_ip6} dev {host2.forwarder_ns.eth1.name}")
+        # forwarder.run(f"ip neigh del {config.sink_router_ip} dev {forwarder.eth1.name}")
+        # forwarder.run(f"ip -6 neigh del {config.sink_router_ip6} dev {forwarder.eth1.name}")
 
         return config
 
@@ -192,9 +204,9 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
 
             [PingEndpoints(self.matched.host1.eth0, self.matched.host2.eth0)]
         """
-        return [PingEndpoints(self.matched.host1.eth0, self.matched.host2.forwarder_ns.eth0),  # host1 -> host2
+        return [PingEndpoints(self.matched.host1.generator_ns.eth0, self.matched.host2.forwarder_ns.eth0),  # host1 -> host2
                 PingEndpoints(self.matched.host2.forwarder_ns.eth1, self.matched.host1.receiver_ns.eth1, use_product_combinations=True),  # host2 -> host1
-                PingEndpoints(self.matched.host1.eth0, self.matched.host1.receiver_ns.eth1, use_product_combinations=True)]  # host1 -> host1.receiver_ns
+                PingEndpoints(self.matched.host1.generator_ns.eth0, self.matched.host1.receiver_ns.eth1, use_product_combinations=True)]  # host1 -> host1.receiver_ns
 
     def generate_perf_endpoints(
         self, config: EnrtConfiguration
@@ -215,7 +227,7 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         which is in this case forwarder (host2).
         """
         endpoint_pairs = []
-        dev1 = self.matched.host1.eth0
+        dev1 = self.matched.host1.generator_ns.eth0
         dev2 = self.matched.host2.forwarder_ns.eth0
 
         for ip_type in [Ip4Address, Ip6Address]:

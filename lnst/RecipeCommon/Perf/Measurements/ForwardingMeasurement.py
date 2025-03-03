@@ -57,11 +57,11 @@ class ForwardingMeasurement(XDPBenchMeasurement):
         params = {
             "command": "drop",
             "xdp_mode": self.mode,
-            "interface": flow.generator.receiver_ns.eth1,
+            "interface": flow.generator._machine._get_netns_by_name("lnst-receiver_ns").eth1,
             "duration": flow.duration + flow.warmup_duration * 2,
         }
         bench = XDPBench(**params)
-        job = flow.generator.receiver_ns.prepare_job(bench)
+        job = flow.generator._machine._get_netns_by_name("lnst-receiver_ns").prepare_job(bench)
 
         return job
 

@@ -85,13 +85,6 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         host1.receiver_ns.eth1 = host1.eth1
         host1.receiver_ns.run("ip link set dev lo up")
 
-        # host2.forwarder_ns = NetNamespace("lnst-forwarder_ns")
-        # host2.forwarder_ns.eth0 = host2.eth0
-        # host2.forwarder_ns.eth1 = host2.eth1
-        # host2.forwarder_ns.run("ip link set dev lo up")
-        # host2.forwarder_ns.run("echo 1 > /proc/sys/net/ipv4/ip_forward")
-        # host2.forwarder_ns.run("echo 1 > /proc/sys/net/ipv6/conf/all/forwarding")
-
     def setup_routes(self, config):
         forwarder, receiver = self.matched.host2, self.matched.host1.receiver_ns
 

@@ -75,7 +75,6 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         self.setup_sink_ips(config)
 
         self.setup_routes(config)
-        breakpoint()
 
         return config
     

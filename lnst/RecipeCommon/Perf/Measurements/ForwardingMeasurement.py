@@ -76,6 +76,7 @@ class ForwardingMeasurement(XDPBenchMeasurement):
             "duration": flow.duration + flow.warmup_duration * 2,
             "src_port": flow.generator_port,
             "dst_port": flow.receiver_port,
+            "ratep": getattr(self.recipe_conf, "pktgen_ratep", -1),
         }
         pktgen = PktGen(**params)
 

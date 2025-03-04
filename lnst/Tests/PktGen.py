@@ -1,6 +1,8 @@
 import re
 import time
+import socket
 import logging
+from math import ceil, log2
 from subprocess import Popen, check_output, CalledProcessError
 from threading import Thread
 from typing import Iterator, Union
@@ -8,7 +10,15 @@ from typing import Iterator, Union
 from lnst.Common.Utils import kmod_loaded
 from lnst.Common.IpAddress import Ip4Address
 from lnst.Tests.BaseTestModule import BaseTestModule, TestModuleError
-from lnst.Common.Parameters import IntParam, IpParam, StrParam, ListParam, DeviceParam
+from lnst.Common.Parameters import (
+    IntParam,
+    IpParam,
+    StrParam,
+    ListParam,
+    DeviceParam,
+    FloatParam,
+    BoolParam,
+)
 
 
 class PktGenResultsSampler:
@@ -124,7 +134,7 @@ class PktGen(BaseTestModule):
     dst_ip = IpParam()
 
     src_port = IntParam(default=9)
-    dst_port = IntParam(default=9) #  WARN: port 9 is discard protocol!
+    dst_port = IntParam(default=9)  #  WARN: port 9 is discard protocol!
 
     count = IntParam(default=0)  # 0 = no upper limit
     pkt_size = IntParam(default=60)  # 4 bytes are added for CRC by NIC
@@ -132,6 +142,10 @@ class PktGen(BaseTestModule):
     burst = IntParam(default=8)
 
     duration = IntParam(default=60)
+
+    ratep = IntParam(default=-1)  # pps
+
+    export_controller = BoolParam(default=False)  # WARN: this will expose controller to the network
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -146,6 +160,12 @@ class PktGen(BaseTestModule):
         self._pg_ctrl("reset")
         self._configure_generator()
 
+        if self.params.export_controller:
+            ctl_proxy = Popen(
+                f"nc -l 0.0.0.0 1234 > /proc/net/pktgen/{self.params.src_if.name}@0",
+                shell=True,
+            )
+
         output_parser = PktGenResultsSampler(self._devices, self.params.duration)
         output_parser.start_sampling()
 
@@ -156,6 +176,8 @@ class PktGen(BaseTestModule):
         time.sleep(self.params.duration)
 
         pktgen.kill()  # stops pktgen
+        if self.params.export_controller:
+            ctl_proxy.kill()  # stops controller proxy
 
         self._res_data = output_parser.device_samples
 
@@ -202,6 +224,9 @@ class PktGen(BaseTestModule):
             self._pg_set(cpu, f"udp_dst_min {self.params.dst_port}")
             self._pg_set(cpu, f"udp_dst_max {self.params.dst_port}")
 
+            if self.params.ratep > 0:
+                self._pg_set(cpu, f"ratep {self.params.ratep}")
+
             self._pg_set(cpu, f"burst {self.params.burst}")
             self._devices.append(dev)
 
@@ -228,3 +253,176 @@ class PktGen(BaseTestModule):
 
     def runtime_estimate(self):
         return self.params.duration + 5
+
+
+class NDRPktGenClient(BaseTestModule):
+    MIN_STEP = 50
+
+    generator_ctl = (
+        StrParam()
+    )  # IP:PORT to generator control process. e.g. 1.1.1.1:1234
+    initial_rate = IntParam(default=1_000_000)  # initial rate in pps
+    min_step = IntParam(default=10)  # minimum step size in pps
+    nic = DeviceParam()  # nic used for receive
+    drop_rate = FloatParam(default=0.0)  # acceptable drop rate in percentage
+    wait_interval = FloatParam(default=5.0)
+
+    def run(self):
+        # Parse generator control address
+        host, port = self.params.generator_ctl.split(":")
+        port = int(port)
+
+        # Initialize TCP connection to generator
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            self.sock.connect((host, port))
+        except socket.error as e:
+            logging.error(f"Failed to connect to generator: {e}")
+            return False
+
+        # Initialize rate variables
+        current_rate = self.params.initial_rate
+        step_size = current_rate / 2
+
+        # Initialize packet counters
+        prev_total = self._read_stat("rx_packets")
+        prev_dropped = self._read_stat("rx_dropped")
+
+        # Set initial rate
+        self._set_rate(current_rate)
+
+        # Previous direction (True = increase, False = decrease)
+        prev_direction = None
+
+        iters = self.max_iterations
+        logging.info(f"Maximum iterations based on configration {iters}")
+        updated = True
+        rates = []
+
+        try:
+            while iters:
+                time.sleep(self.params.wait_interval)
+
+                curr_total = self._read_stat("rx_packets")
+                curr_dropped = self._read_stat("rx_dropped")
+
+                total_packets = curr_total - prev_total
+                dropped = curr_dropped - prev_dropped
+
+                drop_rate = dropped / total_packets if total_packets > 0 else 0
+                rates.append((current_rate, drop_rate))
+
+                if updated:
+                    # If rate was updated, reset counters
+                    updated = False
+                    prev_total = curr_total
+                    prev_dropped = curr_dropped
+                    logging.info(
+                        "Rate updated, skipping check to let numbers stabilize"
+                    )
+                    continue
+
+                logging.info(
+                    f"Rate: {int(current_rate)} pps, Drop rate: {drop_rate:.2f}, Step: {int(step_size)}"
+                )
+
+                if drop_rate > self.params.drop_rate:
+                    # Too many drops, decrease rate
+                    current_direction = False
+                    new_rate = current_rate - step_size
+                else:
+                    # Acceptable drops, increase rate
+                    current_direction = True
+                    new_rate = current_rate + step_size
+
+                # If direction changed, reduce step size
+                if prev_direction is not None and prev_direction != current_direction:
+                    step_size /= 2
+
+                prev_direction = current_direction
+
+                current_rate = max(new_rate, self.MIN_STEP)
+                if current_rate != new_rate:
+                    updated = True
+
+                if step_size <= self.MIN_STEP:
+                    logging.info("Minimum rate reached")
+                    break
+
+                self._set_rate(current_rate)
+
+                prev_total = curr_total
+                prev_dropped = curr_dropped
+
+                iters -= 1
+        except Exception as e:
+            logging.error(f"Error during test: {e}")
+        finally:
+            # Close the connection
+            try:
+                self.sock.close()
+            except:
+                pass
+
+        acceptable_rates = sorted(
+            filter(
+                lambda x: x[1] <= self.params.drop_rate, self._deduplicate_rates(rates)
+            )
+        )
+        best_rate = acceptable_rates[-1]
+        logging.info(f"Acceptable rates: {acceptable_rates}")
+        logging.info(
+            f"Best rate measured {best_rate[0]} pps with drop rate {best_rate[1]:.2f}"
+        )
+        self._res_data = best_rate
+
+        return True
+
+    def _deduplicate_rates(self, rates):
+        deduplicated = []
+        for rate in rates:
+            same_rate = list(filter(lambda x: x[0] == rate[0], deduplicated))
+            if not same_rate:
+                deduplicated.append(rate)
+            else:
+                same_rate = same_rate[0]
+                if rate[1] > same_rate[1]:
+                    deduplicated.remove(same_rate)
+                    deduplicated.append(rate)
+
+        return deduplicated
+
+    def _read_stat(self, stat_name) -> int:
+        """Read a statistic from the NIC."""
+        path = f"/sys/class/net/{self.params.nic.name}/statistics/{stat_name}"
+        try:
+            with open(path, "r") as f:
+                return int(f.read().strip())
+        except (OSError, ValueError) as e:
+            logging.error(f"Error reading {stat_name}: {e}")
+            return -1
+
+    def _set_rate(self, rate):
+        """Send rate update command to the generator."""
+        try:
+            cmd = f"ratep {int(rate)}\n"
+            self.sock.send(cmd.encode())
+        except socket.error as e:
+            logging.error(f"Failed to send rate update: {e}")
+            # Attempt to reconnect
+            try:
+                host, port = self.params.generator_ctl.split(":")
+                port = int(port)
+                self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                self.sock.connect((host, port))
+                # Try sending again
+                self.sock.send(cmd.encode())
+            except Exception as reconnect_error:
+                logging.error(f"Failed to reconnect to generator: {reconnect_error}")
+
+    @property
+    def max_iterations(self):
+        return ceil(log2(self.params.initial_rate / self.MIN_STEP))
+
+    def runtime_estimate(self):
+        return ceil(self.max_iterations * self.params.wait_interval)

@@ -16,7 +16,7 @@ class XDPForwardingRecipe(ForwardingRecipe):
 
     def test_wide_configuration(self):
         config = super().test_wide_configuration()
-        job = self.matched.host2.forwarder_ns.run(f"xdp-forward load {self.matched.host2.forwarder_ns.eth0.name} {self.matched.host2.forwarder_ns.eth1.name}")
+        job = self.matched.host2.run(f"xdp-forward load {self.matched.host2.eth0.name} {self.matched.host2.eth1.name}")
         if not job.passed:
             raise LnstError(f"Failed to load XDP program: {job.stderr}")
 
@@ -24,7 +24,7 @@ class XDPForwardingRecipe(ForwardingRecipe):
 
     def test_wide_deconfiguration(self, config):
         super().test_wide_deconfiguration(config)
-        job = self.matched.host2.forwarder_ns.run(f"xdp-forward unload {self.matched.host2.forwarder_ns.eth0.name} {self.matched.host2.forwarder_ns.eth1.name}")
+        job = self.matched.host2.run(f"xdp-forward unload {self.matched.host2.eth0.name} {self.matched.host2.eth1.name}")
         if not job.passed:
             raise LnstError(f"Failed to unload XDP program: {job.stderr}")
 

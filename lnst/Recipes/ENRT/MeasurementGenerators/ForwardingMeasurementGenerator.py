@@ -8,6 +8,6 @@ class ForwardingMeasurementGenerator(BaseFlowMeasurementGenerator):
     @property
     def net_perf_tool_class(self):
         def ForwardingMeasurement_partial(*args, **kwargs):
-            return ForwardingMeasurement(*args, **kwargs)
+            return ForwardingMeasurement(*args, ratep=self.params.ratep, **kwargs)
 
         return ForwardingMeasurement_partial

@@ -1,7 +1,7 @@
 from collections.abc import Collection
 import math
 from socket import AF_INET, AF_INET6
-from lnst.Common.Parameters import Param, IPv4NetworkParam, IPv6NetworkParam, StrParam
+from lnst.Common.Parameters import Param, IPv4NetworkParam, IPv6NetworkParam, StrParam, IntParam
 from lnst.Common.IpAddress import interface_addresses
 from lnst.Controller import HostReq, DeviceReq, RecipeParam
 from lnst.RecipeCommon.endpoints import EndpointPair, IPEndpoint
@@ -41,6 +41,8 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
     net_ipv6 = IPv6NetworkParam(default="fc00::/64")
 
     driver2 = StrParam()
+
+    ratep = IntParam(default=-1)
 
     def test_wide_configuration(self) -> EnrtConfiguration:
         """

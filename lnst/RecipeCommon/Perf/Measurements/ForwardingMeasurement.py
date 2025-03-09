@@ -19,7 +19,7 @@ from lnst.RecipeCommon.Perf.Results import (
     ParallelPerfResult,
     SequentialPerfResult,
 )
-from lnst.Tests.PktGen import PktGen
+from lnst.Tests.PktGen import PktgenController
 from lnst.Tests.XDPBench import XDPBench
 from lnst.Controller.Job import Job
 from lnst.Controller.RecipeResults import MeasurementResult, ResultType
@@ -79,7 +79,9 @@ class ForwardingMeasurement(XDPBenchMeasurement):
             "dst_port": flow.receiver_port,
             "ratep": self._ratep,
         }
-        pktgen = PktGen(**params)
+        translated= PktgenController.translate_cpus_to_thread_cfgs(params)
+
+        pktgen = PktgenController(config=translated)
 
         job = flow.generator.prepare_job(pktgen)
 

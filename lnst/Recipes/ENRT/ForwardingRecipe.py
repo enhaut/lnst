@@ -102,13 +102,13 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         host1, host2 = self.matched.host1, self.matched.host2
         generator, forwarder, receiver = self.matched.host1, self.matched.host2, self.matched.host1.receiver_ns
         minimal_prefix_len = max(
-            1, math.ceil(math.log2(self.params.perf_parallel_streams))
+            1, math.ceil(math.log2(self.params.perf_parallel_processes))
         )  # how many bites needed for networks
         routed4 = config.routed4_net.subnets(prefixlen_diff=minimal_prefix_len)
         routed6 = config.routed6_net.subnets(prefixlen_diff=minimal_prefix_len)
 
         config.sink_ips = []
-        for _ in range(self.params.perf_parallel_streams):
+        for _ in range(self.params.perf_parallel_processes):
             net4 = next(routed4)
             net6 = next(routed6)
 
@@ -157,11 +157,10 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
 
     def test_wide_deconfiguration(self, config):
         super().test_wide_deconfiguration(config)
-        host2 = self.matched.host2
         generator, forwarder = self.matched.host1, self.matched.host2
 
-        host2.run("echo 0 > /proc/sys/net/ipv4/ip_forward")
-        host2.run("echo 0 > /proc/sys/net/ipv6/conf/all/forwarding")
+        forwarder.run("echo 0 > /proc/sys/net/ipv4/ip_forward")
+        forwarder.run("echo 0 > /proc/sys/net/ipv6/conf/all/forwarding")
 
         # remove routes and neighs for routed networks:
         for net4, net6 in config.sink_ips:

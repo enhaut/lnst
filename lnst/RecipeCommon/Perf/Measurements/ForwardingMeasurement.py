@@ -34,27 +34,38 @@ class ForwardingMeasurement(XDPBenchMeasurement):
         super().__init__(flows, "drop", "native", recipe_conf=recipe_conf)
         self._ratep = ratep
 
-    def start(self):
-        net_flows = self._prepare_flows()
-        for flow in net_flows:
-            flow.forwarder_job.start(bg=True)
-            flow.server_job.start(bg=True)
-            flow.client_job.start(bg=True)
-            # server starts immediately, no need to wait
-            self._running_measurements.append(flow)
+        self._client_job = None
+        self._server_jobs = {}
+        self._forwarder_jobs = {}
 
-        self._running_measurements = net_flows
+    def start(self):
+        self._prepare_flows()
+
+        for server_job in self._server_jobs.values():
+            server_job.start(bg=True)
+        
+        for forwarder_job in self._forwarder_jobs.values():
+            forwarder_job.start(bg=True)
+
+        self._client_job.start(bg=True)
 
     def _prepare_forwarder(self, flow):
+        if flow.receiver.eth1 in self._forwarder_jobs:
+            return self._forwarder_jobs[flow.receiver.eth1]
+
         monitor = InterfaceStatsMonitor(
             device=flow.receiver.eth1,
             duration=flow.duration + flow.warmup_duration * 2
         )
         job = flow.receiver.prepare_job(monitor)
+        self._forwarder_jobs[flow.receiver.eth1] = job
 
         return job
 
     def _prepare_server(self, flow):
+        if flow.generator.receiver_ns.eth1 in self._server_jobs:
+            return self._server_jobs[flow.generator.receiver_ns.eth1]
+
         params = {
             "command": "drop",
             "xdp_mode": self.mode,
@@ -64,24 +75,26 @@ class ForwardingMeasurement(XDPBenchMeasurement):
         bench = XDPBench(**params)
         job = flow.generator.receiver_ns.prepare_job(bench)
 
+        self._server_jobs[flow.generator.receiver_ns.eth1] = job
         return job
 
-    def _prepare_client(self, flow: Flow):
-        params = {
-            "src_if": flow.generator_nic,
-            "dst_mac": flow.receiver_nic.hwaddr,
-            "src_ip": flow.generator_bind,
-            "dst_ip": flow.receiver_bind,
-            "cpus": flow.generator_cpupin,
-            "pkt_size": flow.msg_size,
-            "duration": flow.duration + flow.warmup_duration * 2,
-            "src_port": flow.generator_port,
-            "dst_port": flow.receiver_port,
-            "ratep": self._ratep,
-        }
-        translated= PktgenController.translate_cpus_to_thread_cfgs(params)
+    def _prepare_client(self):
+        config = []
+        for flow in self.flows:
+            config.append({
+                "src_if": flow.generator_nic,
+                "dst_mac": flow.receiver_nic.hwaddr,
+                "src_ip": flow.generator_bind,
+                "dst_ip": flow.receiver_bind,
+                "cpu": flow.generator_cpupin[0],  # FwdMeasGen round-robins cpus, so this will be list with 1 cpu only
+                "pkt_size": flow.msg_size,
+                "duration": flow.duration + flow.warmup_duration * 2,
+                "src_port": flow.generator_port,
+                "dst_port": flow.receiver_port,
+                "ratep": self._ratep,
+            })
 
-        pktgen = PktgenController(config=translated)
+        pktgen = PktgenController(config=config)
 
         job = flow.generator.prepare_job(pktgen)
 
@@ -89,12 +102,13 @@ class ForwardingMeasurement(XDPBenchMeasurement):
 
     def _prepare_flows(self) -> list[NetworkFlowTest]:
         flows = []
+        self._client_job = self._prepare_client()
+
         for flow in self.flows:
             forwarder = self._prepare_forwarder(flow)
-            client = self._prepare_client(flow)
             server = self._prepare_server(flow)
 
-            net_flow = NetworkFlowTest(flow, server, client)
+            net_flow = NetworkFlowTest(flow, server, self._client_job)
             net_flow.forwarder_job = forwarder
 
             flows.append(net_flow)
@@ -103,23 +117,43 @@ class ForwardingMeasurement(XDPBenchMeasurement):
 
     def finish(self):
         try:
-            for flow in self._running_measurements:
-                forwarder_job = flow.forwarder_job.what
-                flow.forwarder_job.wait(timeout=forwarder_job.runtime_estimate())
-        finally:
-            for flow in self._running_measurements:
-                flow.forwarder_job.kill()
+            self._client_job.wait(timeout=self._client_job.what.runtime_estimate())
 
-        super().finish()
+            for forwarder_job in self._forwarder_jobs.values():
+                forwarder_job.wait(timeout=forwarder_job.what.runtime_estimate())
+
+            for server_job in self._server_jobs.values():
+                server_job.wait(timeout=server_job.what.runtime_estimate())
+        finally:
+            self._client_job.kill()
+
+            for forwarder_job in self._forwarder_jobs.values():
+                forwarder_job.kill()
+
+            for server_job in self._server_jobs.values():
+                server_job.kill()
 
     def collect_results(self):
         results = []
-        for flow in self._finished_measurements:
-            result = ForwardingMeasurementResults(measurement=self, measurement_success=True, flow=flow, warmup_duration=flow.flow.warmup_duration)
-            result.generator_results = self._parse_generator_results(flow.client_job)
-            result.receiver_results = self._parse_receiver_results(flow.server_job)
-            result.forwarder_results = self._parse_forwarder_results(flow.forwarder_job)
+
+        receiver_results = {}
+        for inf, job in self._server_jobs.items():
+            receiver_results[inf] = self._parse_receiver_results(job)
+
+        forwarder_results = {}
+        for inf, job in self._forwarder_jobs.items():
+            forwarder_results[inf] = self._parse_forwarder_results(job)
+
+        generator_results = self._parse_generator_results(self._client_job)
+
+        for flow in self._flows:  # TODO: iterovat cez ten network flow
+            result = ForwardingMeasurementResults(measurement=self, measurement_success=True, flow=flow, warmup_duration=flow.warmup_duration)
+            result.generator_results = generator_results
+            result.receiver_results = self._spread_receiver_results(receiver_results, flow)
+            result.forwarder_results = self._spread_forwarder_results(forwarder_results, flow)
+
             results.append(result)
+        breakpoint()
 
         return results
 
@@ -128,6 +162,36 @@ class ForwardingMeasurement(XDPBenchMeasurement):
         results.append(self.parse_samples(job.result, "tx_packets", "packets"))
 
         return results
+
+    def _spread_forwarder_results(self, cummulative_results, flow):
+        device_results = cummulative_results[flow.receiver.eth1]
+        spread_results = SequentialPerfResult()
+
+        flows_to_device = len([f for f in self._flows if f.receiver.eth1 == flow.receiver.eth1])
+
+        for sample in device_results[0]:
+            spread_results.append(PerfInterval(sample.value / flows_to_device, sample.duration, sample.unit, sample.start_timestamp))
+
+        return spread_results
+
+    def _spread_generator_results(self, cummulative_results):
+        results = SequentialPerfResult()
+
+        for sample in cummulative_results[0]:
+            results.append(PerfInterval(sample.value / len(self._flows), sample.duration, sample.unit, sample.start_timestamp))
+
+        return results
+
+    def _spread_receiver_results(self, cummulative_results, flow):
+        device_results = cummulative_results[flow.generator.receiver_ns.eth1]
+        spread_results = SequentialPerfResult()
+
+        flows_to_device = len([f for f in self._flows if f.generator.receiver_ns.eth1 == flow.generator.receiver_ns.eth1])
+
+        for sample in device_results[0]:
+            spread_results.append(PerfInterval(sample.value / flows_to_device, sample.duration, sample.unit, sample.start_timestamp))
+
+        return spread_results
 
     def parse_samples(self, raw_samples: list[dict], metric: str, unit: str) -> SequentialPerfResult:
         result = SequentialPerfResult()

@@ -91,8 +91,8 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
 
         # neighbors needs to be static as receiver is running XDP drop
         # which drops ARP/NDP packets as well
-        # forwarder.run(f"ip neigh add {config.sink_router_ip} lladdr {receiver.eth1.hwaddr} dev {forwarder.eth1.name}")
-        # forwarder.run(f"ip -6 neigh add {config.sink_router_ip6} lladdr {receiver.eth1.hwaddr} dev {forwarder.eth1.name}")
+        forwarder.run(f"ip neigh add {config.sink_router_ip} lladdr {receiver.eth1.hwaddr} dev {forwarder.eth1.name}")
+        forwarder.run(f"ip -6 neigh add {config.sink_router_ip6} lladdr {receiver.eth1.hwaddr} dev {forwarder.eth1.name}")
 
         # setup default routes in receiver namespace to enable communication TO outside
         receiver.run(f"ip route add 0.0.0.0/0 via {filter_ip(config, forwarder.eth1, AF_INET)} dev {receiver.eth1.name}")
@@ -158,7 +158,7 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
     def test_wide_deconfiguration(self, config):
         super().test_wide_deconfiguration(config)
         host2 = self.matched.host2
-        generator, forwarder, receiver = self.matched.host1, self.matched.host2, self.matched.host1.receiver_ns
+        generator, forwarder = self.matched.host1, self.matched.host2
 
         host2.run("echo 0 > /proc/sys/net/ipv4/ip_forward")
         host2.run("echo 0 > /proc/sys/net/ipv6/conf/all/forwarding")
@@ -171,8 +171,8 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
             generator.run(f"ip route del {net4}")  # remove routes at generator side
             generator.run(f"ip -6 route del {net6}")  # remove routes at generator side
 
-        # forwarder.run(f"ip neigh del {config.sink_router_ip} dev {forwarder.eth1.name}")
-        # forwarder.run(f"ip -6 neigh del {config.sink_router_ip6} dev {forwarder.eth1.name}")
+        forwarder.run(f"ip neigh del {config.sink_router_ip} dev {forwarder.eth1.name}")
+        forwarder.run(f"ip -6 neigh del {config.sink_router_ip6} dev {forwarder.eth1.name}")
 
         return config
 

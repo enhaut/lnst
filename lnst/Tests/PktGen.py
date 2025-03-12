@@ -7,7 +7,7 @@ from ipaddress import IPv4Address
 from dataclasses import dataclass, field
 from subprocess import Popen, check_output, CalledProcessError
 from threading import Thread
-from typing import Iterator, Union
+from typing import Iterator, Union, Optional
 
 from lnst.Common.Utils import kmod_loaded
 from lnst.Common.IpAddress import Ip4Address
@@ -19,7 +19,6 @@ from lnst.Common.Parameters import (
     ListParam,
     DeviceParam,
     FloatParam,
-    BoolParam,
 )
 
 
@@ -155,9 +154,10 @@ class PktgenDevice:
 
     ratep: IntParam = -1  # pps
 
-    export_controller: BoolParam = (
-        False  # WARN: this will expose controller to the network
-    )
+    export_controller: ListParam = field(default_factory=list)  # (IP, port) tuple
+    # WARN: this will expose cotroller to the network
+
+    ctl_proxy: Optional[Popen] = field(init=False, default=None)
 
     @staticmethod
     def name_template(inf: str, cpu: int) -> str:
@@ -195,6 +195,23 @@ class PktgenDevice:
 
         self._cmd(f"burst {self.burst}")
 
+        if self.export_controller:
+            self.start_controller()
+
+    def start_controller(self):
+        logging.debug(f"Starting controller proxy for {self.name}")
+        ip, port = self.export_controller
+        self.ctl_proxy = Popen(
+            f"nc -l {ip} {port} > /proc/net/pktgen/{self.name}",
+            shell=True,
+        )
+        logging.info(f"Controller proxy for {self.name} started at {ip}:{port}")
+
+    def kill_controller(self):
+        if self.ctl_proxy is not None:
+            logging.debug(f"Killing controller proxy for {self.name}")
+            self.ctl_proxy.kill()
+
     def _cmd(self, cmd: str):
         logging.debug(f"Writing {cmd} to {self.name}")
         with open(f"/proc/net/pktgen/{self.name}", "w") as f:
@@ -221,6 +238,9 @@ class PktgenThread:
         logging.debug(f"Removing all devices from cpu{self.cpu}")
 
         self._cmd("rem_device_all")
+        for device in self.devices:
+            device.kill_controller()
+
         self.devices = []
 
     def _cmd(self, cmd: str):

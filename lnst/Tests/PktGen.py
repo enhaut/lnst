@@ -434,11 +434,31 @@ class NDRPktGenClient(BaseTestModule):
                     pass
 
         self._res_data = max(
-            ((pps, drop) for pps, drop in rates if drop <= self.params.drop_rate),
+            filter(
+                lambda x: x[1] <= self.params.drop_rate, self._deduplicate_rates(rates)
+            ),
             key=lambda x: x[0],
         )
 
         return True
+
+    def _deduplicate_rates(self, rates):
+        """
+        Function merges duplicate rates and keeps only the one with
+        the highest drop rate (worst case).
+        """
+        deduplicated = []
+        for rate in rates:
+            same_rate = list(filter(lambda x: x[0] == rate[0], deduplicated))
+            if not same_rate:
+                deduplicated.append(rate)
+            else:
+                same_rate = same_rate[0]
+                if rate[1] > same_rate[1]:
+                    deduplicated.remove(same_rate)
+                    deduplicated.append(rate)
+
+        return deduplicated
 
     def _read_stat(self, stat_name):
         """Read a statistic from the NIC."""

@@ -121,3 +121,4 @@ from .ForwardingRecipe import ForwardingRecipe
 from .XDPForwardingRecipe import XDPForwardingRecipe
 from .ForwardingMRTRoutesRecipe import ForwardingMRTRoutesRecipe
 from .XDPForwardingMRTRoutesRecipe import XDPForwardingMRTRoutesRecipe
+from .NDRForwardingRecipe import NDRForwardingRecipe

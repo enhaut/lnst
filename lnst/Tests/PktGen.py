@@ -363,6 +363,7 @@ class NDRPktGenClient(BaseTestModule):
     nic = DeviceParam()  # nic used for receive
     drop_rate = FloatParam(default=0.0)
     wait_interval = FloatParam(default=5.0)  # seconds
+    max_iterations = IntParam(default=15)
 
     def run(self):
         self.connections = self._open_connections()
@@ -379,8 +380,8 @@ class NDRPktGenClient(BaseTestModule):
         rates = []  # list of tuples (rate, drop_rate)
 
         try:
-            for iteration in range(self.max_iterations):
-                logging.info(f"Iteration {iteration+1}/{self.max_iterations}")
+            for iteration in range(self.params.max_iterations):
+                logging.info(f"Iteration {iteration+1}/{self.params.max_iterations}")
 
                 # wait for changes to propagate
                 time.sleep(self.params.wait_interval)
@@ -501,9 +502,5 @@ class NDRPktGenClient(BaseTestModule):
                 f"Failed to connect to generator at {host}:{port}: {e}"
             )
 
-    @property
-    def max_iterations(self):
-        return ceil(log2(self.params.initial_rate / self.params.cutoff_step))
-
     def runtime_estimate(self):
-        return ceil(self.max_iterations * self.params.wait_interval)
+        return ceil(self.params.max_iterations * self.params.wait_interval)

@@ -19,7 +19,8 @@ class NoDropRateMixin:
     max_iterations = IntParam(default=100)
 
     def do_perf_tests(self, recipe_config):
-        self.find_ndr_rate(recipe_config)
+        for i in range(self.params.perf_iterations):
+            self.find_ndr_rate(recipe_config)
 
     def find_ndr_rate(self, recipe_config):
         receiver_jobs = self._prepare_receiver(recipe_config)

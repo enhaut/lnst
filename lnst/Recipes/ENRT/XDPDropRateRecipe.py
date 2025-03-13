@@ -49,12 +49,12 @@ class XDPDropRateRecipe(XDPForwardingRecipe):
     def _report_results(self, jobs: dict[Device, Job]):
         for dev, job in jobs.items():
             if job.passed:
-                logging.info(f"INF_RESULTS ({self.params.ratep}): " + str(job.result))
+                logging.info(f"RESULTS for {dev.name} ({self.params.ratep}): " + str(job.result))
 
                 self.add_result(
                     job.passed,
-                    f"Drop rate measurement ({self.params.ratep}pps)",
-                    data=job.result,
+                    f"Drop rate measurement ({self.params.ratep}pps) for {dev.name}",
+                    data={dev.name: job.result},
                 )
 
     def _prepare_generators(self, config, max_duration):
@@ -101,7 +101,13 @@ class XDPDropRateRecipe(XDPForwardingRecipe):
             for flow in flow_combinations:
                 if flow.receiver_nic not in configs:
                     configs[flow.receiver_nic] = {
-                        "device": self._get_nic_to_watch(flow),
+                        "device": flow.receiver_nic,
+                        "duration": flow.duration
+                    }
+
+                if self.matched.host2.eth1 not in configs:
+                    configs[self.matched.host2.eth1] = {
+                        "device": self.matched.host2.eth1,
                         "duration": flow.duration
                     }
         jobs = {}
@@ -111,11 +117,3 @@ class XDPDropRateRecipe(XDPForwardingRecipe):
             jobs[device] = device.netns.prepare_job(ndr)
 
         return jobs
-
-    def _get_nic_to_watch(self, flow: Flow):
-        """
-        If you need to measure drop rate on some other interface than
-        flow.receiver_nic (e.g. if the machine is just forwarding packets),
-        you can override this method.
-        """
-        return self.matched.host2.eth1

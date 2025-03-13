@@ -26,7 +26,7 @@ class NoDropRateMixin:
         receiver_jobs = self._prepare_receiver(recipe_config)
         duration = max(job.what.runtime_estimate() for job in receiver_jobs.values())
 
-        generator_jobs = self._prepare_generators(recipe_config, duration + 5)
+        generator_jobs = self._prepare_generators(recipe_config, duration + 30)
         for generator_job in generator_jobs:  # 2 seconds for setup
             generator_job.start(bg=True)
 

@@ -378,6 +378,7 @@ class NDRPktGenClient(BaseTestModule):
 
         prev_direction = None  # True = increase, False = decrease
         rates = []  # list of tuples (rate, drop_rate)
+        updated = True
 
         try:
             for iteration in range(self.params.max_iterations):
@@ -393,12 +394,19 @@ class NDRPktGenClient(BaseTestModule):
                 dropped = curr_dropped - prev_dropped
                 drop_rate = dropped / packets if packets > 0 else 0
 
+                if updated:
+                    prev_total = curr_total
+                    prev_dropped = curr_dropped
+                    logging.info("Rate updated, waiting for changes to propagate.")
+                    updated = False
+                    continue
+
                 logging.info(
-                    f"Rate: {current_rate} pps, Drop rate: {drop_rate:.2f}, Step: {step_size}"
+                    f"Rate: {current_rate} pps, Drop rate: {drop_rate:.3f}, Step: {step_size}"
                 )
                 rates.append((current_rate, drop_rate))
 
-                if drop_rate > self.params.drop_rate:
+                if round(drop_rate, 3) > self.params.drop_rate:
                     # too many drops, decrease rate
                     current_direction = False
                     new_rate = current_rate - step_size
@@ -410,6 +418,8 @@ class NDRPktGenClient(BaseTestModule):
                 # drop rate direction changed, reduce step size
                 if prev_direction is not None and prev_direction != current_direction:
                     step_size = int(step_size / 2)
+
+                updated = (current_rate != new_rate)
 
                 current_rate = max(new_rate, self.params.cutoff_step)
                 self._set_rate_all(current_rate)

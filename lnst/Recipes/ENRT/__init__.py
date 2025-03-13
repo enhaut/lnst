@@ -124,3 +124,4 @@ from .XDPForwardingMRTRoutesRecipe import XDPForwardingMRTRoutesRecipe
 from .NDRForwardingRecipe import NDRForwardingRecipe
 from .NDRXDPForwardingRecipe import NDRXDPForwardingRecipe
 from .DropRateRecipe import DropRateRecipe
+from .XDPDropRateRecipe import XDPDropRateRecipe

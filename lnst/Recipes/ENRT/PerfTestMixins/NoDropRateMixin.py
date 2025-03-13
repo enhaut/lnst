@@ -139,7 +139,7 @@ class NoDropRateMixin:
     def _get_nic_to_watch(self, flow: Flow):
         """
         If you need to measure drop rate on some other interface than
-        flow.receiver_nic (e.g. if the machine is just forwarding packets),
+        flow.receiver_nic (e.g. if the machine is just receiving packets),
         you can override this method.
         """
         return flow.receiver_nic

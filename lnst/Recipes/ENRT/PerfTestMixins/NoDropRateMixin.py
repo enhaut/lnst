@@ -3,7 +3,7 @@ import pprint
 
 from lnst.Controller.Job import Job
 from lnst.Devices.Device import Device
-from lnst.Common.Parameters import FloatParam
+from lnst.Common.Parameters import FloatParam, IntParam
 from lnst.Tests.PktGen import NDRPktGenClient, PktgenController
 from lnst.RecipeCommon.Perf.Measurements.BaseFlowMeasurement import Flow
 
@@ -15,7 +15,8 @@ class NoDropRateMixin:
     without being dropped.
     """
     drop_rate = FloatParam(default=0.0)
-    min_step = FloatParam(default=50)
+    min_step = FloatParam(default=5)
+    max_iterations = IntParam(default=100)
 
     def do_perf_tests(self, recipe_config):
         self.find_ndr_rate(recipe_config)
@@ -117,6 +118,7 @@ class NoDropRateMixin:
                         "nic": self._get_nic_to_watch(flow),
                         "drop_rate": self.params.drop_rate,
                         "cutoff_step": self.params.min_step,
+                        "max_iterations": self.params.max_iterations,
                     }
 
                 endpoint = self._get_ctl_address(flow)

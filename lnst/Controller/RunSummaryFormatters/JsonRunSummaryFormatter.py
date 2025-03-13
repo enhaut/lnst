@@ -144,4 +144,5 @@ class JsonRunSummaryFormatter(RunSummaryFormatter):
             return ret | {
                 "type": "unknown",
                 "description": result.description,
+                "data": result.data
             }

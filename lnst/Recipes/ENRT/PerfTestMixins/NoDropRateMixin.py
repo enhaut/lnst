@@ -46,10 +46,7 @@ class NoDropRateMixin:
                 receiver_job.kill()
 
             for generator_job in generator_jobs:
-                try:
-                    generator_job.kill()  # TODO: crashes on kill
-                except:
-                    pass
+                generator_job.kill()
 
         self._report_results(receiver_jobs)
 

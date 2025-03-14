@@ -31,7 +31,7 @@ class DisableIdleStatesMixin(BaseSubConfigMixin):
         super().apply_sub_configuration(config)
 
         latency = getattr(self.params, "minimal_idlestates_latency", None)
-        if latency is not None:
+        if latency is not None and self.params.minimal_idlestates_latency > 0:
             for host in self.disable_idlestates_host_list:
                 # TODO: save previous state
                 host.run("cpupower idle-set -D {}".format(latency))
@@ -52,6 +52,7 @@ class DisableIdleStatesMixin(BaseSubConfigMixin):
 
     def remove_sub_configuration(self, config):
         for host in self.disable_idlestates_host_list:
-            host.run("cpupower idle-set -E")
+            if self.params.minimal_idlestates_latency > 0:
+                host.run("cpupower idle-set -E")
 
         return super().remove_sub_configuration(config)

@@ -302,7 +302,10 @@ class PktgenController(BaseTestModule):
         pktgen = Popen("echo 'start' > /proc/net/pktgen/pgctrl", shell=True)
         # ^^ echoing start to controller is blocking => needs to be separated
 
-        time.sleep(self.duration)
+        try:
+            time.sleep(self.duration)
+        except KeyboardInterrupt:
+            logging.info("Test interrupted, stopping")
 
         pktgen.kill()  # stops pktgen
 

@@ -1,5 +1,6 @@
 import time
 import pprint
+import signal
 
 from lnst.Controller.Job import Job
 from lnst.Devices.Device import Device
@@ -38,6 +39,9 @@ class NoDropRateMixin:
         try:
             for receiver_job in receiver_jobs.values():
                 receiver_job.wait(timeout=duration + 5)
+
+            for generator_job in generator_jobs:
+                generator_job.kill(signal=signal.SIGINT)
 
             for generator_job in generator_jobs:
                 generator_job.wait(timeout=5)

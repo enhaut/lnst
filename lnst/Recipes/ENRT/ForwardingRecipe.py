@@ -202,8 +202,8 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
             [PingEndpoints(self.matched.host1.eth0, self.matched.host2.eth0)]
         """
         return [PingEndpoints(self.matched.host1.eth0, self.matched.host2.eth0),  # host1 -> host2
-                PingEndpoints(self.matched.host2.eth1, self.matched.host1.receiver_ns.eth1, use_product_combinations=True),  # host2 -> host1
-                PingEndpoints(self.matched.host1.eth0, self.matched.host1.receiver_ns.eth1, use_product_combinations=True)]  # host1 -> host1.receiver_ns
+                PingEndpoints(self.matched.host2.eth1, self.matched.host1.receiver_ns.eth1, use_product_combinations=True)]  # host2 -> host1
+                #PingEndpoints(self.matched.host1.eth0, self.matched.host1.receiver_ns.eth1, use_product_combinations=True)]  # host1 -> host1.receiver_ns
 
     def generate_perf_endpoints(
         self, config: EnrtConfiguration

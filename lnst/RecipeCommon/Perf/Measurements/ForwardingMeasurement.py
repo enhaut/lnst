@@ -60,7 +60,7 @@ class ForwardingMeasurement(XDPBenchMeasurement):
             return self._forwarder_jobs[flow.receiver.eth1]
 
         monitor = InterfaceStatsMonitor(
-            device=flow.receiver.eth1, duration=flow.duration + flow.warmup_duration * 2
+            device=flow.receiver.eth1, duration=flow.duration + flow.warmup_duration * 2, stats=["tx_packets"]
         )
         job = flow.receiver.prepare_job(monitor)
         self._forwarder_jobs[flow.receiver.eth1] = job

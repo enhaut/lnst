@@ -479,7 +479,6 @@ class NDRPktGenClient(BaseTestModule):
         # ^ needs to rescan devices to update netlink msg
         # where stats are fetched from
         res = self.params.nic.link_stats64
-        logging.debug(f"Read stats: {res}")
 
         return res["rx_packets"], res["rx_dropped"] + res["rx_missed_errors"]
 

@@ -165,13 +165,13 @@ class ForwardingMeasurement(XDPBenchMeasurement):
                     flow.generator_nic.name, flow.generator_cpupin[0]
                 )
             ]
-            result.receiver_results = self._spread_results(
+            result.forwarder_results = self._spread_results(
                 receiver_results[flow.generator.receiver_ns.eth1],
                 flow,
                 lambda cum_flow, curr_flow: cum_flow.receiver.eth1
                 == curr_flow.receiver.eth1,
             )
-            result.forwarder_results = self._spread_results(
+            result.receiver_results = self._spread_results(
                 forwarder_results[flow.receiver.eth1],
                 flow,
                 lambda cum_flow, curr_flow: cum_flow.generator.receiver_ns.eth1

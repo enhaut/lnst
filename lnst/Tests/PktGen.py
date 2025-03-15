@@ -369,13 +369,13 @@ class NDRPktGenClient(BaseTestModule):
     max_iterations = IntParam(default=15)
 
     def run(self):
+        self.params.nic._if_manager.reconnect_netlink()
         self.connections = self._open_connections()
 
         current_rate = self.params.initial_rate
         step_size = int(current_rate / 2)
 
-        prev_total = self._read_stat("rx_packets")
-        prev_dropped = self._read_stat("rx_dropped")
+        prev_total, prev_dropped = self._read_stat()
 
         self._set_rate_all(current_rate)
 
@@ -390,8 +390,7 @@ class NDRPktGenClient(BaseTestModule):
                 # wait for changes to propagate
                 time.sleep(self.params.wait_interval)
 
-                curr_total = self._read_stat("rx_packets")
-                curr_dropped = self._read_stat("rx_dropped")
+                curr_total, curr_dropped = self._read_stat()
 
                 packets = curr_total - prev_total
                 dropped = curr_dropped - prev_dropped
@@ -474,15 +473,15 @@ class NDRPktGenClient(BaseTestModule):
 
         return deduplicated
 
-    def _read_stat(self, stat_name):
+    def _read_stat(self):
         """Read a statistic from the NIC."""
-        path = f"/sys/class/net/{self.params.nic.name}/statistics/{stat_name}"
-        try:
-            with open(path, "r") as f:
-                return int(f.read().strip())
-        except (OSError, ValueError) as e:
-            logging.error(f"Error reading {stat_name}: {e}")
-            return 0
+        self.params.nic._if_manager.rescan_devices()
+        # ^ needs to rescan devices to update netlink msg
+        # where stats are fetched from
+        res = self.params.nic.link_stats64
+        logging.debug(f"Read stats: {res}")
+
+        return res["rx_packets"], res["rx_dropped"] + res["rx_missed_errors"]
 
     def _set_rate_all(self, rate):
         """Send rate update command to all generators."""

@@ -9,53 +9,20 @@ from lnst.Tests.InterfaceStatsMonitor import InterfaceStatsMonitor
 from .ForwardingRecipe import ForwardingRecipe
 from .XDPForwardingRecipe import XDPForwardingRecipe
 from lnst.Tests.PktGen import NDRPktGenClient, PktgenController
+from .NDRXDPForwardingRecipe import NDRXDPForwardingRecipe
 from lnst.RecipeCommon.Perf.Measurements.BaseFlowMeasurement import Flow
 
 
-class XDPDropRateRecipe(XDPForwardingRecipe):
+class XDPDropRateRecipe(NDRXDPForwardingRecipe):
     ratep = IntParam(default=1_000_000)
-
-    def do_perf_tests(self, recipe_config):
-        self.find_ndr_rate(recipe_config)
-
-    def find_ndr_rate(self, recipe_config):
-        receiver_jobs = self._prepare_receiver(recipe_config)
-        duration = max(job.what.runtime_estimate() for job in receiver_jobs.values())
-
-        generator_jobs = self._prepare_generators(recipe_config, duration + 5)
-        for generator_job in generator_jobs:  # 2 seconds for setup
-            generator_job.start(bg=True)
-
-        time.sleep(1)
-
-        for receiver_job in receiver_jobs.values():
-            receiver_job.start(bg=True)
-
-        try:
-            for receiver_job in receiver_jobs.values():
-                receiver_job.wait(timeout=duration + 5)
-
-            for generator_job in generator_jobs:
-                generator_job.wait(timeout=5)
-        finally:
-            for receiver_job in receiver_jobs.values():
-                receiver_job.kill()
-
-            # for generator_job in generator_jobs:
-            #     generator_job.kill()  # TODO: crashes on kill
-
-        self._report_results(receiver_jobs)
 
     def _report_results(self, jobs: dict[Device, Job]):
         for dev, job in jobs.items():
-            if job.passed:
-                logging.info(f"RESULTS for {dev.name} ({self.params.ratep}): " + str(job.result))
-
-                self.add_result(
-                    job.passed,
-                    f"Drop rate measurement ({self.params.ratep}pps) for {dev.name}",
-                    data={dev.name: job.result},
-                )
+            self.add_result(
+                job.passed,
+                f"Drop rate measurement results ({self.params.ratep}pps) for {dev.name}",
+                data={dev.name: job.result} if job.passed else None,
+            )
 
     def _prepare_generators(self, config, max_duration):
         configs = {}

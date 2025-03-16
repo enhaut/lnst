@@ -34,9 +34,10 @@ from lnst.RecipeCommon.Perf.Results import PerfInterval, SequentialPerfResult
 
 
 class ForwardingMeasurement(XDPBenchMeasurement):
-    def __init__(self, flows, ratep=-1, recipe_conf=None):
+    def __init__(self, flows, ratep=-1, burst=1, recipe_conf=None):
         super().__init__(flows, "drop", "native", recipe_conf=recipe_conf)
         self._ratep = ratep
+        self._burst = burst
 
         self._client_job = None
         self._server_jobs = {}
@@ -99,8 +100,8 @@ class ForwardingMeasurement(XDPBenchMeasurement):
                     "duration": flow.duration + flow.warmup_duration * 2,
                     "src_port": flow.generator_port,
                     "dst_port": flow.receiver_port,
-                    "ratep": self._ratep,
-                    "burst": 1
+                    "ratep": int(self._ratep / self._burst),
+                    "burst": self._burst
                 }
             )
 

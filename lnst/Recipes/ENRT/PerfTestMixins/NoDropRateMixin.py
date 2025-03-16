@@ -4,7 +4,7 @@ import signal
 
 from lnst.Controller.Job import Job
 from lnst.Devices.Device import Device
-from lnst.Common.Parameters import FloatParam, IntParam
+from lnst.Common.Parameters import FloatParam, IntParam, ConstParam
 from lnst.Tests.PktGen import NDRPktGenClient, PktgenController
 from lnst.RecipeCommon.Perf.Measurements.BaseFlowMeasurement import Flow
 
@@ -18,6 +18,7 @@ class NoDropRateMixin:
     drop_rate = FloatParam(default=0.0)
     min_step = FloatParam(default=100)
     max_iterations = IntParam(default=100)
+    burst = ConstParam(value=8)
 
     def do_perf_tests(self, recipe_config):
         for i in range(self.params.perf_iterations):
@@ -82,7 +83,7 @@ class NoDropRateMixin:
                     "src_port": flow.generator_port,
                     "dst_port": flow.receiver_port,
                     "export_controller": self._get_ctl_address(flow),
-                    "burst": 1,
+                    "burst": self.params.burst,
                 }
 
                 # it's pktgen, so single instance per MACHINE, thats why machine
@@ -121,10 +122,12 @@ class NoDropRateMixin:
                 if flow.receiver_nic not in configs:
                     configs[flow.receiver_nic] = {
                         "generators": [],
-                        "nic": self._get_nic_to_watch(flow),
+                        "ingress_nic": self.get_ingress_nic(flow),
+                        "egress_nic": self.get_egress_nic(flow),
                         "drop_rate": self.params.drop_rate,
                         "cutoff_step": self.params.min_step,
                         "max_iterations": self.params.max_iterations,
+                        "pktgen_burst": self.params.burst,
                     }
 
                 endpoint = self._get_ctl_address(flow)
@@ -144,10 +147,13 @@ class NoDropRateMixin:
 
         return jobs
 
-    def _get_nic_to_watch(self, flow: Flow):
+    def get_ingress_nic(self, flow: Flow):
         """
         If you need to measure drop rate on some other interface than
         flow.receiver_nic (e.g. if the machine is just receiving packets),
         you can override this method.
         """
         return flow.receiver_nic
+
+    def get_egress_nic(self, flow: Flow):
+        return self.matched.host2.eth1

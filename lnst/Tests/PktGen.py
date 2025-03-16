@@ -394,7 +394,7 @@ class NDRPktGenClient(BaseTestModule):
 
                 packets = curr_total - prev_total
                 dropped = curr_dropped - prev_dropped
-                drop_rate = dropped / packets if packets > 0 else 0
+                drop_rate = (dropped / packets) * 100 if packets > 0 else 0
 
                 if updated:
                     prev_total = curr_total

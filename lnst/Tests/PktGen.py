@@ -361,19 +361,24 @@ class PktgenController(BaseTestModule):
 
 class NDRPktGenClient(BaseTestModule):
     generators = ListParam()  # list of tuples (IP, port)
-    cutoff_step = IntParam(default=50)  # pps; binary search stops when reached
+    cutoff_step = IntParam(default=100)  # pps; binary search stops when reached
     initial_rate = IntParam(default=1_000_000)  # initial rate in pps
-    nic = DeviceParam()  # nic used for receive
+
+    ingress_nic = DeviceParam()  # nic used for receive
+    egress_nic = DeviceParam()  # nic used for transmit
+
     drop_rate = FloatParam(default=0.0)
     wait_interval = FloatParam(default=5.0)  # seconds
     max_iterations = IntParam(default=15)
+    pktgen_burst = IntParam(default=8)
 
     def run(self):
-        self.params.nic._if_manager.reconnect_netlink()
+        self.params.ingress_nic._if_manager.reconnect_netlink()
+        self.params.egress_nic._if_manager.reconnect_netlink()
         self.connections = self._open_connections()
 
-        current_rate = self.params.initial_rate
-        step_size = int(current_rate / 2)
+        current_rate = int(self.params.initial_rate / self.params.pktgen_burst)
+        step_size = int(self.params.initial_rate / 2)
 
         prev_total, prev_dropped = self._read_stat()
 
@@ -394,7 +399,7 @@ class NDRPktGenClient(BaseTestModule):
 
                 packets = curr_total - prev_total
                 dropped = curr_dropped - prev_dropped
-                drop_rate = (dropped / packets) * 100 if packets > 0 else 0
+                drop_rate = round((dropped / packets) * 100 if packets > 0 and dropped / packets > 0 else 0, 2)
 
                 if updated:
                     prev_total = curr_total
@@ -404,11 +409,11 @@ class NDRPktGenClient(BaseTestModule):
                     continue
 
                 logging.info(
-                    f"Rate: {current_rate} pps, Drop rate: {drop_rate:.3f}, Step: {step_size}"
+                    f"Rate: {current_rate * self.params.pktgen_burst} pps, Drop rate: {drop_rate}, Step: {step_size}"
                 )
-                rates.append((current_rate, drop_rate))
+                rates.append((current_rate * self.params.pktgen_burst, drop_rate))
 
-                if round(drop_rate, 3) > self.params.drop_rate:
+                if drop_rate > self.params.drop_rate:
                     # too many drops, decrease rate
                     current_direction = False
                     new_rate = current_rate - step_size
@@ -475,12 +480,21 @@ class NDRPktGenClient(BaseTestModule):
 
     def _read_stat(self):
         """Read a statistic from the NIC."""
-        self.params.nic._if_manager.rescan_devices()
+        self.params.ingress_nic._if_manager.rescan_devices()
+        self.params.egress_nic._if_manager.rescan_devices()
         # ^ needs to rescan devices to update netlink msg
         # where stats are fetched from
-        res = self.params.nic.link_stats64
+        ingress = self.params.ingress_nic.link_stats64
+        egress = self.params.egress_nic.link_stats64
 
-        return res["rx_packets"], res["rx_dropped"] + res["rx_missed_errors"]
+        dropped_ingress = ingress["rx_dropped"] + ingress["rx_missed_errors"]
+
+        dropped_internally = ingress["rx_packets"] - egress["tx_packets"] + dropped_ingress
+        # e.g. when running xdp program that drops packet,
+        # drop counter is not increased
+        # TODO: kernel bug??
+
+        return ingress["rx_packets"], dropped_internally
 
     def _set_rate_all(self, rate):
         """Send rate update command to all generators."""

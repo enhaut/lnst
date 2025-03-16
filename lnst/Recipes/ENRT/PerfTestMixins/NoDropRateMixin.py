@@ -17,7 +17,7 @@ class NoDropRateMixin:
     """
     drop_rate = FloatParam(default=0.0)
     min_step = FloatParam(default=100)
-    max_iterations = IntParam(default=100)
+    max_iterations = IntParam(default=80)
     burst = ConstParam(value=8)
 
     def do_perf_tests(self, recipe_config):

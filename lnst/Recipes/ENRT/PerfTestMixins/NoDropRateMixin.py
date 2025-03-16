@@ -16,7 +16,7 @@ class NoDropRateMixin:
     without being dropped.
     """
     drop_rate = FloatParam(default=0.0)
-    min_step = FloatParam(default=5)
+    min_step = FloatParam(default=100)
     max_iterations = IntParam(default=100)
 
     def do_perf_tests(self, recipe_config):
@@ -82,6 +82,7 @@ class NoDropRateMixin:
                     "src_port": flow.generator_port,
                     "dst_port": flow.receiver_port,
                     "export_controller": self._get_ctl_address(flow),
+                    "burst": 1,
                 }
 
                 # it's pktgen, so single instance per MACHINE, thats why machine

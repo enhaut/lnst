@@ -100,6 +100,7 @@ class ForwardingMeasurement(XDPBenchMeasurement):
                     "src_port": flow.generator_port,
                     "dst_port": flow.receiver_port,
                     "ratep": self._ratep,
+                    "burst": 1
                 }
             )
 

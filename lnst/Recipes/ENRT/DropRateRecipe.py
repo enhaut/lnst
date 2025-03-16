@@ -38,6 +38,7 @@ class DropRateRecipe(NDRForwardingRecipe):
                     "src_port": flow.generator_port,
                     "dst_port": flow.receiver_port,
                     "ratep": self.params.ratep,
+                    "burst": 1
                 }
 
                 # it's pktgen, so single instance per MACHINE, thats why machine

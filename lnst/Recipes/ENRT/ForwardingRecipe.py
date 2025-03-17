@@ -37,12 +37,13 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
     host2.eth0 = DeviceReq(label="net1", driver=RecipeParam("driver"))
     host2.eth1 = DeviceReq(label="net1", driver=RecipeParam("driver2"))
 
-    net_ipv4 = IPv4NetworkParam(default="192.168.101.0/24")
-    net_ipv6 = IPv6NetworkParam(default="fc00::/64")
+    net_ipv4 = IPv4NetworkParam(default="192.168.241.0/24")
+    net_ipv6 = IPv6NetworkParam(default="aa00::/64")
 
     driver2 = StrParam()
 
     ratep = IntParam(default=-1)
+    burst = IntParam(default=1)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

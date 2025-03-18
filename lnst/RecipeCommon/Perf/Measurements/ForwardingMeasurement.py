@@ -265,6 +265,10 @@ class ForwardingMeasurement(XDPBenchMeasurement):
     def report_results(
         cls, recipe: BaseRecipe, results: list[AggregatedForwardingMeasurementResults]
     ):
+        generated = 0
+        forwarded = 0
+        received = 0
+
         for result in results:
             generator = result.generator_results
             receiver = result.receiver_results
@@ -298,3 +302,23 @@ class ForwardingMeasurement(XDPBenchMeasurement):
                 },
             )
             recipe.add_custom_result(recipe_result)
+            generated += generator.average
+            forwarded += forwarder.average
+            received += receiver.average
+
+        agg_results = {
+                "generator_results": generated,
+                "receiver_results": received,
+                "forwarder_results": forwarded,
+            }
+        desc = ["Total results:"] + [
+            "{}: {}".format(name, result) for name, result in agg_results.items()
+        ]
+
+        recipe_result = MeasurementResult(
+            "forwarding",
+            result=ResultType.PASS,
+            description="\n".join(desc),
+            data=agg_results,
+        )
+        recipe.add_custom_result(recipe_result)

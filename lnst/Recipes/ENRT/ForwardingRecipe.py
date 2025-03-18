@@ -203,6 +203,9 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         for id in config.flow_action_ids:
             forwarder.run(f"ethtool -N {forwarder.eth0.name} delete {id}")
 
+        forwarder.run("(cd /sys/class/net/ens2f0np0/device/msi_irqs/; for IRQ in *; do echo 40 > /proc/irq/$IRQ/smp_affinity_list; done)")
+        forwarder.run("(cd /sys/class/net/ens2f1np1/device/msi_irqs/; for IRQ in *; do echo 40 > /proc/irq/$IRQ/smp_affinity_list; done)")
+
         return config
 
     def generate_test_wide_description(self, config: EnrtConfiguration):

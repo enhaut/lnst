@@ -189,6 +189,7 @@ class PktgenDevice:
         self._cmd(f"udp_src_max {self.src_port}")
         self._cmd(f"udp_dst_min {self.dst_port}")
         self._cmd(f"udp_dst_max {self.dst_port}")
+        self._cmd("flag UDPCSUM")
 
         if self.ratep > 0:
             self._cmd(f"ratep {self.ratep}")
@@ -372,17 +373,23 @@ class NDRPktGenClient(BaseTestModule):
     max_iterations = IntParam(default=15)
     pktgen_burst = IntParam(default=8)
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.connections = []
+        self._current_rate = 0
+
     def run(self):
         self.params.ingress_nic._if_manager.reconnect_netlink()
         self.params.egress_nic._if_manager.reconnect_netlink()
         self.connections = self._open_connections()
 
-        current_rate = int(self.params.initial_rate / self.params.pktgen_burst)
+        self._current_rate = int(self.params.initial_rate / self.params.pktgen_burst)
         step_size = int(self.params.initial_rate / 2)
 
         prev_total, prev_dropped = self._read_stat()
 
-        self._set_rate_all(current_rate)
+        self._set_rate_all()
 
         prev_direction = None  # True = increase, False = decrease
         rates = []  # list of tuples (rate, drop_rate)
@@ -397,9 +404,15 @@ class NDRPktGenClient(BaseTestModule):
 
                 curr_total, curr_dropped = self._read_stat()
 
-                packets = curr_total - prev_total
-                dropped = curr_dropped - prev_dropped
+                if "mlx5" not in self.params.ingress_nic.driver:
+                    packets = curr_total - prev_total
+                    dropped = curr_dropped - prev_dropped
+                else:
+                    packets = curr_total
+                    dropped = curr_dropped - prev_dropped
+
                 drop_rate = round((dropped / packets) * 100 if packets > 0 and dropped / packets > 0 else 0, 2)
+                logging.debug(f"Total packets: {packets}, Dropped packets: {dropped}, Drop rate: {drop_rate}")
 
                 if updated:
                     prev_total = curr_total
@@ -409,27 +422,27 @@ class NDRPktGenClient(BaseTestModule):
                     continue
 
                 logging.info(
-                    f"Rate: {current_rate * self.params.pktgen_burst} pps, Drop rate: {drop_rate}, Step: {step_size}"
+                    f"Rate: {self._current_rate * self.params.pktgen_burst} pps, Drop rate: {drop_rate}, Step: {step_size}"
                 )
-                rates.append((current_rate * self.params.pktgen_burst, drop_rate))
+                rates.append((self._current_rate * self.params.pktgen_burst, drop_rate))
 
                 if drop_rate > self.params.drop_rate:
                     # too many drops, decrease rate
                     current_direction = False
-                    new_rate = current_rate - step_size
+                    new_rate = self._current_rate - step_size
                 else:
                     # drops within range, increase rate
                     current_direction = True
-                    new_rate = current_rate + step_size
+                    new_rate = self._current_rate + step_size
 
                 # drop rate direction changed, reduce step size
                 if prev_direction is not None and prev_direction != current_direction:
                     step_size = int(step_size / 2)
 
-                updated = (current_rate != new_rate)
+                updated = (self._current_rate != new_rate)
 
-                current_rate = max(new_rate, self.params.cutoff_step)
-                self._set_rate_all(current_rate)
+                self._current_rate = max(new_rate, self.params.cutoff_step)
+                self._set_rate_all()
 
                 prev_total = curr_total
                 prev_dropped = curr_dropped
@@ -488,19 +501,24 @@ class NDRPktGenClient(BaseTestModule):
         egress = self.params.egress_nic.link_stats64
 
         dropped_ingress = ingress["rx_dropped"] + ingress["rx_missed_errors"]
+        if "mlx5" not in self.params.ingress_nic.driver:
+            # mlx5 doesn't increase ANY counter when running xdp program
+            dropped_internally = ingress["rx_packets"] - egress["tx_packets"] + dropped_ingress
+            # e.g. when running xdp program that drops packet,
+            # drop counter is not increased
+            # TODO: kernel bug??
+            return ingress["rx_packets"], dropped_internally
+        else:
+        # if "mlx5" in self.params.ingress_nic.driver:
+            # mlx5 doesn't increase ANY counter when running xdp program
+            return max(self._current_rate * self.params.pktgen_burst, 1), dropped_ingress
 
-        dropped_internally = ingress["rx_packets"] - egress["tx_packets"] + dropped_ingress
-        # e.g. when running xdp program that drops packet,
-        # drop counter is not increased
-        # TODO: kernel bug??
 
-        return ingress["rx_packets"], dropped_internally
-
-    def _set_rate_all(self, rate):
+    def _set_rate_all(self):
         """Send rate update command to all generators."""
         for sock, host, port in self.connections:
             try:
-                cmd = f"ratep {int(rate)}\n"
+                cmd = f"ratep {int(self._current_rate)}\n"
                 sock.send(cmd.encode())
             except socket.error as e:
                 logging.error(f"Failed to send rate update to {host}:{port}: {e}")

@@ -1,3 +1,4 @@
+import re
 from collections.abc import Collection
 import math
 from socket import AF_INET, AF_INET6
@@ -22,6 +23,7 @@ from lnst.Recipes.ENRT.ConfigMixins.MultiDevInterruptHWConfigMixin import (
 from lnst.Recipes.ENRT.ConfigMixins.OffloadSubConfigMixin import OffloadSubConfigMixin
 
 from lnst.Controller.NetNamespace import NetNamespace
+from .ConfigMixins.DevRxHashFunctionConfigMixin import DevRxHashFunctionConfigMixin
 
 
 def filter_ip(config, iface, family):
@@ -86,7 +88,7 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         self.setup_routes(config)
 
         return config
-    
+
     def setup_namespaces(self, config):
         host1, host2 = self.matched.host1, self.matched.host2
         host1.receiver_ns = NetNamespace("lnst-receiver_ns")
@@ -115,6 +117,12 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         routed6 = config.routed6_net.subnets(prefixlen_diff=minimal_prefix_len)
 
         config.sink_ips = []
+        cpupin = 0
+        irq_pin = 0
+
+        raw_irqs = forwarder.run(f"ls -1 /sys/class/net/{forwarder.eth0.name}/device/msi_irqs/")
+        irqs = [int(irq) for irq in raw_irqs.stdout.splitlines() if int(irq) % 2 == 0]
+        config.flow_action_ids = []
         for _ in range(self.params.perf_parallel_processes):
             net4 = next(routed4)
             net6 = next(routed6)
@@ -125,12 +133,25 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
             # needed just for connectivity check. The routing is
             # based on static routes added bellow.
 
+            forwarder.run(f'grep -m1 "mlx[0-9].*comp4" /proc/interrupts | cut -d":" -f1')
+            v4_job = forwarder.run(f"ethtool -N {forwarder.eth0.name} flow-type ip4 dst-ip {net4[1]} action {cpupin}")
+            v6_job = forwarder.run(f"ethtool -N {forwarder.eth0.name} flow-type ip6 dst-ip {net6[1]} action {cpupin}")
+            config.flow_action_ids.extend([self.action_id_from_job(v4_job), self.action_id_from_job(v6_job)])
+
+            forwarder.run(f"echo -n {cpupin} > /proc/irq/{irqs[irq_pin]}/smp_affinity_list")
+            cpupin += 2
+            irq_pin += 1
+
             forwarder.run(f"ip route add {net4} via {config.sink_router_ip} dev {forwarder.eth1.name}")
             forwarder.run(f"ip -6 route add {net6} via {config.sink_router_ip6} dev {forwarder.eth1.name}")
 
             generator.run(f"ip route add {net4} via {filter_ip(config, forwarder.eth0, AF_INET)} dev {generator.eth0.name}")
             generator.run(f"ip -6 route add {net6} via {filter_ip(config, forwarder.eth0, AF_INET6)} dev {generator.eth0.name}")
             config.sink_ips.append((net4, net6))
+
+    @staticmethod
+    def action_id_from_job(job):
+        return re.search(r"Added rule with ID (\d+)", job.stdout).group(1)
 
     def setup_infra_ips(self, config):
         """
@@ -178,6 +199,9 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
 
         forwarder.run(f"ip neigh del {config.sink_router_ip} dev {forwarder.eth1.name}")
         forwarder.run(f"ip -6 neigh del {config.sink_router_ip6} dev {forwarder.eth1.name}")
+
+        for id in config.flow_action_ids:
+            forwarder.run(f"ethtool -N {forwarder.eth0.name} delete {id}")
 
         return config
 

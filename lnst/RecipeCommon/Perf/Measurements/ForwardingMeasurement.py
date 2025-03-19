@@ -311,9 +311,9 @@ class ForwardingMeasurement(XDPBenchMeasurement):
                 "receiver_results": received,
                 "forwarder_results": forwarded,
             }
-        desc = ["Total results:"] + [
-            "{}: {}".format(name, result) for name, result in agg_results.items()
-        ]
+        desc = ["Total results:"] + ["{"] + [
+            f"'{name}': {result}," for name, result in agg_results.items()
+        ] + ["},"]
 
         recipe_result = MeasurementResult(
             "forwarding",

@@ -63,6 +63,19 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         host2.eth0 = 192.168.101.2/24 and fc00::2/64
         """
         host2 = self.matched.host2
+        raw_irqs = host2.run(f"ls -1 /sys/class/net/{host2.eth0.name}/device/msi_irqs/")
+        irqs = [int(irq) for irq in raw_irqs.stdout.splitlines() if int(irq)]
+        for irq in irqs:
+            host2.run(f"echo 41 > /proc/irq/{irq}/smp_affinity_list")
+            time.sleep(0.5)
+        
+        raw_irqs = host2.run(f"ls -1 /sys/class/net/{host2.eth1.name}/device/msi_irqs/")
+        irqs = [int(irq) for irq in raw_irqs.stdout.splitlines() if int(irq)]
+        for irq in irqs:
+            host2.run(f"echo 43 > /proc/irq/{irq}/smp_affinity_list")
+            time.sleep(0.5)
+
+
         config: EnrtConfiguration = super().test_wide_configuration()
 
         config.egress6_net, config.ingress6_net, config.routed6_net, _ = self.params.net_ipv6.subnets(
@@ -86,6 +99,9 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         self.setup_sink_ips(config)
 
         self.setup_routes(config)
+
+        # host2.run("ethtool -G ens2f0np0 rx 1024 tx 1024")
+        # host2.run("ethtool -G ens2f1np1 rx  1024 tx 1024")
 
         return config
 
@@ -203,8 +219,17 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         for id in config.flow_action_ids:
             forwarder.run(f"ethtool -N {forwarder.eth0.name} delete {id}")
 
-        forwarder.run("(cd /sys/class/net/ens2f0np0/device/msi_irqs/; for IRQ in *; do echo 40 > /proc/irq/$IRQ/smp_affinity_list; done)")
-        forwarder.run("(cd /sys/class/net/ens2f1np1/device/msi_irqs/; for IRQ in *; do echo 40 > /proc/irq/$IRQ/smp_affinity_list; done)")
+        raw_irqs = forwarder.run(f"ls -1 /sys/class/net/{forwarder.eth0.name}/device/msi_irqs/")
+        irqs = [int(irq) for irq in raw_irqs.stdout.splitlines() if int(irq)]
+        for irq in irqs:
+            forwarder.run(f"echo 51 > /proc/irq/{irq}/smp_affinity_list")
+            time.sleep(0.5)
+        
+        raw_irqs = forwarder.run(f"ls -1 /sys/class/net/{forwarder.eth1.name}/device/msi_irqs/")
+        irqs = [int(irq) for irq in raw_irqs.stdout.splitlines() if int(irq)]
+        for irq in irqs:
+            forwarder.run(f"echo 53 > /proc/irq/{irq}/smp_affinity_list")
+            time.sleep(0.5)
 
         return config
 

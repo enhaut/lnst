@@ -24,13 +24,14 @@ from lnst.Recipes.ENRT.ConfigMixins.OffloadSubConfigMixin import OffloadSubConfi
 
 from lnst.Controller.NetNamespace import NetNamespace
 from .ConfigMixins.DevRxHashFunctionConfigMixin import DevRxHashFunctionConfigMixin
+from .ConfigMixins.DevFlowsPinningHWConfigMixin import DevFlowsPinningHWConfigMixin
 
 
 def filter_ip(config, iface, family):
     return [ip for ip in config._device_ips[iface] if ip.family == family][0]
 
 
-class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGenerator, OffloadSubConfigMixin, BaremetalEnrtRecipe):
+class ForwardingRecipe(DevFlowsPinningHWConfigMixin, MultiDevInterruptHWConfigMixin, ForwardingMeasurementGenerator, OffloadSubConfigMixin, BaremetalEnrtRecipe):
     host1 = HostReq()
     host1.eth0 = DeviceReq(label="net1", driver=RecipeParam("driver"))
     host1.eth1 = DeviceReq(label="net1", driver=RecipeParam("driver2"))
@@ -63,18 +64,6 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         host2.eth0 = 192.168.101.2/24 and fc00::2/64
         """
         host2 = self.matched.host2
-        raw_irqs = host2.run(f"ls -1 /sys/class/net/{host2.eth0.name}/device/msi_irqs/")
-        irqs = [int(irq) for irq in raw_irqs.stdout.splitlines() if int(irq)]
-        for irq in irqs:
-            host2.run(f"echo 41 > /proc/irq/{irq}/smp_affinity_list")
-            time.sleep(0.5)
-        
-        raw_irqs = host2.run(f"ls -1 /sys/class/net/{host2.eth1.name}/device/msi_irqs/")
-        irqs = [int(irq) for irq in raw_irqs.stdout.splitlines() if int(irq)]
-        for irq in irqs:
-            host2.run(f"echo 43 > /proc/irq/{irq}/smp_affinity_list")
-            time.sleep(0.5)
-
 
         config: EnrtConfiguration = super().test_wide_configuration()
 
@@ -99,9 +88,6 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         self.setup_sink_ips(config)
 
         self.setup_routes(config)
-
-        # host2.run("ethtool -G ens2f0np0 rx 1024 tx 1024")
-        # host2.run("ethtool -G ens2f1np1 rx  1024 tx 1024")
 
         return config
 
@@ -137,7 +123,7 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
         irq_pin = 0
 
         raw_irqs = forwarder.run(f"ls -1 /sys/class/net/{forwarder.eth0.name}/device/msi_irqs/")
-        irqs = [int(irq) for irq in raw_irqs.stdout.splitlines() if int(irq) % 2 == 0]
+        irqs = [int(irq) for irq in raw_irqs.stdout.splitlines()[1:]]
         config.flow_action_ids = []
         for _ in range(self.params.perf_parallel_processes):
             net4 = next(routed4)
@@ -149,14 +135,10 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
             # needed just for connectivity check. The routing is
             # based on static routes added bellow.
 
-            forwarder.run(f'grep -m1 "mlx[0-9].*comp4" /proc/interrupts | cut -d":" -f1')
-            v4_job = forwarder.run(f"ethtool -N {forwarder.eth0.name} flow-type ip4 dst-ip {net4[1]} action {cpupin}")
-            v6_job = forwarder.run(f"ethtool -N {forwarder.eth0.name} flow-type ip6 dst-ip {net6[1]} action {cpupin}")
-            config.flow_action_ids.extend([self.action_id_from_job(v4_job), self.action_id_from_job(v6_job)])
-
+            # forwarder.run(f'grep -m1 "mlx[0-9].*comp4" /proc/interrupts | cut -d":" -f1')
             forwarder.run(f"echo -n {cpupin} > /proc/irq/{irqs[irq_pin]}/smp_affinity_list")
             cpupin += 2
-            irq_pin += 1
+            irq_pin += 2
 
             forwarder.run(f"ip route add {net4} via {config.sink_router_ip} dev {forwarder.eth1.name}")
             forwarder.run(f"ip -6 route add {net6} via {config.sink_router_ip6} dev {forwarder.eth1.name}")
@@ -164,10 +146,6 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
             generator.run(f"ip route add {net4} via {filter_ip(config, forwarder.eth0, AF_INET)} dev {generator.eth0.name}")
             generator.run(f"ip -6 route add {net6} via {filter_ip(config, forwarder.eth0, AF_INET6)} dev {generator.eth0.name}")
             config.sink_ips.append((net4, net6))
-
-    @staticmethod
-    def action_id_from_job(job):
-        return re.search(r"Added rule with ID (\d+)", job.stdout).group(1)
 
     def setup_infra_ips(self, config):
         """
@@ -215,21 +193,6 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
 
         forwarder.run(f"ip neigh del {config.sink_router_ip} dev {forwarder.eth1.name}")
         forwarder.run(f"ip -6 neigh del {config.sink_router_ip6} dev {forwarder.eth1.name}")
-
-        for id in config.flow_action_ids:
-            forwarder.run(f"ethtool -N {forwarder.eth0.name} delete {id}")
-
-        raw_irqs = forwarder.run(f"ls -1 /sys/class/net/{forwarder.eth0.name}/device/msi_irqs/")
-        irqs = [int(irq) for irq in raw_irqs.stdout.splitlines() if int(irq)]
-        for irq in irqs:
-            forwarder.run(f"echo 51 > /proc/irq/{irq}/smp_affinity_list")
-            time.sleep(0.5)
-        
-        raw_irqs = forwarder.run(f"ls -1 /sys/class/net/{forwarder.eth1.name}/device/msi_irqs/")
-        irqs = [int(irq) for irq in raw_irqs.stdout.splitlines() if int(irq)]
-        for irq in irqs:
-            forwarder.run(f"echo 53 > /proc/irq/{irq}/smp_affinity_list")
-            time.sleep(0.5)
 
         return config
 
@@ -298,3 +261,5 @@ class ForwardingRecipe(MultiDevInterruptHWConfigMixin, ForwardingMeasurementGene
     def offload_nics(self):
         return [self.matched.host1.receiver_ns.eth1, self.matched.host2.eth0, self.matched.host2.eth1]
 
+    def steer_flow_by(self, flow):
+        return "dst-ip"

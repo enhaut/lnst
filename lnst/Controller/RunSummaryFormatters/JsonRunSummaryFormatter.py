@@ -137,7 +137,7 @@ class JsonRunSummaryFormatter(RunSummaryFormatter):
                 }
             else:
                 logging.warning(f"unhandled measurement result type: {result.measurement_type}")
-                measurement_data = None
+                measurement_data = result.data if getattr(result, "data", None) is not None else None
             return ret | {
                 "type": "measurement",
                 "measurement_type": result.measurement_type,

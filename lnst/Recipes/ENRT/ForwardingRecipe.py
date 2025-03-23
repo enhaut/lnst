@@ -2,7 +2,7 @@ import re
 from collections.abc import Collection
 import math
 from socket import AF_INET, AF_INET6
-from lnst.Common.Parameters import Param, IPv4NetworkParam, IPv6NetworkParam, StrParam, IntParam
+from lnst.Common.Parameters import Param, IPv4NetworkParam, IPv6NetworkParam, StrParam, IntParam, ConstParam
 from lnst.Common.IpAddress import interface_addresses
 from lnst.Controller import HostReq, DeviceReq, RecipeParam
 from lnst.RecipeCommon.endpoints import EndpointPair, IPEndpoint
@@ -135,7 +135,6 @@ class ForwardingRecipe(DevFlowsPinningHWConfigMixin, MultiDevInterruptHWConfigMi
             # needed just for connectivity check. The routing is
             # based on static routes added bellow.
 
-            # forwarder.run(f'grep -m1 "mlx[0-9].*comp4" /proc/interrupts | cut -d":" -f1')
             forwarder.run(f"echo -n {cpupin} > /proc/irq/{irqs[irq_pin]}/smp_affinity_list")
             cpupin += 2
             irq_pin += 2

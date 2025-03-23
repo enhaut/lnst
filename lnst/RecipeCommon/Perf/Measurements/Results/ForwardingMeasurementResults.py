@@ -1,5 +1,5 @@
 from .XDPBenchMeasurementResults import XDPBenchMeasurementResults
-from lnst.RecipeCommon.Perf.Results import ParallelPerfResult
+from lnst.RecipeCommon.Perf.Results import ParallelPerfResult, SequentialPerfResult, PerfInterval
 from lnst.RecipeCommon.Perf.Measurements.MeasurementError import MeasurementError
 
 
@@ -14,6 +14,14 @@ class ForwardingMeasurementResults(XDPBenchMeasurementResults):
         super().__init__(*args, **kwargs)
 
         self._forwarder_results = ParallelPerfResult()
+
+        self.generator_cpu_stats = ParallelPerfResult()
+        self.generator_cpu_stats.append(SequentialPerfResult())
+        self.generator_cpu_stats[0].append(PerfInterval(0, 0, "percent", 0))
+
+        self.receiver_cpu_stats = ParallelPerfResult()
+        self.receiver_cpu_stats.append(SequentialPerfResult())
+        self.receiver_cpu_stats[0].append(PerfInterval(0, 0, "percent", 0))
 
     @property
     def metrics(self) -> list[str]:

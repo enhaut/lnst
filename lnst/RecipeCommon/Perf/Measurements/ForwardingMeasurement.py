@@ -316,7 +316,7 @@ class ForwardingMeasurement(XDPBenchMeasurement):
         ] + ["},"]
 
         recipe_result = MeasurementResult(
-            "forwarding",
+            "forwarding_total",
             result=ResultType.PASS,
             description="\n".join(desc),
             data=agg_results,

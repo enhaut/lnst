@@ -1,6 +1,6 @@
 from .ForwardingMeasurementResults import ForwardingMeasurementResults
 from lnst.RecipeCommon.Perf.Measurements.MeasurementError import MeasurementError
-from lnst.RecipeCommon.Perf.Results import SequentialPerfResult
+from lnst.RecipeCommon.Perf.Results import SequentialPerfResult, ParallelPerfResult, PerfInterval
 
 
 class AggregatedForwardingMeasurementResults(ForwardingMeasurementResults):
@@ -10,6 +10,14 @@ class AggregatedForwardingMeasurementResults(ForwardingMeasurementResults):
         self._generator_results = SequentialPerfResult()
         self._receiver_results = SequentialPerfResult()
         self._forwarder_results = SequentialPerfResult()
+        
+        self.generator_cpu_stats = ParallelPerfResult()
+        self.generator_cpu_stats.append(SequentialPerfResult())
+        self.generator_cpu_stats[0].append(PerfInterval(0, 0, "percent", 0))
+
+        self.receiver_cpu_stats = ParallelPerfResult()
+        self.receiver_cpu_stats.append(SequentialPerfResult())
+        self.receiver_cpu_stats[0].append(PerfInterval(0, 0, "percent", 0))
 
     @property
     def individual_results(self) -> list[ForwardingMeasurementResults]:

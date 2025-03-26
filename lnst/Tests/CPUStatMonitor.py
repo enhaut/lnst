@@ -1,6 +1,7 @@
 import re
 import time
 import signal
+import logging
 from time import sleep
 from lnst.Common.Parameters import IntParam
 from lnst.Tests.BaseTestModule import BaseTestModule, InterruptException
@@ -29,6 +30,25 @@ class CPUStatMonitor(BaseTestModule):
                         "stat": stat_lines
                         })
                     sleep(self.params.interval / float(1000))
+                    logging.debug("CPUStatMonitor: sampling")
+                    logging.debug("CPUStatMonitor: sampling")
+                    logging.debug("CPUStatMonitor: sampling")
+                    logging.debug("CPUStatMonitor: sampling")
+                    logging.debug("CPUStatMonitor: sampling")
+                    logging.debug("CPUStatMonitor: sampling")
+                    logging.debug("CPUStatMonitor: sampling")
+                    logging.debug("CPUStatMonitor: sampling")
+                    logging.debug("CPUStatMonitor: sampling")
+                    logging.debug("CPUStatMonitor: sampling")
+                    logging.debug("CPUStatMonitor: sampling")
+                    logging.debug("CPUStatMonitor: sampling")
+                    logging.debug("CPUStatMonitor: sampling")
+                    logging.debug("CPUStatMonitor: sampling")
+                    logging.debug("CPUStatMonitor: sampling")
+                    logging.debug("CPUStatMonitor: sampling")
+                    logging.debug("CPUStatMonitor: sampling")
+                    logging.debug("CPUStatMonitor: sampling")
+                    logging.debug("CPUStatMonitor: sampling")
         except InterruptException:
             pass
         finally:

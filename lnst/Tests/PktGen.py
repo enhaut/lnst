@@ -20,6 +20,7 @@ from lnst.Common.Parameters import (
     DeviceParam,
     FloatParam,
 )
+from lnst.Devices.VlanDevice import Device, VlanDevice
 
 
 class PktGenResultsSampler:
@@ -160,12 +161,15 @@ class PktgenDevice:
     ctl_proxy: Optional[Popen] = field(init=False, default=None)
 
     @staticmethod
-    def name_template(inf: str, cpu: int) -> str:
-        return f"{inf}@{cpu}"
+    def name_template(inf: Device, cpu: int) -> str:
+        if isinstance(inf, VlanDevice):
+            inf = inf.realdev
+
+        return f"{inf.name}@{cpu}"
 
     @property
     def name(self):
-        return PktgenDevice.name_template(self.src_if.name, self.cpu)
+        return PktgenDevice.name_template(self.src_if, self.cpu)
 
     def configure(self):
         self._cmd("flag QUEUE_MAP_CPU")
@@ -189,6 +193,9 @@ class PktgenDevice:
         self._cmd(f"udp_src_max {self.src_port}")
         self._cmd(f"udp_dst_min {self.dst_port}")
         self._cmd(f"udp_dst_max {self.dst_port}")
+        if isinstance(self.src_if, VlanDevice):
+            self._cmd(f"vlan_id {self.src_if.vlan_id}")
+
         self._cmd("flag UDPCSUM")
 
         if self.ratep > 0:

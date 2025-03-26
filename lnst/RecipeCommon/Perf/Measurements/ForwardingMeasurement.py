@@ -164,7 +164,7 @@ class ForwardingMeasurement(XDPBenchMeasurement):
             )
             result.generator_results = generator_results[
                 PktgenDevice.name_template(
-                    flow.generator_nic.name, flow.generator_cpupin[0]
+                    flow.generator_nic, flow.generator_cpupin[0]
                 )
             ]
             result.forwarder_results = self._spread_results(

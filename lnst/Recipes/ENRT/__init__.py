@@ -125,3 +125,5 @@ from .NDRForwardingRecipe import NDRForwardingRecipe
 from .NDRXDPForwardingRecipe import NDRXDPForwardingRecipe
 from .DropRateRecipe import DropRateRecipe
 from .XDPDropRateRecipe import XDPDropRateRecipe
+from .VlansForwardingRecipe import VlansForwardingRecipe
+from .VlansXDPForwardingRecipe import VlansXDPForwardingRecipe

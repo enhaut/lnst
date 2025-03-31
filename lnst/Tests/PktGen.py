@@ -1,10 +1,13 @@
 import re
 import time
+import socket
 import logging
+from math import ceil
+from ipaddress import IPv4Address
 from dataclasses import dataclass, field
 from subprocess import Popen, check_output, CalledProcessError
 from threading import Thread
-from typing import Iterator, Union
+from typing import Iterator, Union, Optional
 
 from lnst.Common.Utils import kmod_loaded
 from lnst.Common.IpAddress import Ip4Address
@@ -15,6 +18,7 @@ from lnst.Common.Parameters import (
     StrParam,
     ListParam,
     DeviceParam,
+    FloatParam,
 )
 from lnst.Devices.Device import Device
 
@@ -153,6 +157,11 @@ class PktgenDevice:
     flags: ListParam = field(default_factory=lambda: ["NO_TIMESTAMP", "QUEUE_MAP_CPU"])
     vlan_id: IntParam = 0  # 0 is invalid vlan id, will be ignored
 
+    export_controller: ListParam = field(default_factory=list)  # (IP, port) tuple
+    # WARN: this will expose cotroller to the network
+
+    ctl_proxy: Optional[Popen] = field(init=False, default=None)
+
     @staticmethod
     def name_template(inf: Device, cpu: int) -> str:
         return f"{inf.name}@{cpu}"
@@ -192,6 +201,23 @@ class PktgenDevice:
             self._cmd(f"ratep {self.ratep}")
 
         self._cmd(f"burst {self.burst}")
+
+        if self.export_controller:
+            self.start_controller()
+
+    def start_controller(self):
+        logging.debug(f"Starting controller proxy for {self.name}")
+        ip, port = self.export_controller
+        self.ctl_proxy = Popen(
+            f"nc -l {ip} {port} > /proc/net/pktgen/{self.name}",
+            shell=True,
+        )
+        logging.info(f"Controller proxy for {self.name} started at {ip}:{port}")
+
+    def kill_controller(self):
+        if self.ctl_proxy is not None:
+            logging.debug(f"Killing controller proxy for {self.name}")
+            self.ctl_proxy.kill()
 
     def _cmd(self, cmd: str):
         logging.debug(f"Writing {cmd} to {self.name}")
@@ -328,3 +354,191 @@ class PktgenController(BaseTestModule):
     def _cmd(self, cmd):
         with open("/proc/net/pktgen/pgctrl", "w") as f:
             f.write(cmd + "\n")
+
+class NDRPktGenClient(BaseTestModule):
+    generators = ListParam()  # list of tuples (IP, port)
+    cutoff_step = IntParam(default=100)  # pps; binary search stops when reached
+    initial_rate = IntParam(default=1_000_000)  # initial rate in pps
+
+    ingress_nic = DeviceParam()  # nic used for receive
+    egress_nic = DeviceParam()  # nic used for transmit
+
+    drop_rate = FloatParam(default=0.0)
+    wait_interval = FloatParam(default=5.0)  # seconds
+    max_iterations = IntParam(default=15)
+    pktgen_burst = IntParam(default=8)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.connections = []
+        self._current_rate = 0
+
+    def run(self):
+        self.params.ingress_nic._if_manager.reconnect_netlink()
+        self.params.egress_nic._if_manager.reconnect_netlink()
+        self.connections = self._open_connections()
+
+        self._current_rate = int(self.params.initial_rate / self.params.pktgen_burst)
+        step_size = int(self.params.initial_rate / 2)
+
+        prev_total, prev_dropped = self._read_stat()
+
+        self._set_rate_all()
+
+        prev_direction = None  # True = increase, False = decrease
+        rates = []  # list of tuples (rate, drop_rate)
+        updated = True
+
+        try:
+            for iteration in range(self.params.max_iterations):
+                logging.info(f"Iteration {iteration+1}/{self.params.max_iterations}")
+
+                # wait for changes to propagate
+                time.sleep(self.params.wait_interval)
+
+                curr_total, curr_dropped = self._read_stat()
+
+                if "mlx5" not in self.params.ingress_nic.driver:
+                    packets = curr_total - prev_total
+                    dropped = curr_dropped - prev_dropped
+                else:
+                    packets = curr_total
+                    dropped = curr_dropped - prev_dropped
+
+                drop_rate = round((dropped / packets) * 100 if packets > 0 and dropped / packets > 0 else 0, 2)
+                logging.debug(f"Total packets: {packets}, Dropped packets: {dropped}, Drop rate: {drop_rate}")
+
+                if updated:
+                    prev_total = curr_total
+                    prev_dropped = curr_dropped
+                    logging.info("Rate updated, waiting for changes to propagate.")
+                    updated = False
+                    continue
+
+                logging.info(
+                    f"Rate: {self._current_rate * self.params.pktgen_burst} pps, Drop rate: {drop_rate}, Step: {step_size}"
+                )
+                rates.append((self._current_rate * self.params.pktgen_burst, drop_rate))
+
+                if drop_rate > self.params.drop_rate:
+                    # too many drops, decrease rate
+                    current_direction = False
+                    new_rate = self._current_rate - step_size
+                else:
+                    # drops within range, increase rate
+                    current_direction = True
+                    new_rate = self._current_rate + step_size
+
+                # drop rate direction changed, reduce step size
+                if prev_direction is not None and prev_direction != current_direction:
+                    step_size = int(step_size / 2)
+
+                updated = (self._current_rate != new_rate)
+
+                self._current_rate = max(new_rate, self.params.cutoff_step)
+                self._set_rate_all()
+
+                prev_total = curr_total
+                prev_dropped = curr_dropped
+                prev_direction = current_direction
+
+                if step_size < self.params.cutoff_step:
+                    logging.info(
+                        f"Step size ({step_size}) below minimum threshold ({self.params.cutoff_step}). Stopping."
+                    )
+                    break
+        except Exception as e:
+            logging.info(f"Error during test: {e}")
+            self._res_data = (0, 100)
+            return False
+        finally:
+            for sock, _, _ in self.connections:
+                try:
+                    sock.close()
+                except:
+                    pass
+
+        self._res_data = max(
+            filter(
+                lambda x: x[1] <= self.params.drop_rate, self._deduplicate_rates(rates)
+            ),
+            key=lambda x: x[0],
+        )
+
+        return True
+
+    def _deduplicate_rates(self, rates):
+        """
+        Function merges duplicate rates and keeps only the one with
+        the highest drop rate (worst case).
+        """
+        deduplicated = []
+        for rate in rates:
+            same_rate = list(filter(lambda x: x[0] == rate[0], deduplicated))
+            if not same_rate:
+                deduplicated.append(rate)
+            else:
+                same_rate = same_rate[0]
+                if rate[1] > same_rate[1]:
+                    deduplicated.remove(same_rate)
+                    deduplicated.append(rate)
+
+        return deduplicated
+
+    def _read_stat(self):
+        """Read a statistic from the NIC."""
+        self.params.ingress_nic._if_manager.rescan_devices()
+        self.params.egress_nic._if_manager.rescan_devices()
+        # ^ needs to rescan devices to update netlink msg
+        # where stats are fetched from
+        ingress = self.params.ingress_nic.link_stats64
+        egress = self.params.egress_nic.link_stats64
+
+        dropped_ingress = ingress["rx_dropped"] + ingress["rx_missed_errors"]
+        if "mlx5" not in self.params.ingress_nic.driver:
+            # mlx5 doesn't increase ANY counter when running xdp program
+            dropped_internally = ingress["rx_packets"] - egress["tx_packets"] + dropped_ingress
+            # e.g. when running xdp program that drops packet,
+            # drop counter is not increased
+            # TODO: kernel bug??
+            return ingress["rx_packets"], dropped_internally
+        else:
+        # if "mlx5" in self.params.ingress_nic.driver:
+            # mlx5 doesn't increase ANY counter when running xdp program
+            return max(self._current_rate * self.params.pktgen_burst, 1), dropped_ingress
+
+
+    def _set_rate_all(self):
+        """Send rate update command to all generators."""
+        for sock, host, port in self.connections:
+            try:
+                cmd = f"ratep {int(self._current_rate)}\n"
+                sock.send(cmd.encode())
+            except socket.error as e:
+                logging.error(f"Failed to send rate update to {host}:{port}: {e}")
+
+    def _open_connections(self):
+        conns = []
+        for host, port in self.params.generators:
+            sock = self._open_connection(host, port)
+            conns.append((sock, host, port))
+            logging.info(f"Connected to generator at {host}:{port}")
+
+        return conns
+
+    def _open_connection(self, host, port):
+        try:
+            sock = socket.socket(
+                socket.AF_INET if isinstance(host, IPv4Address) else socket.AF_INET6,
+                socket.SOCK_STREAM,
+            )  # TODO: use lnst_ipaddr_class.family
+            sock.connect((str(host), port))
+            return sock
+        except socket.error as e:
+            raise TestModuleError(
+                f"Failed to connect to generator at {host}:{port}: {e}"
+            )
+
+    def runtime_estimate(self):
+        return ceil(self.params.max_iterations * self.params.wait_interval)

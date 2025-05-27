@@ -38,13 +38,18 @@ from lnst.Recipes.ENRT.ConfigMixins.MultiDevInterruptHWConfigMixin import (
 from lnst.Recipes.ENRT.ConfigMixins.OffloadSubConfigMixin import OffloadSubConfigMixin
 
 from lnst.Controller.NetNamespace import NetNamespace
-
+from lnst.Recipes.ENRT.ConfigMixins.DevRingConfigMixin import DevRingConfigMixin
+from lnst.Recipes.ENRT.ConfigMixins.DevFlowsPinningHWConfigMixin import (
+    DevFlowsPinningHWConfigMixin,
+)
 
 def filter_ip(config, iface, family):
     return [ip for ip in config._device_ips[iface] if ip.family == family][0]
 
 
 class ForwardingRecipe(
+    DevFlowsPinningHWConfigMixin,
+    DevRingConfigMixin,
     MultiDevInterruptHWConfigMixin,
     ForwardingMeasurementGenerator,
     OffloadSubConfigMixin,
@@ -380,3 +385,6 @@ class ForwardingRecipe(
     @property
     def forwarder_egress_nic(self):
         return self.matched.host2.eth1
+    
+    def steer_flow_by(self, _):
+        return "dst-ip"

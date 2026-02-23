@@ -6,4 +6,5 @@ from lnst.RecipeCommon.Perf.Measurements.NeperFlowMeasurement import NeperFlowMe
 from lnst.RecipeCommon.Perf.Measurements.LinuxPerfMeasurement import LinuxPerfMeasurement
 from lnst.RecipeCommon.Perf.Measurements.RDMABandwidthMeasurement import RDMABandwidthMeasurement
 from lnst.RecipeCommon.Perf.Measurements.XDPBenchMeasurement import XDPBenchMeasurement
+from lnst.RecipeCommon.Perf.Measurements.RSSMeasurement import RSSMeasurement
 

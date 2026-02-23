@@ -144,6 +144,9 @@ class BaseFlowMeasurementGenerator(BaseMeasurementGenerator):
             client, server = endpoint_pair
             for i in range(self.params.perf_parallel_processes):
                 server_port = client_port = next(port_iter)
+                if server_port == client_port and client_port == 12001:
+                    # avoid using 12001 as it is used by some other tests and might cause conflicts
+                    server_port = client_port = next(port_iter)
                 flows.append(
                     self._create_perf_flow(
                         perf_test,

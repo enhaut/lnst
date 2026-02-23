@@ -136,6 +136,8 @@ from lnst.Recipes.ENRT.DellLACPRecipe import DellLACPRecipe
 from lnst.Recipes.ENRT.SoftwareRDMARecipe import SoftwareRDMARecipe
 from lnst.Recipes.ENRT.XDPDropRecipe import XDPDropRecipe
 from lnst.Recipes.ENRT.XDPTxRecipe import XDPTxRecipe
+from lnst.Recipes.ENRT.RSSRecipe import RSSRecipe
+from lnst.Recipes.ENRT.XDPRSSRecipe import XDPRSSRecipe
 from lnst.Recipes.ENRT.CTInsertionRateNftablesRecipe import (
     CTInsertionRateNftablesRecipe,
 )

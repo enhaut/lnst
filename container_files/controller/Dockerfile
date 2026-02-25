@@ -19,7 +19,7 @@ RUN mkdir -p /root/.lnst
 RUN git clone -b nv https://github.com/enhaut/lnst.git /lnst
 
 ENV UV_PROJECT_ENVIRONMENT=/root/lnst_venv
-RUN cd /lnst && uv sync
+RUN cd /lnst && uv sync --extra trex
 # UV_PROJECT_ENVIRONMENT places the venv outside /lnst
 # to prevent conflicts when user mounts host-machine's
 # lnst dir to /lnst

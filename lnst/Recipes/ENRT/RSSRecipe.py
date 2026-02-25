@@ -1,6 +1,6 @@
 """
 Module with RSSRecipe class that implements ENRT recipe
-for testing RSS (Receive Side Scaling) distribution.
+for testing RSS distribution via XDP redirect-cpu.
 
 Copyright 2025 Red Hat, Inc.
 Licensed under the GNU General Public License, version 2 as
@@ -17,8 +17,8 @@ import logging
 from lnst.Recipes.ENRT.ConfigMixins.MultiDevInterruptHWConfigMixin import (
     MultiDevInterruptHWConfigMixin,
 )
-from lnst.Recipes.ENRT.MeasurementGenerators.RSSMeasurementGenerator import (
-    RSSMeasurementGenerator,
+from lnst.Recipes.ENRT.MeasurementGenerators.XDPRedirectCPUMeasurementGenerator import (
+    XDPRedirectCPUMeasurementGenerator,
 )
 from lnst.Recipes.ENRT.SimpleNetworkRecipe import SimpleNetworkRecipe
 from lnst.Recipes.ENRT.BaseEnrtRecipe import EnrtConfiguration
@@ -27,18 +27,18 @@ from lnst.RecipeCommon.Ping.PingEndpoints import PingEndpoints
 
 class RSSRecipe(
     MultiDevInterruptHWConfigMixin,
-    RSSMeasurementGenerator,
+    XDPRedirectCPUMeasurementGenerator,
     SimpleNetworkRecipe,
 ):
     """
     This recipe implements ENRT recipe for testing RSS (Receive Side Scaling)
-    distribution. It uses 2 hosts: host1 generates traffic with pktgen,
-    host2 receives and processes it via xdp-bench redirect-cpu (xdp mode)
-    or RPS (rps mode).
+    distribution via XDP redirect-cpu. It uses 2 hosts: host1 generates
+    traffic with pktgen, host2 receives and processes it via xdp-bench
+    redirect-cpu.
 
     RSS is effectively disabled on host2 by zeroing the hash key and
     disabling rxhash. All IRQs on host2 are pinned to a single CPU
-    (via multi_dev_interrupt_config). xdp-bench redirect-cpu or RPS then
+    (via multi_dev_interrupt_config). xdp-bench redirect-cpu then
     redistributes packets across the configured CPUs.
 
     .. code-block:: none
@@ -46,7 +46,7 @@ class RSSRecipe(
         +--------+              +--------+
         | host1  |              | host2  |
         |  eth0 -+-- switch  ---+- eth0  |
-        |pktgen  |              | xdp-bench redirect-cpu / RPS |
+        |pktgen  |              | xdp-bench redirect-cpu |
         +--------+              +--------+
 
     IRQ pinning should be configured via ``multi_dev_interrupt_config``
@@ -60,18 +60,21 @@ class RSSRecipe(
         host2 = self.matched.host2
         dev = host2.eth0
 
-        # Set combined rx/tx queues to 1 on host2
-        self._set_queue_count(host2, dev, config)
+        # Install python3-bcc and symlink for TC drop monitor
+        host2.run("dnf install -y python3-bcc", timeout=300)
+        host2.run(
+            "ln -sf /usr/lib/python3.9/site-packages/bcc"
+            " /tmp/virtualenvs/rhextensions-lnst-Xo1BSm3a-py3.9/lib/python3.9/site-packages/bcc"
+        )
 
-        # Disable rxhash on host2
-        host2.run(f"ethtool -K {dev.name} rxhash off")
+        # Set combined rx/tx queues to 1 on host2
+        # self._set_queue_count(host2, dev, config)
+
+        # Set NIC ring buffer size
+        self._set_ring_size(host2, dev, config)
 
         # Zero RSS hash key on host2
         self._zero_rss_hash_key(host2, dev, config)
-
-        # Configure RPS if rps mode
-        if self.params.rss_mode == "rps":
-            self._configure_rps(host2, dev, config)
 
         return config
 
@@ -79,15 +82,14 @@ class RSSRecipe(
         host2 = self.matched.host2
         dev = host2.eth0
 
-        # Restore RPS config if applicable
-        if self.params.rss_mode == "rps":
-            self._deconfigure_rps(host2, dev, config)
-
         # Restore original RSS hash key
         self._restore_rss_hash_key(host2, dev, config)
 
         # Restore rxhash
         host2.run(f"ethtool -K {dev.name} rxhash on")
+
+        # Restore NIC ring buffer size
+        self._restore_ring_size(host2, dev, config)
 
         # Restore original queue count
         self._restore_queue_count(host2, dev, config)
@@ -96,25 +98,51 @@ class RSSRecipe(
 
         return config
 
-    def _set_queue_count(self, host, dev, config):
-        """Save current combined queue count and set to 1."""
-        result = host.run(f"ethtool -l {dev.name}")
-        match = re.search(r"Current hardware settings:.*?Combined:\s+(\d+)",
-                          result.stdout, re.DOTALL)
-        if match:
-            config.rss_original_queue_count = int(match.group(1))
-        else:
-            config.rss_original_queue_count = None
+    def _set_ring_size(self, host, dev, config):
+        """Save current RX ring size and set to driver maximum."""
+        result = host.run(f"ethtool -g {dev.name}")
 
-        host.run(f"ethtool -L {dev.name} combined 1")
-        logging.info(f"Set combined queue count to 1 on {dev.name}")
+        max_match = re.search(
+            r"Pre-set maximums:.*?RX:\s+(\d+)", result.stdout, re.DOTALL
+        )
+        cur_match = re.search(
+            r"Current hardware settings:.*?RX:\s+(\d+)", result.stdout, re.DOTALL
+        )
+        config.rss_original_ring_size = int(cur_match.group(1)) if cur_match else None
 
-    def _restore_queue_count(self, host, dev, config):
-        """Restore original combined queue count."""
-        original = getattr(config, "rss_original_queue_count", None)
+        max_rx = int(max_match.group(1)) if max_match else 8192
+        host.run(f"ethtool -G {dev.name} rx {max_rx}")
+        logging.info(f"Set RX ring size to {max_rx} (max) on {dev.name}")
+
+    def _restore_ring_size(self, host, dev, config):
+        """Restore original RX ring size."""
+        original = getattr(config, "rss_original_ring_size", None)
         if original:
-            host.run(f"ethtool -L {dev.name} combined {original}")
-            logging.info(f"Restored combined queue count to {original} on {dev.name}")
+            host.run(f"ethtool -G {dev.name} rx {original}")
+            logging.info(f"Restored RX ring size to {original} on {dev.name}")
+
+    # def _set_queue_count(self, host, dev, config):
+    #     """Save current combined queue count and set to 1."""
+    #     return
+    #     result = host.run(f"ethtool -l {dev.name}")
+    #     match = re.search(
+    #         r"Current hardware settings:.*?Combined:\s+(\d+)", result.stdout, re.DOTALL
+    #     )
+    #     if match:
+    #         config.rss_original_queue_count = int(match.group(1))
+    #     else:
+    #         config.rss_original_queue_count = None
+    #
+    #     host.run(f"ethtool -L {dev.name} combined 1")
+    #     logging.info(f"Set combined queue count to 1 on {dev.name}")
+    #
+    # def _restore_queue_count(self, host, dev, config):
+    #     """Restore original combined queue count."""
+    #     return
+    #     original = getattr(config, "rss_original_queue_count", None)
+    #     if original:
+    #         host.run(f"ethtool -L {dev.name} combined {original}")
+    #         logging.info(f"Restored combined queue count to {original} on {dev.name}")
 
     def _zero_rss_hash_key(self, host, dev, config):
         """
@@ -125,9 +153,7 @@ class RSSRecipe(
         output = result.stdout
 
         # Parse hash key from ethtool -x output
-        key_match = re.search(
-            r"RSS hash key:\s*\n((?:[0-9a-fA-F]{2}:?)+)", output
-        )
+        key_match = re.search(r"RSS hash key:\s*\n((?:[0-9a-fA-F]{2}:?)+)", output)
         if key_match:
             original_key = key_match.group(1).strip()
             key_bytes = original_key.split(":")
@@ -143,9 +169,7 @@ class RSSRecipe(
                 f"(original length: {key_length} bytes)"
             )
         else:
-            logging.warning(
-                f"Could not parse RSS hash key from ethtool -x output"
-            )
+            logging.warning(f"Could not parse RSS hash key from ethtool -x output")
             config.rss_original_hash_key = None
 
     def _restore_rss_hash_key(self, host, dev, config):
@@ -155,30 +179,13 @@ class RSSRecipe(
             host.run(f"ethtool -X {dev.name} hkey {original_key}")
             logging.info(f"Restored RSS hash key on {dev.name}")
 
-    def _configure_rps(self, host, dev, config):
-        """Configure RPS by writing CPU bitmask to all RX queues."""
-        bitmask = 0
-        for cpu in self.params.perf_tool_cpu:
-            bitmask |= (1 << cpu)
-        hex_mask = format(bitmask, "x")
-
-        host.run(
-            f"for f in /sys/class/net/{dev.name}/queues/rx-*/rps_cpus; "
-            f"do echo {hex_mask} > $f; done"
-        )
-        config.rss_rps_configured = True
-        logging.info(
-            f"Configured RPS on {dev.name} with CPU mask 0x{hex_mask}"
-        )
-
-    def _deconfigure_rps(self, host, dev, config):
-        """Reset RPS configuration (set mask to 0 = disabled)."""
-        if getattr(config, "rss_rps_configured", False):
-            host.run(
-                f"for f in /sys/class/net/{dev.name}/queues/rx-*/rps_cpus; "
-                f"do echo 0 > $f; done"
-            )
-            logging.info(f"Disabled RPS on {dev.name}")
+    def _cpu_measurement_kwargs(self):
+        cpu_names = ["cpu0", "cpu"] + [f"cpu{c}" for c in self.params.perf_tool_cpu]
+        return {
+            "log_cpu_filter": cpu_names,
+            "log_host_filter": {"host2"},
+            "results_dir": f"/root/.lnst/results/{self.__class__.__name__}",
+        }
 
     def generate_ping_endpoints(self, config):
         return [

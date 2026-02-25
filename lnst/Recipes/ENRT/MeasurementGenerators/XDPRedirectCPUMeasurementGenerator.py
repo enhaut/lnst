@@ -1,5 +1,5 @@
 """
-Module with generator class for RSS Recipe.
+Module with generator class for XDP redirect-cpu RSS Recipe.
 
 Copyright 2025 Red Hat, Inc.
 Licensed under the GNU General Public License, version 2 as
@@ -14,44 +14,43 @@ from lnst.Common.Parameters import (
     IntParam,
     ListParam,
     StrParam,
-    ChoiceParam,
 )
 
 from lnst.Recipes.ENRT.MeasurementGenerators.BaseFlowMeasurementGenerator import (
     BaseFlowMeasurementGenerator,
 )
-from lnst.RecipeCommon.Perf.Measurements.RSSMeasurement import (
-    RSSMeasurement,
+from lnst.RecipeCommon.Perf.Measurements.XDPRedirectCPUMeasurement import (
+    XDPRedirectCPUMeasurement,
 )
-from lnst.RecipeCommon.Perf.Measurements.BaseFlowMeasurement import BaseFlowMeasurement
 
 from lnst.RecipeCommon.Perf.Measurements import Flow as PerfFlow
 from lnst.RecipeCommon.endpoints import EndpointPair, IPEndpoint
 
 
-class RSSMeasurementGenerator(BaseFlowMeasurementGenerator):
+class XDPRedirectCPUMeasurementGenerator(BaseFlowMeasurementGenerator):
     perf_tool_cpu = ListParam(mandatory=True)
     ratep = IntParam(default=-1)
     burst = IntParam(default=1)
-    rss_mode = ChoiceParam(type=StrParam, choices=["xdp", "rps"], default="xdp")
+    backlog_size = IntParam(default=512)
     xdp_redirect_program = StrParam(default="l4-hash")
     xdp_redirect_remote_action = StrParam(default="pass")
 
     @property
     def net_perf_tool_class(self):
-        def RSSMeasurement_partial(*args, **kwargs):
-            return RSSMeasurement(
+        def XDPMeasurement_partial(*args, **kwargs):
+            return XDPRedirectCPUMeasurement(
                 *args,
-                mode=self.params.rss_mode,
                 cpus=self.params.perf_tool_cpu,
                 xdp_program=self.params.xdp_redirect_program,
                 xdp_remote_action=self.params.xdp_redirect_remote_action,
+                backlog_size=self.params.backlog_size,
                 ratep=self.params.ratep,
                 burst=self.params.burst,
+                results_dir=f"/root/.lnst/results/{self.__class__.__name__}",
                 **kwargs,
             )
 
-        return RSSMeasurement_partial
+        return XDPMeasurement_partial
 
     def generator_cpupin(self, flow_id: int) -> list[int]:
         """
@@ -70,7 +69,7 @@ class RSSMeasurementGenerator(BaseFlowMeasurementGenerator):
         msg_size,
     ) -> list[PerfFlow]:
         """
-        :class:`RSSMeasurement` needs `Flow.receiver_nic` to be set
+        :class:`XDPRedirectCPUMeasurement` needs `Flow.receiver_nic` to be set
         for all flows.
         """
         flows = super()._create_perf_flows(endpoint_pairs, perf_test, msg_size)

@@ -39,6 +39,7 @@ class RSSMeasurementResults(BaseMeasurementResults):
         self._generator_results = ParallelPerfResult()
         self._receiver_results = SequentialPerfResult()
         self._forwarded_results = ParallelPerfResult()
+        self._drop_results = ParallelPerfResult()
 
     @property
     def flows(self):
@@ -50,6 +51,7 @@ class RSSMeasurementResults(BaseMeasurementResults):
             "generator_results",
             "receiver_results",
             "forwarded_results",
+            "drop_results",
         ]
 
     @property
@@ -77,12 +79,22 @@ class RSSMeasurementResults(BaseMeasurementResults):
         self._forwarded_results = value
 
     @property
+    def drop_results(self) -> ParallelPerfResult:
+        return self._drop_results
+
+    @drop_results.setter
+    def drop_results(self, value: ParallelPerfResult):
+        self._drop_results = value
+
+    @property
     def start_timestamp(self):
         timestamps = [self.generator_results.start_timestamp]
         if self.receiver_results:
             timestamps.append(self.receiver_results.start_timestamp)
         if self.forwarded_results:
             timestamps.append(self.forwarded_results.start_timestamp)
+        if self.drop_results:
+            timestamps.append(self.drop_results.start_timestamp)
         return min(timestamps)
 
     @property
@@ -92,6 +104,8 @@ class RSSMeasurementResults(BaseMeasurementResults):
             timestamps.append(self.receiver_results.end_timestamp)
         if self.forwarded_results:
             timestamps.append(self.forwarded_results.end_timestamp)
+        if self.drop_results:
+            timestamps.append(self.drop_results.end_timestamp)
         return max(timestamps)
 
     @property
@@ -110,6 +124,8 @@ class RSSMeasurementResults(BaseMeasurementResults):
         result_copy.generator_results = self.generator_results.time_slice(start, end)
         result_copy.receiver_results = self.receiver_results.time_slice(start, end)
         result_copy.forwarded_results = self.forwarded_results.time_slice(start, end)
+        if self.drop_results:
+            result_copy.drop_results = self.drop_results.time_slice(start, end)
 
         return result_copy
 
@@ -121,6 +137,7 @@ class RSSMeasurementResults(BaseMeasurementResults):
             self.generator_results.extend(results.generator_results)
             self.receiver_results.extend(results.receiver_results)
             self.forwarded_results.extend(results.forwarded_results)
+            self.drop_results.extend(results.drop_results)
         else:
             raise MeasurementError("Adding incorrect results.")
 
@@ -170,6 +187,16 @@ class RSSMeasurementResults(BaseMeasurementResults):
                             unit=fwd.unit,
                         ).replace("_", " ")
                     )
+                if i < len(self.drop_results):
+                    drp = self.drop_results[i]
+                    desc.append(
+                        "TC drops (drop_results): {tput:_.2f} +-{deviation:.2f}({percentage:.2f}%) {unit} per second.".format(
+                            tput=drp.average,
+                            deviation=drp.std_deviation,
+                            percentage=self._deviation_percentage(drp),
+                            unit=drp.unit,
+                        ).replace("_", " ")
+                    )
 
         desc.append(str(self.flow))
         desc.append(
@@ -196,6 +223,16 @@ class RSSMeasurementResults(BaseMeasurementResults):
                     deviation=self.forwarded_results.std_deviation,
                     percentage=self._deviation_percentage(self.forwarded_results),
                     unit=self.forwarded_results.unit,
+                ).replace("_", " ")
+            )
+
+        if self.drop_results:
+            desc.append(
+                "TC drops (drop_results): {tput:_.2f} +-{deviation:.2f}({percentage:.2f}%) {unit} per second.".format(
+                    tput=self.drop_results.average,
+                    deviation=self.drop_results.std_deviation,
+                    percentage=self._deviation_percentage(self.drop_results),
+                    unit=self.drop_results.unit,
                 ).replace("_", " ")
             )
 

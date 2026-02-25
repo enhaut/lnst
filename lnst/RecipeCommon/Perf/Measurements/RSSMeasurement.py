@@ -1,5 +1,5 @@
 """
-Module implementing RSS Measurement.
+Module implementing base RSS Measurement.
 
 Copyright 2025 Red Hat, Inc.
 Licensed under the GNU General Public License, version 2 as
@@ -10,10 +10,13 @@ __author__ = """
 sdobron@redhat.com (Samuel Dobron)
 """
 
+import json
+import os
 import signal
-from typing import Literal
+import logging
+import time
 
-from lnst.Tests.XDPBenchRedirectCpu import XDPBenchRedirectCpu
+from lnst.Tests.TCIngDropMonitor import TCIngDropMonitor
 from lnst.RecipeCommon.Perf.Results import (
     PerfInterval,
     ParallelPerfResult,
@@ -23,7 +26,6 @@ from lnst.Devices.VlanDevice import VlanDevice
 from lnst.Controller.RecipeResults import ResultType
 from lnst.Tests.PktGen import PktgenController
 
-from lnst.Tests.InterfaceStatsMonitor import InterfaceStatsMonitor
 from lnst.RecipeCommon.Perf.Measurements.BaseFlowMeasurement import NetworkFlowTest
 from lnst.RecipeCommon.Perf.Measurements.MeasurementError import MeasurementError
 from lnst.RecipeCommon.Perf.Measurements.BaseFlowMeasurement import BaseFlowMeasurement
@@ -38,17 +40,14 @@ from lnst.Controller.RecipeResults import MeasurementResult
 
 class RSSMeasurement(BaseFlowMeasurement):
     """
-    This class implements RSS (Receive Side Scaling) measurement.
+    Base class for RSS/RPS measurements.
 
     It uses pktgen to generate packets from host1 to host2.
-    On host2, depending on the mode:
-    - xdp mode: xdp-bench redirect-cpu receives and redistributes packets
-    - rps mode: InterfaceStatsMonitor tracks rx_packets
+    TCIngDropMonitor counts per-CPU drops at TC ingress on host2.
 
-    :param mode: "xdp" or "rps" - which RSS distribution mechanism to use
-    :param cpus: target CPUs for xdp-bench redirect-cpu
-    :param xdp_program: -p flag for xdp-bench (default "l4-hash")
-    :param xdp_remote_action: -r flag for xdp-bench (default "pass")
+    Subclasses add mode-specific receiver jobs (xdp-bench, etc).
+
+    :param cpus: target CPUs for packet distribution
     :param ratep: pktgen rate limit (default -1, unlimited)
     :param burst: pktgen burst (default 1)
     """
@@ -56,28 +55,26 @@ class RSSMeasurement(BaseFlowMeasurement):
     def __init__(
         self,
         flows,
-        mode: Literal["xdp", "rps"] = "xdp",
         cpus: list[int] = None,
-        xdp_program: str = "l4-hash",
-        xdp_remote_action: str = "pass",
         ratep=-1,
         burst=1,
         recipe_conf=None,
+        results_dir=None,
     ):
         super().__init__(recipe_conf=recipe_conf)
         self._flows = flows
-        self._mode = mode
         self._cpus = cpus or []
-        self._xdp_program = xdp_program
-        self._xdp_remote_action = xdp_remote_action
         self._ratep = ratep
         self._burst = burst
+        self._results_dir = results_dir
 
         self._generator_job = None  # pktgen
-        self._receiver_job = None  # xdp-bench redirect-cpu or InterfaceStatsMonitor
+        self._receiver_job = None  # mode-specific (xdp-bench, etc.)
+        self._drop_monitor_job = None  # TCIngDropMonitor
 
         self._finished_generator_job = None
         self._finished_receiver_job = None
+        self._finished_drop_monitor_job = None
 
         self._net_flows = []
 
@@ -101,20 +98,23 @@ class RSSMeasurement(BaseFlowMeasurement):
 
         self._prepare_jobs()
 
-        self._receiver_job.start(bg=True)
+        self._drop_monitor_job.start(bg=True)
+        if self._receiver_job:
+            self._receiver_job.start(bg=True)
         self._generator_job.start(bg=True)
 
     def _prepare_jobs(self):
         self._generator_job = self._prepare_client()
-
-        if self._mode == "xdp":
-            self._receiver_job = self._prepare_server_xdp()
-        else:
-            self._receiver_job = self._prepare_server_rps()
+        self._drop_monitor_job = self._prepare_drop_monitor()
+        self._prepare_receiver()
 
         for flow in self.flows:
-            net_flow = NetworkFlowTest(flow, self._receiver_job, self._generator_job)
+            net_flow = NetworkFlowTest(flow, self._drop_monitor_job, self._generator_job)
             self._net_flows.append(net_flow)
+
+    def _prepare_receiver(self):
+        """Override in subclasses to set self._receiver_job."""
+        pass
 
     def _prepare_client(self):
         config = []
@@ -145,34 +145,16 @@ class RSSMeasurement(BaseFlowMeasurement):
 
         return job
 
-    def _prepare_server_xdp(self):
+    def _prepare_drop_monitor(self):
         """
-        Prepares xdp-bench redirect-cpu at the receiver.
-        """
-        sample_flow = self.flows[0]
-        receiver_nic = self._real_dev(sample_flow.receiver_nic)
-
-        bench = XDPBenchRedirectCpu(
-            interface=receiver_nic,
-            cpus=self._cpus,
-            program=self._xdp_program,
-            remote_action=self._xdp_remote_action,
-            duration=sample_flow.duration + sample_flow.warmup_duration * 2,
-        )
-        job = sample_flow.receiver.prepare_job(bench)
-
-        return job
-
-    def _prepare_server_rps(self):
-        """
-        Prepares InterfaceStatsMonitor at the receiver for RPS mode.
+        Prepares TCIngDropMonitor at the receiver to count per-CPU drops.
         """
         sample_flow = self.flows[0]
         receiver_nic = self._real_dev(sample_flow.receiver_nic)
 
-        monitor = InterfaceStatsMonitor(
+        monitor = TCIngDropMonitor(
             device=receiver_nic,
-            stats=["rx_packets"],
+            cpus=self._cpus,
         )
         job = sample_flow.receiver.prepare_job(monitor)
 
@@ -183,56 +165,77 @@ class RSSMeasurement(BaseFlowMeasurement):
             self._generator_job.wait(
                 timeout=self._generator_job.what.runtime_estimate()
             )
-            if self._mode == "rps":
-                self._receiver_job.kill(signal.SIGINT)
-                self._receiver_job.wait()
-            else:
+            if self._receiver_job:
                 self._receiver_job.wait(
                     timeout=self._receiver_job.what.runtime_estimate()
                 )
         finally:
             self._generator_job.kill()
-            self._receiver_job.kill()
+            if self._receiver_job:
+                self._receiver_job.kill()
+
+        self._drop_monitor_job.kill(signal.SIGINT)
+        self._drop_monitor_job.wait()
 
         self._finished_generator_job = self._generator_job
         self._finished_receiver_job = self._receiver_job
+        self._finished_drop_monitor_job = self._drop_monitor_job
 
         self._generator_job = None
         self._receiver_job = None
+        self._drop_monitor_job = None
 
     def collect_results(self):
-        generator_results = self._parse_generator_results()
+        self._log_raw_results()
 
-        if self._mode == "xdp":
-            receiver_results, forwarded_results = self._parse_receiver_results_xdp()
-        else:
-            receiver_results = self._parse_receiver_results_rps()
-            forwarded_results = ParallelPerfResult(
-                [
-                    SequentialPerfResult(
-                        PerfInterval(
-                            0, interval.duration, "packets", interval.timestamp
-                        )
-                        for interval in receiver_results
-                    )
-                ]
-            )
+        generator_results = self._parse_generator_results()
+        drop_results = self._parse_drop_monitor_results()
+        receiver_results, forwarded_results = self._parse_receiver_results()
 
         flows = [net_flow.flow for net_flow in self._net_flows]
         warmup_duration = flows[0].warmup_duration if flows else 0
 
         result = RSSMeasurementResults(
             measurement=self,
-            measurement_success=bool(receiver_results) and bool(generator_results),
+            measurement_success=bool(drop_results) and bool(generator_results),
             flows=flows,
             warmup_duration=warmup_duration,
         )
         result.generator_results = generator_results
         result.receiver_results = receiver_results
         result.forwarded_results = forwarded_results
-        breakpoint()
+        result.drop_results = drop_results
+
         self._net_flows = []
         return [result]
+
+    def _parse_receiver_results(self):
+        """Override in subclasses. Returns (receiver_results, forwarded_results)."""
+        return SequentialPerfResult(), ParallelPerfResult()
+
+    def _log_raw_results(self):
+        raw = {}
+
+        if self._finished_generator_job and self._finished_generator_job.passed:
+            raw["generator"] = self._finished_generator_job.result
+
+        if self._finished_receiver_job and self._finished_receiver_job.passed:
+            raw["receiver"] = self._finished_receiver_job.result
+
+        if self._finished_drop_monitor_job and self._finished_drop_monitor_job.passed:
+            raw["drop_monitor"] = self._finished_drop_monitor_job.result
+
+        json_str = json.dumps(raw, indent=2, default=str)
+        logging.info("RSSMeasurement raw results:\n%s", json_str)
+
+        if self._results_dir:
+            os.makedirs(self._results_dir, exist_ok=True)
+            path = os.path.join(
+                self._results_dir, f"rss_{int(time.time())}.json"
+            )
+            with open(path, "w") as f:
+                f.write(json_str)
+            logging.info("RSSMeasurement results saved to %s", path)
 
     def _parse_generator_results(self) -> ParallelPerfResult:
         """
@@ -258,73 +261,41 @@ class RSSMeasurement(BaseFlowMeasurement):
 
         return ParallelPerfResult(nic_results.values())
 
-    def _parse_receiver_results_xdp(self):
+    def _map_cpu_to_flow_id(self, cpu):
         """
-        Parse xdp-bench redirect-cpu results.
-
-        - receiver_results: SequentialPerfResult of total received pkt/s
-        - forwarded_results: ParallelPerfResult with one SequentialPerfResult
-          per CPU (each CPU is a separate flow due to l4-hash)
+        Map a CPU id to a flow index. Currently a dumb 1:1 mapping
+        based on position in self._cpus.
         """
-        receiver_results = SequentialPerfResult()
+        return self._cpus.index(cpu)
 
-        if not self._finished_receiver_job.passed:
-            return receiver_results, ParallelPerfResult()
+    def _parse_drop_monitor_results(self) -> ParallelPerfResult:
+        """
+        Parse TCIngDropMonitor results into a ParallelPerfResult with
+        one SequentialPerfResult per CPU.
+        """
+        if not self._finished_drop_monitor_job:
+            return ParallelPerfResult()
 
-        forwarded_results = ParallelPerfResult()
+        if not self._finished_drop_monitor_job.passed:
+            return ParallelPerfResult()
+
+        results = ParallelPerfResult()
         for _ in self._cpus:
-            forwarded_results.append(SequentialPerfResult())
+            results.append(SequentialPerfResult())
 
-        for sample in self._finished_receiver_job.result:
-            receiver_results.append(
-                PerfInterval(
-                    sample["received"],
-                    sample["duration"],
-                    "packets",
-                    sample["timestamp"],
-                )
-            )
-
-            for cpu, pkts in sample["forwarded_per_cpu"].items():
-                forwarded_results[
-                    self._cpus.index(cpu)
-                ].append(  # TODO: more inteligent mapping of cpu to flow instead of round-robin
+        for sample in self._finished_drop_monitor_job.result:
+            for cpu, drops in sample["drops_per_cpu"].items():
+                cpu = int(cpu)
+                results[self._map_cpu_to_flow_id(cpu)].append(
                     PerfInterval(
-                        pkts,
+                        drops,
                         sample["duration"],
                         "packets",
                         sample["timestamp"],
                     )
                 )
 
-        # breakpoint()
-        return receiver_results, forwarded_results
-
-    def _parse_receiver_results_rps(self):
-        """
-        Parse InterfaceStatsMonitor results (rx_packets only).
-        """
-        result = SequentialPerfResult()
-        if not self._finished_receiver_job.passed:
-            return result
-
-        raw_samples = self._finished_receiver_job.result
-        previous_timestamp = raw_samples[0]["timestamp"]
-        previous_value = raw_samples[0]["rx_packets"]
-
-        for raw_sample in raw_samples[1:]:
-            sample = PerfInterval(
-                raw_sample["rx_packets"] - previous_value,
-                raw_sample["timestamp"] - previous_timestamp,
-                "packets",
-                raw_sample["timestamp"],
-            )
-            result.append(sample)
-
-            previous_timestamp = raw_sample["timestamp"]
-            previous_value = raw_sample["rx_packets"]
-
-        return result
+        return results
 
     def _real_dev(self, device):
         if isinstance(device, VlanDevice):
@@ -352,6 +323,7 @@ class RSSMeasurement(BaseFlowMeasurement):
         generator = result.generator_results
         receiver = result.receiver_results
         forwarded = result.forwarded_results
+        drop = result.drop_results
 
         desc = []
         desc.append(result.describe())
@@ -359,16 +331,22 @@ class RSSMeasurement(BaseFlowMeasurement):
         metrics_result = ResultType.PASS
         metrics = {
             "Generator": generator,
-            "Receiver": receiver,
         }
         data = {
             "generator_results": generator,
             "receiver_results": receiver,
             "forwarded_results": forwarded,
+            "drop_results": drop,
         }
+
+        if receiver:
+            metrics["Receiver"] = receiver
 
         if forwarded:
             metrics["Forwarded"] = forwarded
+
+        if drop:
+            metrics["TC Drops"] = drop
 
         for name, metric_result in metrics.items():
             if cls._invalid_flow_duration(metric_result):

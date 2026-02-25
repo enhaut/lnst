@@ -1,5 +1,6 @@
 import re
 import time
+import random
 import signal
 import logging
 from subprocess import Popen, PIPE
@@ -29,6 +30,7 @@ class XDPBenchRedirectCpuOutputParser:
         try:
             for sample in iter(self._process.stdout.readline, ""):
                 self._raw_samples.append((time.time(), sample.decode()))
+                # logging.debug(sample.decode().rstrip())
         except ValueError:
             pass  # .readline raises exception on killing xdp-bench subprocess
 
@@ -38,10 +40,10 @@ class XDPBenchRedirectCpuOutputParser:
         logging.debug("Stderr of xdp-bench redirect-cpu:")
         logging.debug(str(stderr))
 
-        logging.debug(
-            "Stdout of xdp-bench redirect-cpu:\n%s",
-            "".join(line for _, line in self._raw_samples),
-        )
+        # logging.debug(
+        #     "Stdout of xdp-bench redirect-cpu:\n%s",
+        #     "".join(line for _, line in self._raw_samples),
+        # )
 
         results = []
         blocks = self._split_into_blocks()
@@ -158,6 +160,7 @@ class XDPBenchRedirectCpu(BaseTestModule):
     remote_action = StrParam(default="pass")
     interval = IntParam(default=1)
     duration = IntParam(default=60)
+    queue_size = IntParam(default=512)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -184,10 +187,10 @@ class XDPBenchRedirectCpu(BaseTestModule):
         for cpu in self.params.cpus:
             args.extend(["-c", str(cpu)])
 
-        args.extend(["-p", "round-robin"])
-        args.extend(["-r", "drop"])
+        args.extend(["-p", "l4-hash"])
+        args.extend(["-r", "pass"])
         args.extend(["-i", str(self.params.interval)])
-        args.extend(["-q", "1000"])
+        args.extend(["-q", str(self.params.queue_size)])
         args.append("-e")  # extended stats
 
         return args

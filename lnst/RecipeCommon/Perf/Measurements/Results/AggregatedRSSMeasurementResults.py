@@ -23,6 +23,7 @@ class AggregatedRSSMeasurementResults(RSSMeasurementResults):
         self._generator_results = SequentialPerfResult()
         self._receiver_results = SequentialPerfResult()
         self._forwarded_results = SequentialPerfResult()
+        self._drop_results = SequentialPerfResult()
 
         self._individual_results: list[RSSMeasurementResults] = []
 
@@ -45,10 +46,12 @@ class AggregatedRSSMeasurementResults(RSSMeasurementResults):
             self.generator_results.extend(results.generator_results)
             self.receiver_results.extend(results.receiver_results)
             self.forwarded_results.extend(results.forwarded_results)
+            self.drop_results.extend(results.drop_results)
         elif isinstance(results, RSSMeasurementResults):
             self._individual_results.append(results)
             self.generator_results.append(results.generator_results)
             self.receiver_results.append(results.receiver_results)
             self.forwarded_results.append(results.forwarded_results)
+            self.drop_results.append(results.drop_results)
         else:
             raise MeasurementError("Adding incorrect results.")

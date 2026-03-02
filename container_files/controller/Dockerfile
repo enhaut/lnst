@@ -13,7 +13,10 @@ RUN dnf install -y initscripts \
     libnl3 \
     lksctp-tools-devel \
     git \
-    libnl3-devel
+    libnl3-devel \
+    jq \
+    sshpass \
+    openssh-clients
 
 RUN mkdir -p /root/.lnst
 RUN git clone -b nv https://github.com/enhaut/lnst.git /lnst

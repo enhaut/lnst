@@ -1,0 +1,1835 @@
+{
+  "generator": {
+    "ens7f0np0@0": [
+      {
+        "timestamp": 1772634670.103752,
+        "duration": 1.0013775825500488,
+        "packets": 1681684,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634671.1051295,
+        "duration": 1.001105546951294,
+        "packets": 1704491,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634672.106235,
+        "duration": 1.0010716915130615,
+        "packets": 1766064,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634673.1073067,
+        "duration": 1.0010859966278076,
+        "packets": 1762583,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634674.1083927,
+        "duration": 1.001068115234375,
+        "packets": 1764108,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634675.1094608,
+        "duration": 1.0010669231414795,
+        "packets": 1762955,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634676.1105278,
+        "duration": 1.0010652542114258,
+        "packets": 1770437,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634677.111593,
+        "duration": 1.001093864440918,
+        "packets": 1765261,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634678.1126869,
+        "duration": 1.0010828971862793,
+        "packets": 1767757,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634679.1137698,
+        "duration": 1.0010745525360107,
+        "packets": 1776131,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634680.1148443,
+        "duration": 1.0010814666748047,
+        "packets": 1774343,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634681.1159258,
+        "duration": 1.0010836124420166,
+        "packets": 1772672,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634682.1170094,
+        "duration": 1.0010919570922852,
+        "packets": 1767819,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634683.1181014,
+        "duration": 1.0010669231414795,
+        "packets": 1776369,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634684.1191683,
+        "duration": 1.0010745525360107,
+        "packets": 1773242,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634685.1202428,
+        "duration": 1.001094102859497,
+        "packets": 1768189,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634686.121337,
+        "duration": 1.001098394393921,
+        "packets": 1772319,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634687.1224353,
+        "duration": 1.0010874271392822,
+        "packets": 1775945,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634688.1235228,
+        "duration": 1.001075029373169,
+        "packets": 1780127,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634689.1245978,
+        "duration": 1.0010607242584229,
+        "packets": 1775908,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634690.1256585,
+        "duration": 1.0010643005371094,
+        "packets": 1778810,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634691.1267228,
+        "duration": 1.001077651977539,
+        "packets": 1777574,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634692.1278005,
+        "duration": 1.001070261001587,
+        "packets": 1781392,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634693.1288707,
+        "duration": 1.0011060237884521,
+        "packets": 1779605,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634694.1299767,
+        "duration": 1.0011062622070312,
+        "packets": 1774647,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634695.131083,
+        "duration": 1.0011093616485596,
+        "packets": 1771151,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634696.1321924,
+        "duration": 1.001091480255127,
+        "packets": 1776628,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634697.1332839,
+        "duration": 1.0011045932769775,
+        "packets": 1778412,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634698.1343884,
+        "duration": 1.0010731220245361,
+        "packets": 1777145,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634699.1354616,
+        "duration": 1.0010886192321777,
+        "packets": 1780559,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634700.1365502,
+        "duration": 1.0001766681671143,
+        "packets": 1780151,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634701.1367269,
+        "duration": 1.0010807514190674,
+        "packets": 1692076,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634702.1378076,
+        "duration": 1.0009136199951172,
+        "packets": 1734977,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634703.1387212,
+        "duration": 1.0010788440704346,
+        "packets": 1743375,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634704.1398,
+        "duration": 1.0009486675262451,
+        "packets": 1753717,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634705.1407487,
+        "duration": 1.0010740756988525,
+        "packets": 1725089,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634706.1418228,
+        "duration": 1.0010979175567627,
+        "packets": 1759816,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634707.1429207,
+        "duration": 1.0010778903961182,
+        "packets": 1779077,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634708.1439986,
+        "duration": 1.0010693073272705,
+        "packets": 1776647,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634709.145068,
+        "duration": 1.0010616779327393,
+        "packets": 1778923,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634710.1461296,
+        "duration": 1.0010924339294434,
+        "packets": 1769146,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634711.147222,
+        "duration": 1.001079797744751,
+        "packets": 1759376,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634712.1483018,
+        "duration": 1.0010805130004883,
+        "packets": 1763889,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634713.1493824,
+        "duration": 1.0010786056518555,
+        "packets": 1764761,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634714.150461,
+        "duration": 1.0010595321655273,
+        "packets": 1764753,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634715.1515205,
+        "duration": 1.0010669231414795,
+        "packets": 1765064,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634716.1525874,
+        "duration": 1.0011169910430908,
+        "packets": 1781114,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634717.1537044,
+        "duration": 1.0011084079742432,
+        "packets": 1775940,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634718.1548128,
+        "duration": 1.0010645389556885,
+        "packets": 1776547,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634719.1558774,
+        "duration": 1.0010697841644287,
+        "packets": 1773475,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634720.1569471,
+        "duration": 1.0010783672332764,
+        "packets": 1773618,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634721.1580255,
+        "duration": 1.0010936260223389,
+        "packets": 1774259,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634722.1591191,
+        "duration": 1.0010838508605957,
+        "packets": 1775743,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634723.160203,
+        "duration": 1.0010623931884766,
+        "packets": 1779400,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634724.1612654,
+        "duration": 1.001086950302124,
+        "packets": 1778796,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634725.1623523,
+        "duration": 1.0010724067687988,
+        "packets": 1773758,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634726.1634247,
+        "duration": 1.0010790824890137,
+        "packets": 1769110,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634727.1645038,
+        "duration": 1.00111985206604,
+        "packets": 1773714,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634728.1656237,
+        "duration": 1.0011088848114014,
+        "packets": 1772908,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634729.1667325,
+        "duration": 1.001075267791748,
+        "packets": 1771603,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634730.1678078,
+        "duration": 1.0010621547698975,
+        "packets": 1768613,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634731.16887,
+        "duration": 1.001072645187378,
+        "packets": 1774858,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634732.1699426,
+        "duration": 1.0010638236999512,
+        "packets": 1771380,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634733.1710064,
+        "duration": 1.001067876815796,
+        "packets": 1770698,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634734.1720743,
+        "duration": 1.0010590553283691,
+        "packets": 1772633,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634735.1731334,
+        "duration": 1.0010693073272705,
+        "packets": 1774892,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634736.1742027,
+        "duration": 1.001067876815796,
+        "packets": 1774146,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634737.1752706,
+        "duration": 1.0010833740234375,
+        "packets": 1775454,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634738.176354,
+        "duration": 1.0011062622070312,
+        "packets": 1775786,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634739.1774602,
+        "duration": 1.0010955333709717,
+        "packets": 1772527,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634740.1785557,
+        "duration": 1.0010910034179688,
+        "packets": 1782656,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634741.1796467,
+        "duration": 1.0010652542114258,
+        "packets": 1771412,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634742.180712,
+        "duration": 1.0010733604431152,
+        "packets": 1770525,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634743.1817853,
+        "duration": 1.0010836124420166,
+        "packets": 1778756,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634744.182869,
+        "duration": 1.0010840892791748,
+        "packets": 1779097,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634745.183953,
+        "duration": 1.001058578491211,
+        "packets": 1777986,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634746.1850116,
+        "duration": 1.0010685920715332,
+        "packets": 1774198,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634747.1860802,
+        "duration": 1.0010781288146973,
+        "packets": 1774917,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634748.1871583,
+        "duration": 1.0011191368103027,
+        "packets": 1772313,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634749.1882775,
+        "duration": 1.001129150390625,
+        "packets": 1773296,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@0\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12000  udp_src_max: 12000  udp_dst_min: 12000  udp_dst_max: 12000\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      }
+    ],
+    "ens7f0np0@1": [
+      {
+        "timestamp": 1772634670.1040685,
+        "duration": 1.0023937225341797,
+        "packets": 1682972,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634671.1064622,
+        "duration": 1.001098871231079,
+        "packets": 1704463,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634672.107561,
+        "duration": 1.00107741355896,
+        "packets": 1766069,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634673.1086385,
+        "duration": 1.0010755062103271,
+        "packets": 1761389,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634674.109714,
+        "duration": 1.0010638236999512,
+        "packets": 1764175,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634675.1107779,
+        "duration": 1.0010662078857422,
+        "packets": 1763483,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634676.111844,
+        "duration": 1.0010602474212646,
+        "packets": 1770277,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634677.1129043,
+        "duration": 1.0010676383972168,
+        "packets": 1765210,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634678.113972,
+        "duration": 1.0011110305786133,
+        "packets": 1768242,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634679.115083,
+        "duration": 1.0010907649993896,
+        "packets": 1775648,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634680.1161737,
+        "duration": 1.0010640621185303,
+        "packets": 1774165,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634681.1172378,
+        "duration": 1.0010807514190674,
+        "packets": 1772035,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634682.1183186,
+        "duration": 1.0011043548583984,
+        "packets": 1767804,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634683.119423,
+        "duration": 1.0010793209075928,
+        "packets": 1776437,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634684.1205022,
+        "duration": 1.0010745525360107,
+        "packets": 1772309,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634685.1215768,
+        "duration": 1.001077651977539,
+        "packets": 1768516,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634686.1226544,
+        "duration": 1.001086950302124,
+        "packets": 1772371,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634687.1237414,
+        "duration": 1.001063585281372,
+        "packets": 1775917,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634688.124805,
+        "duration": 1.0010671615600586,
+        "packets": 1780099,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634689.1258721,
+        "duration": 1.0010650157928467,
+        "packets": 1775880,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634690.1269372,
+        "duration": 1.00105881690979,
+        "packets": 1777911,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634691.127996,
+        "duration": 1.0010883808135986,
+        "packets": 1778023,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634692.1290843,
+        "duration": 1.0010840892791748,
+        "packets": 1781098,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634693.1301684,
+        "duration": 1.001096248626709,
+        "packets": 1779419,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634694.1312647,
+        "duration": 1.001079797744751,
+        "packets": 1774084,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634695.1323445,
+        "duration": 1.001091718673706,
+        "packets": 1770088,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634696.1334362,
+        "duration": 1.0010700225830078,
+        "packets": 1776860,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634697.1345062,
+        "duration": 1.0010764598846436,
+        "packets": 1777839,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634698.1355827,
+        "duration": 1.0010743141174316,
+        "packets": 1776686,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634699.136657,
+        "duration": 1.0010781288146973,
+        "packets": 1780567,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634700.1377351,
+        "duration": 1.0010743141174316,
+        "packets": 1780792,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634701.1388094,
+        "duration": 1.0010814666748047,
+        "packets": 1691427,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634702.139891,
+        "duration": 1.0010807514190674,
+        "packets": 1735966,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634703.1409717,
+        "duration": 1.00108003616333,
+        "packets": 1742728,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634704.1420517,
+        "duration": 1.001103401184082,
+        "packets": 1754678,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634705.143155,
+        "duration": 1.0010769367218018,
+        "packets": 1725670,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634706.144232,
+        "duration": 1.0010809898376465,
+        "packets": 1759148,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634707.145313,
+        "duration": 1.0010783672332764,
+        "packets": 1779692,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634708.1463914,
+        "duration": 1.001098871231079,
+        "packets": 1776638,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634709.1474903,
+        "duration": 1.0010950565338135,
+        "packets": 1778743,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634710.1485853,
+        "duration": 1.0011115074157715,
+        "packets": 1768451,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634711.1496968,
+        "duration": 1.0011146068572998,
+        "packets": 1759152,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634712.1508114,
+        "duration": 1.001082181930542,
+        "packets": 1764039,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634713.1518936,
+        "duration": 1.0010862350463867,
+        "packets": 1764874,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634714.1529799,
+        "duration": 1.0010755062103271,
+        "packets": 1764635,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634715.1540554,
+        "duration": 1.0010714530944824,
+        "packets": 1765335,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634716.1551268,
+        "duration": 1.0010862350463867,
+        "packets": 1780572,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634717.156213,
+        "duration": 1.001091480255127,
+        "packets": 1775400,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634718.1573045,
+        "duration": 1.001072883605957,
+        "packets": 1777277,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634719.1583774,
+        "duration": 1.0010871887207031,
+        "packets": 1773399,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634720.1594646,
+        "duration": 1.0010931491851807,
+        "packets": 1773663,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634721.1605577,
+        "duration": 1.0010910034179688,
+        "packets": 1773472,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634722.1616488,
+        "duration": 1.0010840892791748,
+        "packets": 1776045,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634723.1627328,
+        "duration": 1.0010650157928467,
+        "packets": 1779311,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634724.1637979,
+        "duration": 1.001089096069336,
+        "packets": 1778758,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634725.164887,
+        "duration": 1.0010952949523926,
+        "packets": 1773699,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634726.1659822,
+        "duration": 1.0010974407196045,
+        "packets": 1769305,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634727.1670797,
+        "duration": 1.0011272430419922,
+        "packets": 1773624,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634728.168207,
+        "duration": 1.0011389255523682,
+        "packets": 1772932,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634729.1693459,
+        "duration": 1.0010855197906494,
+        "packets": 1771399,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634730.1704314,
+        "duration": 1.0010650157928467,
+        "packets": 1768789,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634731.1714964,
+        "duration": 1.0011110305786133,
+        "packets": 1774498,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634732.1726074,
+        "duration": 1.0010919570922852,
+        "packets": 1771321,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634733.1736994,
+        "duration": 1.0010778903961182,
+        "packets": 1770844,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634734.1747773,
+        "duration": 1.0010807514190674,
+        "packets": 1773194,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634735.175858,
+        "duration": 1.0010855197906494,
+        "packets": 1774323,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634736.1769435,
+        "duration": 1.0010828971862793,
+        "packets": 1774139,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634737.1780264,
+        "duration": 1.001110553741455,
+        "packets": 1774976,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634738.179137,
+        "duration": 1.0011005401611328,
+        "packets": 1775136,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634739.1802375,
+        "duration": 1.0011327266693115,
+        "packets": 1772705,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634740.1813703,
+        "duration": 1.001112699508667,
+        "packets": 1781755,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634741.182483,
+        "duration": 1.0010883808135986,
+        "packets": 1771721,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634742.1835713,
+        "duration": 1.0011425018310547,
+        "packets": 1769625,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634743.1847138,
+        "duration": 1.0011098384857178,
+        "packets": 1778452,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634744.1858237,
+        "duration": 1.0011107921600342,
+        "packets": 1779634,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634745.1869345,
+        "duration": 1.0010731220245361,
+        "packets": 1777196,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634746.1880076,
+        "duration": 1.0010738372802734,
+        "packets": 1774045,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634747.1890814,
+        "duration": 1.001084804534912,
+        "packets": 1774947,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634748.1901662,
+        "duration": 1.0010950565338135,
+        "packets": 1772169,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      },
+      {
+        "timestamp": 1772634749.1912613,
+        "duration": 1.001103401184082,
+        "packets": 1768029,
+        "errors": 0,
+        "params": " count 0  min_pkt_size: 60  max_pkt_size: 60\n     frags: 0  delay: 102406  clone_skb: 0  ifname: ens7f0np0@1\n     flows: 0 flowlen: 0\n     queue_map_min: 0  queue_map_max: 0\n     dst_min: 192.168.244.2  dst_max: 192.168.244.2\n     src_min: 192.168.244.1  src_max: 192.168.244.1\n     src_mac: 0c:42:a1:08:0b:72 dst_mac: 0c:42:a1:08:0a:72\n     udp_src_min: 12003  udp_src_max: 12003  udp_dst_min: 12035  udp_dst_max: 12035\n     src_mac_count: 0  dst_mac_count: 0\n     burst: 512\n     Flags: NO_TIMESTAMP  QUEUE_MAP_CPU  SHARED  \n"
+      }
+    ]
+  },
+  "receiver": [],
+  "drop_monitor": [
+    {
+      "timestamp": 1772634663.8446724,
+      "duration": 1.0010390281677246,
+      "drops_per_cpu": {
+        "17": 0,
+        "18": 0
+      }
+    },
+    {
+      "timestamp": 1772634664.8457115,
+      "duration": 1.0011727809906006,
+      "drops_per_cpu": {
+        "17": 0,
+        "18": 0
+      }
+    },
+    {
+      "timestamp": 1772634665.8468843,
+      "duration": 1.0011334419250488,
+      "drops_per_cpu": {
+        "17": 0,
+        "18": 0
+      }
+    },
+    {
+      "timestamp": 1772634666.8480177,
+      "duration": 1.0010883808135986,
+      "drops_per_cpu": {
+        "17": 0,
+        "18": 0
+      }
+    },
+    {
+      "timestamp": 1772634667.849106,
+      "duration": 1.0010883808135986,
+      "drops_per_cpu": {
+        "17": 0,
+        "18": 0
+      }
+    },
+    {
+      "timestamp": 1772634668.8501945,
+      "duration": 1.0010762214660645,
+      "drops_per_cpu": {
+        "17": 0,
+        "18": 0
+      }
+    },
+    {
+      "timestamp": 1772634669.8512707,
+      "duration": 1.001084327697754,
+      "drops_per_cpu": {
+        "17": 1140249,
+        "18": 1131858
+      }
+    },
+    {
+      "timestamp": 1772634670.852355,
+      "duration": 1.0010621547698975,
+      "drops_per_cpu": {
+        "17": 1301528,
+        "18": 1291843
+      }
+    },
+    {
+      "timestamp": 1772634671.8534172,
+      "duration": 1.0010671615600586,
+      "drops_per_cpu": {
+        "17": 1397529,
+        "18": 1359475
+      }
+    },
+    {
+      "timestamp": 1772634672.8544843,
+      "duration": 1.001091718673706,
+      "drops_per_cpu": {
+        "17": 1407887,
+        "18": 1367810
+      }
+    },
+    {
+      "timestamp": 1772634673.855576,
+      "duration": 1.0010905265808105,
+      "drops_per_cpu": {
+        "17": 1371808,
+        "18": 1341740
+      }
+    },
+    {
+      "timestamp": 1772634674.8566666,
+      "duration": 1.0011281967163086,
+      "drops_per_cpu": {
+        "17": 1397755,
+        "18": 1362679
+      }
+    },
+    {
+      "timestamp": 1772634675.8577948,
+      "duration": 1.0010554790496826,
+      "drops_per_cpu": {
+        "17": 1374869,
+        "18": 1345021
+      }
+    },
+    {
+      "timestamp": 1772634676.8588502,
+      "duration": 1.0010509490966797,
+      "drops_per_cpu": {
+        "17": 1353314,
+        "18": 1327054
+      }
+    },
+    {
+      "timestamp": 1772634677.8599012,
+      "duration": 1.0010499954223633,
+      "drops_per_cpu": {
+        "17": 1338870,
+        "18": 1322143
+      }
+    },
+    {
+      "timestamp": 1772634678.8609512,
+      "duration": 1.0010528564453125,
+      "drops_per_cpu": {
+        "17": 1329200,
+        "18": 1315433
+      }
+    },
+    {
+      "timestamp": 1772634679.862004,
+      "duration": 1.0010569095611572,
+      "drops_per_cpu": {
+        "17": 1333968,
+        "18": 1318210
+      }
+    },
+    {
+      "timestamp": 1772634680.863061,
+      "duration": 1.0010566711425781,
+      "drops_per_cpu": {
+        "17": 1324029,
+        "18": 1311771
+      }
+    },
+    {
+      "timestamp": 1772634681.8641176,
+      "duration": 1.0010526180267334,
+      "drops_per_cpu": {
+        "17": 1319179,
+        "18": 1305675
+      }
+    },
+    {
+      "timestamp": 1772634682.8651702,
+      "duration": 1.001114845275879,
+      "drops_per_cpu": {
+        "17": 1316475,
+        "18": 1306138
+      }
+    },
+    {
+      "timestamp": 1772634683.866285,
+      "duration": 1.0011208057403564,
+      "drops_per_cpu": {
+        "17": 1322909,
+        "18": 1307455
+      }
+    },
+    {
+      "timestamp": 1772634684.867406,
+      "duration": 1.0010478496551514,
+      "drops_per_cpu": {
+        "17": 1345139,
+        "18": 1325265
+      }
+    },
+    {
+      "timestamp": 1772634685.8684537,
+      "duration": 1.0010545253753662,
+      "drops_per_cpu": {
+        "17": 1370014,
+        "18": 1340081
+      }
+    },
+    {
+      "timestamp": 1772634686.8695083,
+      "duration": 1.0010647773742676,
+      "drops_per_cpu": {
+        "17": 1367640,
+        "18": 1338831
+      }
+    },
+    {
+      "timestamp": 1772634687.870573,
+      "duration": 1.0010509490966797,
+      "drops_per_cpu": {
+        "17": 1371471,
+        "18": 1341831
+      }
+    },
+    {
+      "timestamp": 1772634688.871624,
+      "duration": 1.0010569095611572,
+      "drops_per_cpu": {
+        "17": 1370789,
+        "18": 1339076
+      }
+    },
+    {
+      "timestamp": 1772634689.872681,
+      "duration": 1.0010499954223633,
+      "drops_per_cpu": {
+        "17": 1404374,
+        "18": 1376494
+      }
+    },
+    {
+      "timestamp": 1772634690.873731,
+      "duration": 1.0010597705841064,
+      "drops_per_cpu": {
+        "17": 1367285,
+        "18": 1354183
+      }
+    },
+    {
+      "timestamp": 1772634691.8747907,
+      "duration": 1.0010619163513184,
+      "drops_per_cpu": {
+        "17": 1403829,
+        "18": 1370779
+      }
+    },
+    {
+      "timestamp": 1772634692.8758526,
+      "duration": 1.0010530948638916,
+      "drops_per_cpu": {
+        "17": 1313723,
+        "18": 1314254
+      }
+    },
+    {
+      "timestamp": 1772634693.8769057,
+      "duration": 1.0010690689086914,
+      "drops_per_cpu": {
+        "17": 1308344,
+        "18": 1310930
+      }
+    },
+    {
+      "timestamp": 1772634694.8779747,
+      "duration": 1.0010607242584229,
+      "drops_per_cpu": {
+        "17": 1322856,
+        "18": 1320434
+      }
+    },
+    {
+      "timestamp": 1772634695.8790355,
+      "duration": 1.0010488033294678,
+      "drops_per_cpu": {
+        "17": 1317875,
+        "18": 1315660
+      }
+    },
+    {
+      "timestamp": 1772634696.8800843,
+      "duration": 1.0010550022125244,
+      "drops_per_cpu": {
+        "17": 1313141,
+        "18": 1313348
+      }
+    },
+    {
+      "timestamp": 1772634697.8811393,
+      "duration": 1.0010507106781006,
+      "drops_per_cpu": {
+        "17": 1316139,
+        "18": 1313885
+      }
+    },
+    {
+      "timestamp": 1772634698.88219,
+      "duration": 1.0010490417480469,
+      "drops_per_cpu": {
+        "17": 1323317,
+        "18": 1318950
+      }
+    },
+    {
+      "timestamp": 1772634699.883239,
+      "duration": 1.0010735988616943,
+      "drops_per_cpu": {
+        "17": 1322339,
+        "18": 1318422
+      }
+    },
+    {
+      "timestamp": 1772634700.8843126,
+      "duration": 1.0010967254638672,
+      "drops_per_cpu": {
+        "17": 1394056,
+        "18": 1372037
+      }
+    },
+    {
+      "timestamp": 1772634701.8854094,
+      "duration": 1.0010480880737305,
+      "drops_per_cpu": {
+        "17": 1390717,
+        "18": 1369067
+      }
+    },
+    {
+      "timestamp": 1772634702.8864574,
+      "duration": 1.0010521411895752,
+      "drops_per_cpu": {
+        "17": 1371633,
+        "18": 1354696
+      }
+    },
+    {
+      "timestamp": 1772634703.8875096,
+      "duration": 1.0011017322540283,
+      "drops_per_cpu": {
+        "17": 1371295,
+        "18": 1346330
+      }
+    },
+    {
+      "timestamp": 1772634704.8886113,
+      "duration": 1.0010857582092285,
+      "drops_per_cpu": {
+        "17": 1382288,
+        "18": 1362312
+      }
+    },
+    {
+      "timestamp": 1772634705.889697,
+      "duration": 1.0010595321655273,
+      "drops_per_cpu": {
+        "17": 1380925,
+        "18": 1362048
+      }
+    },
+    {
+      "timestamp": 1772634706.8907566,
+      "duration": 1.001084566116333,
+      "drops_per_cpu": {
+        "17": 1370403,
+        "18": 1353738
+      }
+    },
+    {
+      "timestamp": 1772634707.8918412,
+      "duration": 1.001049280166626,
+      "drops_per_cpu": {
+        "17": 1377347,
+        "18": 1361269
+      }
+    },
+    {
+      "timestamp": 1772634708.8928905,
+      "duration": 1.0010595321655273,
+      "drops_per_cpu": {
+        "17": 1318133,
+        "18": 1314129
+      }
+    },
+    {
+      "timestamp": 1772634709.89395,
+      "duration": 1.0010483264923096,
+      "drops_per_cpu": {
+        "17": 1323887,
+        "18": 1319636
+      }
+    },
+    {
+      "timestamp": 1772634710.8949983,
+      "duration": 1.0010533332824707,
+      "drops_per_cpu": {
+        "17": 1312732,
+        "18": 1311266
+      }
+    },
+    {
+      "timestamp": 1772634711.8960516,
+      "duration": 1.0010504722595215,
+      "drops_per_cpu": {
+        "17": 1318733,
+        "18": 1315554
+      }
+    },
+    {
+      "timestamp": 1772634712.897102,
+      "duration": 1.0010478496551514,
+      "drops_per_cpu": {
+        "17": 1323944,
+        "18": 1320526
+      }
+    },
+    {
+      "timestamp": 1772634713.89815,
+      "duration": 1.0010900497436523,
+      "drops_per_cpu": {
+        "17": 1310395,
+        "18": 1310512
+      }
+    },
+    {
+      "timestamp": 1772634714.89924,
+      "duration": 1.0010762214660645,
+      "drops_per_cpu": {
+        "17": 1319541,
+        "18": 1317266
+      }
+    },
+    {
+      "timestamp": 1772634715.9003162,
+      "duration": 1.0010747909545898,
+      "drops_per_cpu": {
+        "17": 1305028,
+        "18": 1307320
+      }
+    },
+    {
+      "timestamp": 1772634716.901391,
+      "duration": 1.0010952949523926,
+      "drops_per_cpu": {
+        "17": 1353448,
+        "18": 1343927
+      }
+    },
+    {
+      "timestamp": 1772634717.9024863,
+      "duration": 1.0010566711425781,
+      "drops_per_cpu": {
+        "17": 1352564,
+        "18": 1344042
+      }
+    },
+    {
+      "timestamp": 1772634718.903543,
+      "duration": 1.001068115234375,
+      "drops_per_cpu": {
+        "17": 1382450,
+        "18": 1365756
+      }
+    },
+    {
+      "timestamp": 1772634719.904611,
+      "duration": 1.0011036396026611,
+      "drops_per_cpu": {
+        "17": 1364166,
+        "18": 1351235
+      }
+    },
+    {
+      "timestamp": 1772634720.9057148,
+      "duration": 1.0010559558868408,
+      "drops_per_cpu": {
+        "17": 1388040,
+        "18": 1366944
+      }
+    },
+    {
+      "timestamp": 1772634721.9067707,
+      "duration": 1.0010533332824707,
+      "drops_per_cpu": {
+        "17": 1386208,
+        "18": 1363352
+      }
+    },
+    {
+      "timestamp": 1772634722.907824,
+      "duration": 1.0010881423950195,
+      "drops_per_cpu": {
+        "17": 1397384,
+        "18": 1375800
+      }
+    },
+    {
+      "timestamp": 1772634723.9089122,
+      "duration": 1.0010466575622559,
+      "drops_per_cpu": {
+        "17": 1384250,
+        "18": 1362555
+      }
+    },
+    {
+      "timestamp": 1772634724.9099588,
+      "duration": 1.0010488033294678,
+      "drops_per_cpu": {
+        "17": 1384349,
+        "18": 1363813
+      }
+    },
+    {
+      "timestamp": 1772634725.9110076,
+      "duration": 1.0010972023010254,
+      "drops_per_cpu": {
+        "17": 1337673,
+        "18": 1328824
+      }
+    },
+    {
+      "timestamp": 1772634726.9121048,
+      "duration": 1.0010533332824707,
+      "drops_per_cpu": {
+        "17": 1323903,
+        "18": 1319708
+      }
+    },
+    {
+      "timestamp": 1772634727.9131582,
+      "duration": 1.0010936260223389,
+      "drops_per_cpu": {
+        "17": 1331599,
+        "18": 1325649
+      }
+    },
+    {
+      "timestamp": 1772634728.9142518,
+      "duration": 1.0010755062103271,
+      "drops_per_cpu": {
+        "17": 1327322,
+        "18": 1314499
+      }
+    },
+    {
+      "timestamp": 1772634729.9153273,
+      "duration": 1.00105619430542,
+      "drops_per_cpu": {
+        "17": 1348066,
+        "18": 1327200
+      }
+    },
+    {
+      "timestamp": 1772634730.9163835,
+      "duration": 1.0010671615600586,
+      "drops_per_cpu": {
+        "17": 1337766,
+        "18": 1320640
+      }
+    },
+    {
+      "timestamp": 1772634731.9174507,
+      "duration": 1.001075029373169,
+      "drops_per_cpu": {
+        "17": 1346792,
+        "18": 1326695
+      }
+    },
+    {
+      "timestamp": 1772634732.9185257,
+      "duration": 1.0010528564453125,
+      "drops_per_cpu": {
+        "17": 1351512,
+        "18": 1329839
+      }
+    },
+    {
+      "timestamp": 1772634733.9195786,
+      "duration": 1.0010597705841064,
+      "drops_per_cpu": {
+        "17": 1349087,
+        "18": 1326890
+      }
+    },
+    {
+      "timestamp": 1772634734.9206383,
+      "duration": 1.0011026859283447,
+      "drops_per_cpu": {
+        "17": 1367329,
+        "18": 1336817
+      }
+    },
+    {
+      "timestamp": 1772634735.921741,
+      "duration": 1.0010957717895508,
+      "drops_per_cpu": {
+        "17": 1374651,
+        "18": 1344459
+      }
+    },
+    {
+      "timestamp": 1772634736.9228368,
+      "duration": 1.0010595321655273,
+      "drops_per_cpu": {
+        "17": 1373761,
+        "18": 1355628
+      }
+    },
+    {
+      "timestamp": 1772634737.9238963,
+      "duration": 1.0010850429534912,
+      "drops_per_cpu": {
+        "17": 1372236,
+        "18": 1352896
+      }
+    },
+    {
+      "timestamp": 1772634738.9249814,
+      "duration": 1.0010547637939453,
+      "drops_per_cpu": {
+        "17": 1365623,
+        "18": 1347944
+      }
+    },
+    {
+      "timestamp": 1772634739.9260361,
+      "duration": 1.0011048316955566,
+      "drops_per_cpu": {
+        "17": 1365089,
+        "18": 1349695
+      }
+    },
+    {
+      "timestamp": 1772634740.927141,
+      "duration": 1.001051664352417,
+      "drops_per_cpu": {
+        "17": 1353192,
+        "18": 1342580
+      }
+    },
+    {
+      "timestamp": 1772634741.9281926,
+      "duration": 1.00105881690979,
+      "drops_per_cpu": {
+        "17": 1361660,
+        "18": 1347573
+      }
+    },
+    {
+      "timestamp": 1772634742.9292514,
+      "duration": 1.001089334487915,
+      "drops_per_cpu": {
+        "17": 1348852,
+        "18": 1338624
+      }
+    },
+    {
+      "timestamp": 1772634743.9303408,
+      "duration": 1.0010826587677002,
+      "drops_per_cpu": {
+        "17": 1328279,
+        "18": 1319253
+      }
+    },
+    {
+      "timestamp": 1772634744.9314234,
+      "duration": 1.001051902770996,
+      "drops_per_cpu": {
+        "17": 1322948,
+        "18": 1318177
+      }
+    },
+    {
+      "timestamp": 1772634745.9324753,
+      "duration": 1.0010993480682373,
+      "drops_per_cpu": {
+        "17": 1160938,
+        "18": 1157598
+      }
+    },
+    {
+      "timestamp": 1772634746.9335747,
+      "duration": 1.001129388809204,
+      "drops_per_cpu": {
+        "17": 0,
+        "18": 0
+      }
+    },
+    {
+      "timestamp": 1772634747.934704,
+      "duration": 1.0011162757873535,
+      "drops_per_cpu": {
+        "17": 0,
+        "18": 0
+      }
+    },
+    {
+      "timestamp": 1772634748.9358203,
+      "duration": 1.0011119842529297,
+      "drops_per_cpu": {
+        "17": 0,
+        "18": 0
+      }
+    },
+    {
+      "timestamp": 1772634749.9369323,
+      "duration": 1.0010979175567627,
+      "drops_per_cpu": {
+        "17": 0,
+        "18": 0
+      }
+    },
+    {
+      "timestamp": 1772634750.9380302,
+      "duration": 1.0011014938354492,
+      "drops_per_cpu": {
+        "17": 0,
+        "18": 0
+      }
+    }
+  ]
+}

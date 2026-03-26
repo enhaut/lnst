@@ -118,16 +118,14 @@ class RSSMeasurement(BaseFlowMeasurement):
 
     def _prepare_client(self):
         config = []
-        for flow in self.flows:
+        for i, flow in enumerate(self.flows):
             config.append(
                 {
                     "src_if": self._real_dev(flow.generator_nic),
                     "dst_mac": flow.receiver_nic.hwaddr,
                     "src_ip": flow.generator_bind,
                     "dst_ip": flow.receiver_bind,
-                    "cpu": flow.generator_cpupin[
-                        0
-                    ],  # RSSMeasGen round-robins cpus, so this will be list with 1 cpu only
+                    "cpu": i,  # RSSMeasGen round-robins cpus, so this will be list with 1 cpu only
                     "pkt_size": flow.msg_size,
                     "duration": flow.duration + flow.warmup_duration * 2,
                     "src_port": flow.generator_port,

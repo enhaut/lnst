@@ -180,6 +180,8 @@ class RecipeRun(object):
         self._datetime = datetime.datetime.now()
         self._environ = os.environ.copy()
         self._exception = None
+        self._perf_results = []
+        self._ping_results = []
 
     def add_result(self, result):
         if not isinstance(result, BaseResult):
@@ -252,6 +254,20 @@ class RecipeRun(object):
     @exception.setter
     def exception(self, exception):
         self._exception = exception
+
+    def add_perf_result(self, result):
+        self._perf_results.append(result)
+
+    def add_ping_result(self, result):
+        self._ping_results.append(result)
+
+    @property
+    def perf_results(self):
+        return getattr(self, '_perf_results', [])
+
+    @property
+    def ping_results(self):
+        return getattr(self, '_ping_results', [])
 
 def export_recipe_run(run: RecipeRun, export_dir: str = None, name: str = None) -> str:
     """

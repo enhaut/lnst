@@ -353,6 +353,7 @@ class BaseEnrtRecipe(
         """
         for ping_configs in self.generate_ping_configurations(recipe_config):
             result = self.ping_test(ping_configs)
+            self.current_run.add_ping_result(result)
             self.ping_report_and_evaluate(result)
 
     def describe_perf_test_tweak(self, perf_config):
@@ -368,7 +369,29 @@ class BaseEnrtRecipe(
         """
         for perf_config in self.generate_perf_configurations(recipe_config):
             result = self.perf_test(perf_config)
+            self.current_run.add_perf_result(result)
             self.perf_report_and_evaluate(result)
+
+    def evaluate_only(self, perf_results, ping_results):
+        """Re-evaluate stored measurement results without running measurements
+
+        This method replays previously stored perf and ping results through
+        the report and evaluate pipeline using fresh evaluators from this
+        recipe instance.
+
+        :param perf_results: list of RecipeResults objects from a previous run
+        :param ping_results: list of ping result dicts from a previous run
+        """
+        for ping_result in ping_results:
+            for pingconf in ping_result.keys():
+                pingconf.register_evaluators(
+                    self.generate_ping_evaluators(pingconf, endpoints=None)
+                )
+            self.ping_report_and_evaluate(ping_result)
+
+        for perf_result in perf_results:
+            self.register_perf_evaluators(perf_result.recipe_conf)
+            self.perf_report_and_evaluate(perf_result)
 
     def generate_ping_configurations(self, config):
         """Base ping test configuration generator

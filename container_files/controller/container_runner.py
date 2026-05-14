@@ -158,6 +158,7 @@ class ContainerRunner:
         for i, test in enumerate(self._test_db):
             print(f"\n{'=' * 60}")
             recipe_name = test["recipe_name"]
+            test_id = test.get("uuid", f"{i}_{recipe_name}")
 
             test_result = ResultType.PASS
             recipe = None
@@ -183,7 +184,7 @@ class ContainerRunner:
 
             if recipe is not None:
                 try:
-                    result_dir = f"{RESULTS_DIR}/{i}_{recipe_name}"
+                    result_dir = f"{RESULTS_DIR}/{test_id}"
                     self._export_results(recipe, result_dir)
                 except Exception:
                     print(
@@ -192,15 +193,15 @@ class ContainerRunner:
                     )
                     traceback.print_exc(file=sys.stderr)
 
-            results.append((recipe_name, test_result))
+            results.append((test_id, test_result))
             overall = ResultType.max_severity(overall, test_result)
 
         print(f"\n{'=' * 60}")
         print("Test Summary:")
         print(f"{'=' * 60}")
-        for i, (recipe_name, result) in enumerate(results):
+        for test_id, result in results:
             status = "PASS" if result == ResultType.PASS else "FAIL"
-            print(f"  {i}_{recipe_name}: {status}")
+            print(f"  {test_id}: {status}")
         overall_status = "PASS" if overall == ResultType.PASS else "FAIL"
         print(f"\nOverall result: {overall_status}")
 

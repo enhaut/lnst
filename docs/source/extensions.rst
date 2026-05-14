@@ -259,8 +259,9 @@ variable. This accepts a local file path or an HTTP(S) URL:
     # Remote URL
     podman run -e TEST_DB=https://server/tests.json ...
 
-Each entry in the JSON array is an object with two keys:
+Each entry in the JSON array is an object with the following keys:
 
+* ``uuid`` -- (optional) unique identifier for the test. When set, the results directory for this test uses the UUID as its name instead of the default ``{index}_{recipe_name}`` format.
 * ``recipe_name`` -- string name of the recipe class (loaded from ``lnst.Recipes.ENRT``)
 * ``params`` -- object of parameters to pass to the recipe constructor
 
@@ -270,6 +271,7 @@ Example ``test_db.json``:
 
     [
         {
+            "uuid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
             "recipe_name": "SimpleNetworkRecipe",
             "params": {
                 "perf_iterations": 1,

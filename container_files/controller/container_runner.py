@@ -1,10 +1,12 @@
 import json
 import os
+import ssl
 import sys
 import traceback
 import zipfile
 from functools import reduce
 from typing import Any, Type
+from urllib.request import urlopen
 
 from lnst.Recipes.ENRT import *
 from lnst.Controller.Recipe import BaseRecipe, export_recipe_run
@@ -16,10 +18,9 @@ from lnst.Controller.ContainerPoolManager import ContainerPoolManager
 from lnst.Controller.RunSummaryFormatters import *
 from lnst.Controller.RunSummaryFormatters.RunSummaryFormatter import RunSummaryFormatter
 
-from container_files.controller.test_db import tests as test_db_tests
-
 RESULTS_DIR = "/root/.lnst/results"
 POOL_DIR = "/root/.lnst/pool"
+TEST_DB = os.getenv("TEST_DB", "/lnst/container_files/controller/test_db.json")
 
 
 class ContainerRunner:
@@ -50,9 +51,22 @@ class ContainerRunner:
                 },
             ]
         else:
-            self._test_db = test_db_tests
+            self._test_db = self._load_test_db()
 
         self._formatters: list[Type[RunSummaryFormatter]] = self._parse_formatters()
+
+    @staticmethod
+    def _load_test_db() -> list[dict[str, Any]]:
+        uri = TEST_DB
+        if "://" not in uri:
+            uri = f"file://{uri}"
+
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+
+        with urlopen(uri, context=ctx) as resp:
+            return json.load(resp)
 
     def _parse_controller_params(self) -> dict:
         params = {

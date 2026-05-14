@@ -244,36 +244,47 @@ Using the test database
 +++++++++++++++++++++++
 
 Instead of specifying ``RECIPE`` and ``RECIPE_PARAMS`` environment variables, you can
-define a list of tests in ``container_files/controller/test_db.py``. When the ``RECIPE``
+define a list of tests in ``container_files/controller/test_db.json``. When the ``RECIPE``
 environment variable is **not** set, the container runner will automatically execute all
-tests defined in ``test_db.py`` in order.
+tests defined in ``test_db.json`` in order.
 
-Each entry in the ``tests`` list is a dictionary with two keys:
+The location of the test database can be overridden with the ``TEST_DB`` environment
+variable. This accepts a local file path or an HTTP(S) URL:
+
+.. code-block:: bash
+
+    # Local file (default)
+    podman run -e TEST_DB=/path/to/my_tests.json ...
+
+    # Remote URL
+    podman run -e TEST_DB=https://server/tests.json ...
+
+Each entry in the JSON array is an object with two keys:
 
 * ``recipe_name`` -- string name of the recipe class (loaded from ``lnst.Recipes.ENRT``)
-* ``params`` -- dictionary of parameters to pass to the recipe constructor
+* ``params`` -- object of parameters to pass to the recipe constructor
 
-Example ``test_db.py``:
+Example ``test_db.json``:
 
-.. code-block:: python
+.. code-block:: json
 
-    tests = [
+    [
         {
             "recipe_name": "SimpleNetworkRecipe",
             "params": {
                 "perf_iterations": 1,
                 "perf_duration": 10,
-                "driver": "ice",
-            },
+                "driver": "ice"
+            }
         },
         {
             "recipe_name": "BondRecipe",
             "params": {
                 "bonding_mode": "active-backup",
                 "miimon_value": 5,
-                "driver": "ice",
-            },
-        },
+                "driver": "ice"
+            }
+        }
     ]
 
 Tests run sequentially and each test is independent -- a failure in one test does not

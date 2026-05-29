@@ -30,11 +30,11 @@ jobs:
       run: |
         podman build \
           --build-arg LNST_SRC=${{ github.server_url }}/${{ github.repository }}.git@${{ github.sha }} \
-          -t quay.io/lnst/lnst-controller:${{ matrix.arch }} \
+          -t quay.io/sdobron/lnst-test:${{ matrix.arch }} \
           container_files/controller
 
     - name: Push container
-      run: podman push quay.io/lnst/lnst-controller:${{ matrix.arch }}
+      run: podman push quay.io/sdobron/lnst-test:${{ matrix.arch }}
 
   manifest:
     runs-on: ubuntu-latest
@@ -46,7 +46,7 @@ jobs:
 
     - name: Create and push manifest
       run: |
-        podman manifest create quay.io/lnst/lnst-controller:latest \
-          quay.io/lnst/lnst-controller:amd64 \
-          quay.io/lnst/lnst-controller:arm64
-        podman manifest push quay.io/lnst/lnst-controller:latest
+        podman manifest create quay.io/sdobron/lnst-test:latest \
+          quay.io/sdobron/lnst-test:amd64 \
+          quay.io/sdobron/lnst-test:arm64
+        podman manifest push quay.io/sdobron/lnst-test:latest

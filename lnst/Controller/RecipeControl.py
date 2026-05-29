@@ -38,7 +38,7 @@ class RecipeControl(object):
         msg_dispatcher = self._controller._msg_dispatcher
 
         if security is None:
-            security = {"auth_type": "none"}
+            security = {"auth_type": "no-auth"}
 
         if machine_id is None:
             machine_id = hostname

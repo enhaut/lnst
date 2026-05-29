@@ -54,6 +54,7 @@ class Machine(object):
         self._connection = None
         self._system_config = {}
         self._security = security
+        self._security["auth_type"] = "no-auth"
         self._security["identity"] = ctl_config.get_option("security",
                                                            "identity")
         self._security["privkey"] = ctl_config.get_option("security",

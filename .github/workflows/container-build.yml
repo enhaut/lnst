@@ -38,15 +38,15 @@ jobs:
 
     - name: Build multi-arch container
       run: |
-        podman manifest create quay.io/lnst/lnst-controller:latest
+        podman manifest create quay.io/sdobron/lnst-test:latest
         podman build \
           --platform linux/amd64,linux/arm64 \
           --build-arg LNST_SRC=${{ env.LNST_SRC }} \
-          --manifest quay.io/lnst/lnst-controller:latest \
+          --manifest quay.io/sdobron/lnst-test:latest \
           container_files/controller
 
     - name: Push multi-arch manifest
       if: github.event_name == 'push'
       run: |
-        podman manifest push quay.io/lnst/lnst-controller:latest
-        podman manifest push quay.io/lnst/lnst-controller:latest quay.io/lnst/lnst-controller:${{ github.sha }}
+        podman manifest push quay.io/sdobron/lnst-test:latest
+        podman manifest push quay.io/sdobron/lnst-test:latest quay.io/sdobron/lnst-test:${{ github.sha }}

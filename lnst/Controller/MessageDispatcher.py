@@ -90,7 +90,7 @@ class WaitTimeoutError(ControllerError):
     pass
 
 def _timeout_handler(signum, frame):
-    msg = "Timeout expired"
+    msg = "Timeout expiredddd"
     raise WaitTimeoutError(msg)
 
 class MessageDispatcher(ConnectionHandler):

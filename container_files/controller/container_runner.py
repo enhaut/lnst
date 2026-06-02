@@ -211,7 +211,7 @@ class ContainerRunner:
             status = "PASS" if result == ResultType.PASS else "FAIL"
             print(f"  {test_id}: {status}")
         overall_status = "PASS" if overall == ResultType.PASS else "FAIL"
-        print(f"\nOverall result: {overall_status}")
+        print(f"\nOverall resultttttt: {overall_status}")
 
         return overall
 

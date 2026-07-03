@@ -49,7 +49,7 @@ class LinuxPerf(BaseTestModule):
         return process.returncode == -2
 
     def _compose_cmd(self) -> str:
-        cmd: str = "perf record"
+        cmd: str = "perf record -g"
         cmd += f" --output={self.params.output_file}"
 
         if cpus := self.params.get("cpus", []):
